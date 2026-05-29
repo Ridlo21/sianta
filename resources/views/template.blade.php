@@ -12,9 +12,7 @@
         content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
-
-    <link rel="canonical" href="index-2.html" />
+    <link rel="shortcut icon" href="{{ asset('asset_login') }}/sianta.png" />
 
     <title>{{ $title }} | SIANTA</title>
 
@@ -79,10 +77,11 @@
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class='sidebar-brand' href='index-2.html'>
+                <a class='sidebar-brand d-flex align-items-center' href="{{ route('dashboard') }}">
+                    <img src="{{ asset('asset_login') }}/sianta.png" alt="Logo" width="40" height="40"
+                        class="me-2">
                     <span class="sidebar-brand-text align-middle">
                         SIANTA
-                        <sup><small class="badge bg-primary text-uppercase">Pro</small></sup>
                     </span>
                     <svg class="sidebar-brand-icon align-middle" width="32px" height="32px" viewBox="0 0 24 24"
                         fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square"
