@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Admincontroller extends Controller
+class Siswacontroller extends Controller
 {
     public function index()
     {
@@ -13,7 +13,8 @@ class Admincontroller extends Controller
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $title = 'Dashboard';
-        return view('admin.dashboard.utama', compact('title', 'user'));
+        $title = 'Siswa';
+
+        return view('admin.siswa.index', compact('title', 'user'));
     }
 }

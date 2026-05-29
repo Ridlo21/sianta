@@ -5,7 +5,6 @@
             <div class="col-auto d-none d-sm-block">
                 <h3><strong>{{ $title }}</strong></h3>
             </div>
-
             <div class="col-auto ms-auto text-end mt-n1">
                 <a href="#" class="btn btn-light bg-white me-2">Invite a Friend</a>
                 <a href="#" class="btn btn-primary">New Project</a>
