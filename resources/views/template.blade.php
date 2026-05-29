@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from demo.adminkit.io/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 24 May 2026 11:31:05 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
     <meta charset="utf-8">
@@ -26,10 +22,38 @@
 
     <!-- Choose your prefered color scheme -->
     <link href="{{ asset('asset_admin') }}/css/light.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('asset_admin') }}/parsleyjs/parsley.css" />
 
     <style>
         body {
             opacity: 0;
+        }
+
+        /* OVERLAY LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: rgb(255, 255, 255);
+            /* transparan */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 9px solid;
+            border-color: #474bff #0000;
+            animation: spinner-0tkp9a 1s infinite;
+        }
+
+        @keyframes spinner-0tkp9a {
+            to {
+                transform: rotate(.5turn);
+            }
         }
     </style>
     <!-- END SETTINGS -->
@@ -49,6 +73,9 @@
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
@@ -88,7 +115,7 @@
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                         data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Log out</a>
+                                <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
                             </div>
 
                             <div class="sidebar-user-subtitle">Designer</div>
@@ -109,7 +136,8 @@
                             data-bs-parent="#sidebar">
                             <li class="sidebar-item active"><a class='sidebar-link' href='index-2.html'>Analytics</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='dashboard-ecommerce.html'>E-Commerce
+                            <li class="sidebar-item"><a class='sidebar-link'
+                                    href='dashboard-ecommerce.html'>E-Commerce
                                     <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                             <li class="sidebar-item"><a class='sidebar-link' href='dashboard-crypto.html'>Crypto
                                     <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
@@ -398,7 +426,7 @@
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                         data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Log out</a>
+                                <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
                             </div>
                         </li>
                     </ul>
@@ -414,8 +442,8 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a href="#" target="_blank"
-                                    class="text-muted"><strong>SIAKAD-SMKNAA</strong></a> &copy; {{ date('Y') }}
+                                <a href="#" target="_blank" class="text-muted"><strong>SIANTA</strong></a>
+                                &copy; {{ date('Y') }}
                             </p>
                         </div>
                         <div class="col-6 text-end">
@@ -433,6 +461,28 @@
     </div>
 
     <script src="{{ asset('asset_admin') }}/js/app.js"></script>
+    <script src="{{ asset('asset_admin') }}/jquery/jquery.min.js"></script>
+    <script src="{{ asset('asset_admin') }}/parsleyjs/parsley.min.js"></script>
+    <script src="{{ asset('asset_admin') }}/parsleyjs/i18n/id.js"></script>
+    <script src="{{ asset('asset_admin') }}/sweetalert2/sweetalert2.all.min.js"></script>
+    <script>
+        function logout() {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: 'Apakah anda yakin untuk logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Tidak',
+                confirmButtonText: 'Ya, logout!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('logout') }}";
+                }
+            });
+        }
+    </script>
     @stack('scripts')
 </body>
 

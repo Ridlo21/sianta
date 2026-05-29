@@ -8,13 +8,14 @@
     <title>{{ $title }}</title>
 
     <link rel="stylesheet" href="{{ asset('asset_admin') }}/parsleyjs/parsley.css" />
-
+    <link href="{{ asset('asset_login') }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('asset_login') }}/bootstrap-icons/font/bootstrap-icons.min.css" />
     <style>
         /* OVERLAY LOADER */
         #loader {
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255);
             /* transparan */
             justify-content: center;
             align-items: center;
@@ -47,12 +48,14 @@
 
     <form id="formLogin" data-parsley-validate>
         @csrf
-        <input type="email" name="email" id="email" placeholder="Email" data-parsley-required="true"
-            data-parsley-type="email">
-        <input type="password" name="password" id="password" placeholder="Password" data-parsley-required="true">
-        <button type="submit">Login</button>
+        <input type="email" class="form-control mb-2" name="email" id="email" placeholder="Email"
+            data-parsley-required="true" data-parsley-type="email">
+        <input type="password" class="form-control mb-2" name="password" id="password" placeholder="Password"
+            data-parsley-required="true">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> Login</button>
     </form>
 
+    <script src="{{ asset('asset_login') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('asset_admin') }}/jquery/jquery.min.js"></script>
     <script src="{{ asset('asset_admin') }}/parsleyjs/parsley.min.js"></script>
     <script src="{{ asset('asset_admin') }}/parsleyjs/i18n/id.js"></script>
