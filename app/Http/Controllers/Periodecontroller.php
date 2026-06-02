@@ -26,9 +26,16 @@ class Periodecontroller extends Controller
         return DataTables::of($periode)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<button class="btn btn-warning btn-sm btnEdit" data-id="' . $row->id . '" title="Edit Periode">
-                            Edit
-                        </button>';
+                if ($row->status == 0) {
+                    $btn = '<button class="btn btn-warning btn-sm" disabled title="Edit Periode">
+                                Edit
+                            </button>';
+                } else {
+                    $btn = '<button class="btn btn-warning btn-sm btnEdit" data-id="' . $row->id . '" title="Edit Periode">
+                                Edit
+                            </button>';
+                }
+
                 return $btn;
             })
             ->addColumn('tahun', function ($row) {
@@ -46,5 +53,66 @@ class Periodecontroller extends Controller
             })
             ->rawColumns(['action', 'tahun', 'stats'])
             ->make(true);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'awal' => 'required|integer',
+            'akhir' => 'required|integer|gt:awal',
+            'semester' => 'required',
+        ], [
+            'akhir.gt' => 'Tahun akhir harus lebih besar dari tahun awal.',
+        ]);
+
+        $cek = Periode::where('awal', $request->awal)
+            ->where('akhir', $request->akhir)
+            ->where('semester', $request->semester)
+            ->exists();
+
+        if ($cek) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Periode akademik tersebut sudah tersedia.'
+            ]);
+        }
+
+        Periode::query()->update([
+            'status' => 0
+        ]);
+
+        Periode::create([
+            'awal'     => $request->awal,
+            'akhir'    => $request->akhir,
+            'semester' => $request->semester,
+            'status'   => 1,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Data Periode berhasil ditambahkan.']);
+    }
+
+    public function edit($id)
+    {
+        $data = Periode::findOrFail($id);
+        return response()->json($data);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'awal' => 'required|integer',
+            'akhir' => 'required|integer|gt:awal',
+            'semester' => 'required',
+        ], [
+            'akhir.gt' => 'Tahun akhir harus lebih besar dari tahun awal.',
+        ]);
+
+        Periode::where('id', $request->id)->update([
+            'awal'     => $request->awal,
+            'akhir'    => $request->akhir,
+            'semester' => $request->semester,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Data Periode berhasil ditambahkan.']);
     }
 }

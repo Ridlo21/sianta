@@ -18,6 +18,9 @@ Route::middleware('auth')->group(function () {
     // PERIODE AKADEMIK
     Route::get('/admin/periode', [Periodecontroller::class, 'index'])->name('periode');
     Route::get('/admin/periode_data', [Periodecontroller::class, 'periode_data'])->name('periode.data');
+    Route::get('/admin/edit_periode/{id}', [Periodecontroller::class, 'edit'])->name('periode.edit');
+    Route::post('/admin/periode_simpan', [Periodecontroller::class, 'store'])->name('periode.simpan');
+    Route::post('/admin/periode_update', [Periodecontroller::class, 'update'])->name('periode.update');
     // SISWA
     Route::get('/admin/siswa', [Siswacontroller::class, 'index'])->name('siswa');
 });

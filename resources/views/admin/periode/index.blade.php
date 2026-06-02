@@ -50,7 +50,9 @@
         data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
-                <form>
+                <form id="formPeriode" data-parsley-validate>
+                    @csrf
+                    <input type="hidden" name="id" id="id" value="">
                     <div class="modal-header">
                         <h5 class="modal-title"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -84,8 +86,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -95,25 +96,6 @@
 
 @push('scripts')
     <script>
-        $('#btnTambah').click(function() {
-            Swal.fire({
-                title: 'Anda yakin?',
-                text: 'Tindakan ini akan menonaktifkan periode akademik yang sedang berjalan. Pastikan seluruh kegiatan pembelajaran, penilaian, dan administrasi akademik telah selesai. Setelah periode diakhiri, statusnya tidak dapat diaktifkan kembali.',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Tidak',
-                confirmButtonText: 'Ya, Lanjutkan!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#centeredModalPrimary .modal-title').text('Tambah Periode');
-                    $('#centeredModalPrimary').modal('show');
-                }
-            });
-
-        });
-
         $(document).ready(function() {
             $('#datatables-reponsive').DataTable({
                 paging: true,
@@ -144,6 +126,130 @@
                         data: 'action'
                     }
                 ]
+            });
+
+            $('#btnTambah').click(function() {
+                Swal.fire({
+                    title: 'Anda yakin?',
+                    text: 'Tindakan ini akan menonaktifkan periode akademik yang sedang berjalan. Pastikan seluruh kegiatan pembelajaran, penilaian, dan administrasi akademik telah selesai. Setelah periode diakhiri, statusnya tidak dapat diaktifkan kembali.',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Tidak',
+                    confirmButtonText: 'Ya, Lanjutkan!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#centeredModalPrimary .modal-title').text('Tambah Periode');
+                        $('#formPeriode')[0].reset();
+                        $('#centeredModalPrimary').modal('show');
+                    }
+                });
+
+            });
+
+            $('#datatables-reponsive').on("click", '.btnEdit', function() {
+                let id = $(this).data('id');
+                $.get("{{ route('periode.edit', ':id') }}".replace(':id', id), function(data) {
+                    $('#id').val(data.id);
+                    $('#awal').val(data.awal);
+                    $('#akhir').val(data.akhir);
+                    $('#semester').val(data.semester);
+                    $('#centeredModalPrimary .modal-title').text('Edit Periode');
+                    $('#centeredModalPrimary').modal('show');
+                });
+            });
+
+            $('#formPeriode').on('submit', function(e) {
+                e.preventDefault();
+                let id = $('#id').val();
+                let url = id ? "{{ route('periode.update') }}" : "{{ route('periode.simpan') }}";
+                $(this).parsley().validate();
+                if ($(this).parsley().isValid()) {
+                    let awal = parseInt($('#awal').val());
+                    let akhir = parseInt($('#akhir').val());
+                    if (akhir <= awal) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Perhatian',
+                            text: 'Tahun akhir harus lebih besar dari tahun awal.'
+                        });
+                        return;
+                    }
+                    Swal.fire({
+                        title: 'Anda yakin?',
+                        text: 'Tindakan ini akan menonaktifkan periode akademik yang sedang berjalan. Pastikan seluruh kegiatan pembelajaran, penilaian, dan administrasi akademik telah selesai. Setelah periode diakhiri, statusnya tidak dapat diaktifkan kembali.',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Tidak',
+                        confirmButtonText: 'Ya, Lanjutkan!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#loader').css('display', 'flex');
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: $(this).serialize(),
+
+                                success: function(response) {
+
+                                    $('#loader').css('display', 'none');
+
+                                    if (response.status == 'success') {
+
+                                        $('#modalSuppliers').modal('hide');
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+
+                                    } else {
+
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: response.message,
+                                        });
+
+                                    }
+                                },
+
+                                error: function(xhr) {
+
+                                    $('#loader').css('display', 'none');
+
+                                    if (xhr.status === 422) {
+
+                                        let errors = xhr.responseJSON.errors;
+                                        let pesan = Object.values(errors).flat().join(
+                                            '\n');
+
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Validasi Gagal',
+                                            text: pesan
+                                        });
+
+                                    } else {
+
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: 'Terjadi kesalahan pada server.'
+                                        });
+
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
             });
         })
     </script>
