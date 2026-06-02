@@ -621,6 +621,17 @@
     <script src="{{ asset('asset_admin') }}/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+
+            if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+                e.preventDefault();
+            }
+        });
         // SHOW PASSWORD
         $('#togglePassword').click(function() {
 

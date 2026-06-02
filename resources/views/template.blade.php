@@ -21,6 +21,7 @@
     <!-- Choose your prefered color scheme -->
     <link href="{{ asset('asset_admin') }}/css/light.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('asset_admin') }}/parsleyjs/parsley.css" />
+    <link rel="stylesheet" href="{{ asset('asset_admin') }}/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 
     <style>
         body {
@@ -124,14 +125,19 @@
                             <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Pages</span>
                         </a>
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-projects.html'>Periode</a></li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-clients.html'>Jurusan</a></li>
-                            <li class="sidebar-item"><a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a></li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-orders.html'>Guru</a></li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-pricing.html'>Rombel</a></li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-chat.html'>Mata Pelajaran</a>
+                            <li class="sidebar-item"><a class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-blank.html'>Sebaran Mapel</a>
+                            <li class="sidebar-item"><a class='sidebar-link' href='pages-clients.html'>Jurusan</a></li>
+                            <li class="sidebar-item"><a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a>
+                            </li>
+                            <li class="sidebar-item"><a class='sidebar-link' href='pages-orders.html'>Guru</a></li>
+                            <li class="sidebar-item"><a class='sidebar-link' href='pages-pricing.html'>Rombel</a>
+                            </li>
+                            <li class="sidebar-item"><a class='sidebar-link' href='pages-chat.html'>Mata
+                                    Pelajaran</a>
+                            </li>
+                            <li class="sidebar-item"><a class='sidebar-link' href='pages-blank.html'>Sebaran
+                                    Mapel</a>
                             </li>
                         </ul>
                     </li>
@@ -384,6 +390,8 @@
     <script src="{{ asset('asset_admin') }}/parsleyjs/parsley.min.js"></script>
     <script src="{{ asset('asset_admin') }}/parsleyjs/i18n/id.js"></script>
     <script src="{{ asset('asset_admin') }}/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('asset_admin') }}/datatables/js/dataTables.min.js"></script>
+    <script src="{{ asset('asset_admin') }}/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
     <script>
         function logout() {
             Swal.fire({
