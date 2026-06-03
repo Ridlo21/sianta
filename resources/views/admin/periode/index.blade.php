@@ -6,7 +6,7 @@
                 <h3><strong>{{ $title }}</strong></h3>
             </div>
             <div class="col-auto ms-auto text-end mt-n1">
-                <button class="btn btn-primary" id="btnTambah">Tambah Periode</button>
+                <button class="btn btn-primary" id="btnTambah"><i class="fas fa-plus"></i> Tambah Periode</button>
             </div>
         </div>
 
@@ -31,13 +31,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -188,19 +181,14 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $('#loader').css('display', 'flex');
+                            $('#centeredModalPrimary').modal('hide');
                             $.ajax({
                                 type: "POST",
                                 url: url,
                                 data: $(this).serialize(),
-
                                 success: function(response) {
-
-                                    $('#loader').css('display', 'none');
-
                                     if (response.status == 'success') {
-
-                                        $('#modalSuppliers').modal('hide');
-
+                                        $('#loader').css('display', 'none');
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Berhasil',
@@ -208,42 +196,31 @@
                                         }).then(() => {
                                             location.reload();
                                         });
-
                                     } else {
-
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Gagal',
                                             text: response.message,
                                         });
-
                                     }
                                 },
-
                                 error: function(xhr) {
-
                                     $('#loader').css('display', 'none');
-
                                     if (xhr.status === 422) {
-
                                         let errors = xhr.responseJSON.errors;
                                         let pesan = Object.values(errors).flat().join(
                                             '\n');
-
                                         Swal.fire({
                                             icon: 'warning',
                                             title: 'Validasi Gagal',
                                             text: pesan
                                         });
-
                                     } else {
-
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Error',
                                             text: 'Terjadi kesalahan pada server.'
                                         });
-
                                     }
                                 }
                             });

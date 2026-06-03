@@ -27,12 +27,12 @@ class Periodecontroller extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 if ($row->status == 0) {
-                    $btn = '<button class="btn btn-warning btn-sm" disabled title="Edit Periode">
-                                Edit
+                    $btn = '<button class="btn btn-warning" disabled title="Edit Periode">
+                                <i class="fas fa-pencil-alt"></i>
                             </button>';
                 } else {
-                    $btn = '<button class="btn btn-warning btn-sm btnEdit" data-id="' . $row->id . '" title="Edit Periode">
-                                Edit
+                    $btn = '<button class="btn btn-warning btnEdit" data-id="' . $row->id . '" title="Edit Periode">
+                                <i class="fas fa-pencil-alt"></i>
                             </button>';
                 }
 
@@ -113,6 +113,6 @@ class Periodecontroller extends Controller
             'semester' => $request->semester,
         ]);
 
-        return response()->json(['status' => 'success', 'message' => 'Data Periode berhasil ditambahkan.']);
+        return response()->json(['status' => 'success', 'message' => 'Data Periode berhasil diedit.']);
     }
 }

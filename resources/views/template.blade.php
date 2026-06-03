@@ -127,7 +127,8 @@
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                             <li class="sidebar-item"><a class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-clients.html'>Jurusan</a></li>
+                            <li class="sidebar-item"><a class='sidebar-link' href='{{ route('jurusan') }}'>Jurusan</a>
+                            </li>
                             <li class="sidebar-item"><a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a>
                             </li>
                             <li class="sidebar-item"><a class='sidebar-link' href='pages-orders.html'>Guru</a></li>
