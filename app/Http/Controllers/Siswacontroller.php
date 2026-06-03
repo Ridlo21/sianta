@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agama;
+use App\Models\Desa;
 use App\Models\Jurusan;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Pekerjaan;
+use App\Models\Pendidikan;
+use App\Models\Penghasilan;
 use App\Models\Provinsi;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class Siswacontroller extends Controller
 {
@@ -22,6 +29,38 @@ class Siswacontroller extends Controller
         return view('admin.siswa.index', compact('title', 'user'));
     }
 
+    public function siswa_data()
+    {
+        $siswa = Siswa::where('status', 'Aktif')->orderBy('id_person', 'desc')->get();
+
+        return DataTables::of($siswa)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = '
+                        <div class="d-flex gap-1">
+                            <a href="#" class="btn btn-info" title="Detail Siswa">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a href="' . route('siswa.edit.step1', [$row->id_person, 'e']) . '" class="btn btn-warning" title="Edit Siswa">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a href="#" class="btn btn-success" title="Berkas Siswa">
+                                <i class="fas fa-image"></i>
+                            </a>
+                            <a href="#" class="btn btn-secondary" title="Berkas Siswa">
+                                <i class="fas fa-print"></i>
+                            </a>
+                            <button class="btn btn-danger btnHapus" title="Berkas Siswa" data-id="' . $row->id_person . '"> 
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        ';
+                return $btn;
+            })
+            ->rawColumns(['action', 'stats'])
+            ->make(true);
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();
@@ -33,6 +72,24 @@ class Siswacontroller extends Controller
         $siswa = Siswa::create($data);
         $id = $siswa->id_person;
         return $id;
+    }
+
+    public function get_kabupaten($provinsi_id)
+    {
+        $kabupaten = Kabupaten::where('province_id', $provinsi_id)->get();
+        return response()->json($kabupaten);
+    }
+
+    public function get_kecamatan($kabupaten_id)
+    {
+        $kecamatan = Kecamatan::where('regency_id', $kabupaten_id)->get();
+        return response()->json($kecamatan);
+    }
+
+    public function get_desa($kecamatan_id)
+    {
+        $desa = Desa::where('district_id', $kecamatan_id)->get();
+        return response()->json($desa);
     }
 
     public function editstep1($id, $st)
@@ -51,9 +108,9 @@ class Siswacontroller extends Controller
     public function updateStep1(Request $request, $id)
     {
         try {
-            $murid = Siswa::findOrFail($id);
+            $siswa = Siswa::findOrFail($id);
 
-            $murid->update([
+            $siswa->update([
                 'nama' => strtoupper($request->nama),
                 'nik' => $request->nik,
                 'no_kk' => $request->no_kk,
@@ -105,7 +162,241 @@ class Siswacontroller extends Controller
         return view('admin.siswa.step2', compact('siswa', 'provinsi', 'st', 'user', 'title'));
     }
 
+    public function updateStep2(Request $request, $id)
+    {
+        $siswa = Siswa::findOrFail($id);
 
+        $request->validate([
+            'kewarganegaraan' => 'required',
+            'alamat_lengkap' => 'required',
+            'prov' => 'required',
+            'kab' => 'required',
+            'kec' => 'required',
+            'desa' => 'required',
+        ]);
+
+        try {
+
+            $siswa->update([
+                'kewarganegaraan' => $request->kewarganegaraan,
+                'alamat_lengkap' => strtoupper($request->alamat_lengkap),
+                'prov' => $request->prov,
+                'kab' => $request->kab,
+                'kec' => $request->kec,
+                'desa' => $request->desa,
+                'pos' => $request->pos,
+                'status_step' => 2,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Step 2 berhasil tersimpan',
+                'id_person' => $id,
+                'st' => $request->st
+            ]);
+        } catch (\Exception $e) {
+
+            return back()
+                ->with('error', 'Gagal menyimpan Step 2')
+                ->withInput();
+        }
+    }
+
+    public function editstep3($id, $st)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+        $siswa = Siswa::findOrFail($id);
+        $pekerjaan = Pekerjaan::all();
+        $pendidikan = Pendidikan::all();
+        $penghasilan = Penghasilan::all();
+        $agama = Agama::all();
+        $title = 'Siswa';
+        // proteksi step
+        if ($siswa->status_step < 2) {
+            return redirect()->route('murid.edit.step2', [$id, $st]);
+        }
+        return view('admin.siswa.step3', compact('siswa', 'pekerjaan', 'pendidikan', 'penghasilan', 'agama', 'st', 'user', 'title'));
+    }
+
+    public function updateStep3(Request $request, $id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        $request->validate([
+            'nik_a' => 'required',
+            'nm_a' => 'required',
+            'tgl_lahir_a' => 'required',
+            'tmpt_lahir_a' => 'required',
+            'agama_a' => 'required',
+            'pkrjn_a' => 'required',
+            'pndkn_a' => 'required',
+            'penghasilan_a' => 'required',
+
+            'nik_i' => 'required',
+            'nm_i' => 'required',
+            'tgl_lahir_i' => 'required',
+            'tmpt_lahir_i' => 'required',
+            'agama_i' => 'required',
+            'pkrjn_i' => 'required',
+            'pndkn_i' => 'required',
+            'penghasilan_i' => 'required'
+        ]);
+
+        try {
+            $siswa->update([
+                'nik_a' => $request->nik_a,
+                'nm_a' => strtoupper($request->nm_a),
+                'tgl_lahir_a' => $request->tgl_lahir_a,
+                'tmpt_lahir_a' => strtoupper($request->tmpt_lahir_a),
+                'agama_a' => $request->agama_a,
+                'pkrjn_a' => $request->pkrjn_a,
+                'pndkn_a' => $request->pndkn_a,
+                'penghasilan_a' => $request->penghasilan_a,
+
+                'nik_i' => $request->nik_i,
+                'nm_i' => strtoupper($request->nm_i),
+                'tgl_lahir_i' => $request->tgl_lahir_i,
+                'tmpt_lahir_i' => strtoupper($request->tmpt_lahir_i),
+                'agama_i' => $request->agama_i,
+                'pkrjn_i' => $request->pkrjn_i,
+                'pndkn_i' => $request->pndkn_i,
+                'penghasilan_i' => $request->penghasilan_i,
+
+                'status_step' => 3,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Step 3 berhasil tersimpan',
+                'id_person' => $id,
+                'st' => $request->st
+            ]);
+        } catch (\Exception $e) {
+
+            return back()
+                ->with('error', 'Gagal menyimpan Step 3')
+                ->withInput();
+        }
+    }
+
+    public function editstep4($id, $st)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+        $siswa = Siswa::findOrFail($id);
+        $pekerjaan = Pekerjaan::all();
+        $pendidikan = Pendidikan::all();
+        $penghasilan = Penghasilan::all();
+        $agama = Agama::all();
+        $provinsi = Provinsi::all();
+        $title = 'Siswa';
+        // proteksi step
+        if ($siswa->status_step < 3) {
+            return redirect()->route('murid.edit.step3', [$id, $st]);
+        }
+        return view('admin.siswa.step4', compact('siswa', 'pekerjaan', 'pendidikan', 'penghasilan', 'agama', 'provinsi', 'st', 'user', 'title'));
+    }
+
+    public function updateStep4(Request $request, $id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        $jurusan = Jurusan::findOrFail($siswa->jurusan_id);
+
+        $nomorUmum = Siswa::whereNotNull('nis')->count() + 1;
+
+        $nomorJurusan = Siswa::where('jurusan_id', $jurusan->id)
+            ->where('id_person', '!=', $siswa->id_person)
+            ->count() + 1;
+
+        $A = str_pad($nomorUmum, 4, '0', STR_PAD_LEFT);
+        $B = str_pad($nomorJurusan, 3, '0', STR_PAD_LEFT);
+
+        // C = kode jurusan
+        $C = $jurusan->kode_nomenklatur;
+
+        $nis = "{$A}/{$B}.{$C}";
+
+        $request->validate([
+            'nm_w' => 'required',
+            'nik_w' => 'required',
+            'tmpt_lahir_w' => 'required',
+            'tgl_lahir_w' => 'required',
+            'agama_w' => 'required',
+            'pkrjn_w' => 'required',
+            'pndkn_w' => 'required',
+            'penghasilan_w' => 'required',
+            'almt_w' => 'required',
+            'desa_w' => 'required',
+            'kec_w' => 'required',
+            'kab_w' => 'required',
+            'prov_w' => 'required',
+            'pos_w' => 'required',
+        ]);
+
+        try {
+            if ($request->st == 't') {
+                $siswa->update([
+                    'nis' => $nis,
+                    'nm_w' => strtoupper($request->nm_w),
+                    'nik_w' => $request->nik_w,
+                    'tmpt_lahir_w' => strtoupper($request->tmpt_lahir_w),
+                    'tgl_lahir_w' => $request->tgl_lahir_w,
+                    'agama_w' => $request->agama_w,
+                    'pkrjn_w' => $request->pkrjn_w,
+                    'pndkn_w' => $request->pndkn_w,
+                    'penghasilan_w' => $request->penghasilan_w,
+                    'hp_w' => $request->hp_w,
+                    'almt_w' => strtoupper($request->almt_w),
+                    'desa_w' => $request->desa_w,
+                    'kec_w' => $request->kec_w,
+                    'kab_w' => $request->kab_w,
+                    'prov_w' => $request->prov_w,
+                    'pos_w' => $request->pos_w,
+                    'tgl_daftar' => now(),
+                    'user_id' => Auth::id(),
+                    'status' => "Aktif",
+                    'status_step' => 4,
+                ]);
+            } else {
+                $siswa->update([
+                    'nm_w' => strtoupper($request->nm_w),
+                    'nik_w' => $request->nik_w,
+                    'tmpt_lahir_w' => strtoupper($request->tmpt_lahir_w),
+                    'tgl_lahir_w' => $request->tgl_lahir_w,
+                    'agama_w' => $request->agama_w,
+                    'pkrjn_w' => $request->pkrjn_w,
+                    'pndkn_w' => $request->pndkn_w,
+                    'penghasilan_w' => $request->penghasilan_w,
+                    'hp_w' => $request->hp_w,
+                    'almt_w' => strtoupper($request->almt_w),
+                    'desa_w' => $request->desa_w,
+                    'kec_w' => $request->kec_w,
+                    'kab_w' => $request->kab_w,
+                    'prov_w' => $request->prov_w,
+                    'pos_w' => $request->pos_w,
+                    'status_step' => 4,
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Step 4 berhasil tersimpan',
+                'id_person' => $id,
+                'st' => $request->st
+            ]);
+        } catch (\Exception $e) {
+
+            return back()
+                ->with('error', 'Gagal menyimpan data wali')
+                ->withInput();
+        }
+    }
 
     public function batal(Request $request)
     {
@@ -115,5 +406,14 @@ class Siswacontroller extends Controller
         $siswa->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function hapus(Request $request)
+    {
+        Siswa::where('id_person', $request->id)->update([
+            'status' => 'Keluar'
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Data siswa berhasil dihapus.']);
     }
 }

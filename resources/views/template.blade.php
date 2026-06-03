@@ -22,7 +22,7 @@
     <link href="{{ asset('asset_admin') }}/css/light.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('asset_admin') }}/parsleyjs/parsley.css" />
     <link rel="stylesheet" href="{{ asset('asset_admin') }}/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-
+    <link rel="stylesheet" href="{{ asset('asset_admin') }}/select2/css/select2.min.css">
     <style>
         body {
             opacity: 0;
@@ -408,6 +408,7 @@
     <script src="{{ asset('asset_admin') }}/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="{{ asset('asset_admin') }}/datatables/js/dataTables.min.js"></script>
     <script src="{{ asset('asset_admin') }}/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('asset_admin') }}/select2/js/select2.full.min.js"></script>
     <script>
         function logout() {
             Swal.fire({

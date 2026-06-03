@@ -21,7 +21,7 @@ class Jurusancontroller extends Controller
 
     public function jurusan_data()
     {
-        $jurusan = Jurusan::orderBy('id', 'desc')->get();
+        $jurusan = Jurusan::where('status', 'Aktif')->orderBy('id', 'desc')->get();
 
         return DataTables::of($jurusan)
             ->addIndexColumn()

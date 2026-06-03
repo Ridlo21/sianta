@@ -13,14 +13,14 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">Biodata Siswa <span class="text-danger">{{ $siswa->nama }}</span></h5>
+                            <h5 class="card-title">Biodata <span class="text-danger">{{ $siswa->nama }}</span></h5>
                         </div>
                         <div class="card-body">
                             <input hidden name="st" value="{{ $st }}">
                             <div class="row g-2">
                                 <div class="col-md-6">
                                     <label class="form-label">Nama Lengkap</label>
-                                    <input type="text" name="nama" value="{{ $siswa->nama }}"
+                                    <input type="text" name="nama" id="nama" value="{{ $siswa->nama }}"
                                         class="form-control text-uppercase" required>
                                 </div>
                                 <div class="col-md-3">
@@ -66,7 +66,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Jenis Kelamin</label>
                                     <select name="jenis_kelamin" class="form-select" required>
-                                        <option value="">-- Pilih --</option>
+                                        <option value="">-- Pilih Jenis Kelamin --</option>
                                         <option value="Laki-Laki"
                                             {{ old('jenis_kelamin', $siswa->jenis_kelamin ?? '') == 'Laki-Laki' ? 'selected' : '' }}>
                                             Laki-Laki
@@ -80,7 +80,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Agama</label>
                                     <select name="agama" class="form-select" required>
-                                        <option value="">-- Pilih --</option>
+                                        <option value="">-- Pilih Agama --</option>
                                         @foreach ($agama as $a)
                                             <option value="{{ $a->id }}"
                                                 {{ old('agama', $siswa->agama->id ?? '') == $a->id ? 'selected' : '' }}>
@@ -92,7 +92,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Status dalam Keluarga</label>
                                     <select name="dlm_klrg" class="form-select" required>
-                                        <option value="">-- Pilih --</option>
+                                        <option value="">-- Pilih Status --</option>
                                         @foreach (['Kandung', 'Tiri', 'Angkat'] as $k)
                                             <option value="{{ $k }}"
                                                 {{ old('dlm_klrg', $siswa->dlm_klrg ?? '') == $k ? 'selected' : '' }}>
@@ -114,7 +114,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Jurusan</label>
                                     <select name="jurusan" class="form-select" required>
-                                        <option value="">-- Pilih --</option>
+                                        <option value="">-- Pilih Jurusan --</option>
                                         @foreach ($jurusan as $j)
                                             <option value="{{ $j->id }}"
                                                 {{ old('jurusan', $siswa->jurusan->id ?? '') == $j->id ? 'selected' : '' }}>
@@ -126,7 +126,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Jenis Pendaftaran</label>
                                     <select name="jenis_daftar" class="form-select" required>
-                                        <option value="">-- Pilih --</option>
+                                        <option value="">-- Pilih Jenis Pendaftaran --</option>
                                         @foreach (['BARU', 'PINDAH'] as $jns)
                                             <option value="{{ $jns }}"
                                                 {{ old('jenis_daftar', $siswa->jenis_daftar ?? '') == $jns ? 'selected' : '' }}>
@@ -150,7 +150,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Tinggal Di</label>
                                     <select name="tinggal_di" class="form-select" required>
-                                        <option value="">-- Pilih --</option>
+                                        <option value="">-- Pilih Tempat Tinggal --</option>
                                         @foreach (['BERSAMA ORANG TUA', 'WALI', 'KOST', 'ASRAMA', 'PANTI ASUHAN', 'PESANTREN', 'LAINNYA'] as $t)
                                             <option value="{{ $t }}"
                                                 {{ old('tinggal_di', $siswa->tinggal_di ?? '') == $t ? 'selected' : '' }}>
@@ -200,7 +200,7 @@
 
                                 <!-- Kanan -->
                                 <button type="submit" class="btn btn-primary">
-                                    Simpan & Lanjut
+                                    Simpan & Lanjut <i class="fas fa-arrow-right"></i>
                                 </button>
                             </div>
                         </div>
@@ -214,6 +214,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $('#nama').focus()
             $('#formSimpan').on('submit', function(e) {
                 e.preventDefault();
                 $(this).parsley().validate();
@@ -224,22 +225,16 @@
                         type: "PUT",
                         data: $(this).serialize(),
                         success: function(response) {
-                            $('#loader').css('display', 'none');
                             if (response.status == 'success') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message,
-                                }).then(() => {
-                                    $('#loader').css('display', 'flex');
-                                    let url =
-                                        "/admin/siswa_edit/step2/" +
-                                        response
-                                        .id_person + "/" + response.st;
+                                $('#loader').css('display', 'none');
+                                let url =
+                                    "/admin/siswa_edit/step2/" +
+                                    response
+                                    .id_person + "/" + response.st;
 
-                                    window.location.href = url;
-                                });
+                                window.location.href = url;
                             } else {
+                                $('#loader').css('display', 'none');
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal',
