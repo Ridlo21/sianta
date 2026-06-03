@@ -32,4 +32,12 @@ Route::middleware('auth')->group(function () {
 
     // SISWA
     Route::get('/admin/siswa', [Siswacontroller::class, 'index'])->name('siswa');
+    // siswa_data
+    Route::post('admin/siswa_simpan', [Siswacontroller::class, 'store'])->name('siswa.store');
+    Route::get('admin/siswa_edit/step1/{id}/{st}', [Siswacontroller::class, 'editstep1'])->name('siswa.edit.step1');
+    Route::put('update/step1/{id}', [Siswacontroller::class, 'updateStep1'])->name('siswa.update.step1');
+    Route::get('admin/siswa_edit/step2/{id}/{st}', [Siswacontroller::class, 'editstep2'])->name('siswa.edit.step2');
+
+
+    Route::post('/batal', [Siswacontroller::class, 'batal'])->name('siswa.batal');
 });

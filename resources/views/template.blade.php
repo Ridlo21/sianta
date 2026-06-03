@@ -28,6 +28,18 @@
             opacity: 0;
         }
 
+        /* Chrome, Edge, Safari */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
         /* OVERLAY LOADER */
         #loader {
             position: fixed;
@@ -125,11 +137,14 @@
                             <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Pages</span>
                         </a>
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                            <li class="sidebar-item"><a class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
+                            <li class="sidebar-item {{ $title == 'Periode Akademik' ? 'active' : '' }}"><a
+                                    class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='{{ route('jurusan') }}'>Jurusan</a>
+                            <li class="sidebar-item {{ $title == 'Jurusan' ? 'active' : '' }}"><a class='sidebar-link'
+                                    href='{{ route('jurusan') }}'>Jurusan</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a>
+                            <li class="sidebar-item {{ $title == 'Siswa' ? 'active' : '' }}"><a class='sidebar-link'
+                                    href="{{ route('siswa') }}">Siswa</a>
                             </li>
                             <li class="sidebar-item"><a class='sidebar-link' href='pages-orders.html'>Guru</a></li>
                             <li class="sidebar-item"><a class='sidebar-link' href='pages-pricing.html'>Rombel</a>
@@ -410,6 +425,14 @@
                 }
             });
         }
+
+        $('input[type="number"]').on('keydown', function(e) {
+            if (['e', 'E', '+', '-'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        $('input, textarea, select').attr('autocomplete', 'off');
     </script>
     @stack('scripts')
 </body>
