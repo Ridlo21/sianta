@@ -434,6 +434,16 @@
         });
 
         $('input, textarea, select').attr('autocomplete', 'off');
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+
+            if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+                e.preventDefault();
+            }
+        });
     </script>
     @stack('scripts')
 </body>

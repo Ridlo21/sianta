@@ -148,6 +148,5 @@
                 });
             });
         })
-        // Your custom script here
     </script>
 @endpush
