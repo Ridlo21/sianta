@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-desa/{kecamatan_id}', [Siswacontroller::class, 'get_desa']);
     Route::post('/batal', [Siswacontroller::class, 'batal'])->name('siswa.batal');
     Route::get('admin/siswa_show/{id}', [Siswacontroller::class, 'show'])->name('siswa.show');
+    Route::get('admin/siswa_download/{id}/{field}', [Siswacontroller::class, 'downloadBerkas'])->name('siswa.download.berkas');
     Route::get('admin/siswa_upload/{id}', [Siswacontroller::class, 'upload'])->name('siswa.upload');
     Route::put('update/upload/{id}', [Siswacontroller::class, 'updateUpload'])->name('siswa.update.upload');
     Route::post('/hapus', [Siswacontroller::class, 'hapus'])->name('siswa.hapus');

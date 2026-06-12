@@ -519,6 +519,44 @@ class Siswacontroller extends Controller
         }
     }
 
+    public function downloadBerkas($id, $field)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $fileName = $siswa->$field;
+        if (!$fileName) {
+            abort(404, 'Berkas tidak ditemukan');
+        }
+
+        $filePath = public_path('gambar_berkas/berkas_siswa/' . $fileName);
+        if (!file_exists($filePath)) {
+            abort(404, 'Berkas fisik tidak ditemukan');
+        }
+
+        // Clean student name
+        $cleanStudentName = str_replace(' ', '_', preg_replace('/[^A-Za-z0-9 ]/', '', $siswa->nama));
+
+        // Clean field name for dynamic naming
+        $cleanField = 'Berkas';
+        if ($field === 'foto_scan_kk') {
+            $cleanField = 'Kartu_Keluarga';
+        } elseif ($field === 'foto_scan_akta') {
+            $cleanField = 'Akta_Kelahiran';
+        } elseif ($field === 'foto_ijazah') {
+            $cleanField = 'Ijazah';
+        } elseif ($field === 'foto_scan_skck') {
+            $cleanField = 'SKCK';
+        } elseif ($field === 'foto_scan_ket_sehat') {
+            $cleanField = 'Surat_Sehat';
+        } elseif ($field === 'foto_warna_santri') {
+            $cleanField = 'Foto_Siswa';
+        }
+
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $downloadName = $cleanField . '_' . $cleanStudentName . '.' . $extension;
+
+        return response()->download($filePath, $downloadName);
+    }
+
     public function hapus(Request $request)
     {
         Siswa::where('id_person', $request->id)->update([
