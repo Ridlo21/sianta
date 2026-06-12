@@ -682,12 +682,18 @@
                                 });
                             }
                         },
-                        error: function() {
+                        error: function(xhr) {
                             $('#loader').css('display', 'none');
+                            let message = 'Terjadi kesalahan pada server.';
+                            if (xhr.status === 429) {
+                                message = 'Terlalu banyak percobaan login. Silakan coba lagi dalam beberapa saat.';
+                            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                                message = xhr.responseJSON.message;
+                            }
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Error',
-                                text: 'Terjadi kesalahan pada server.',
+                                title: 'Gagal',
+                                text: message,
                             });
                         }
                     });

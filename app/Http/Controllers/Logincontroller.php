@@ -20,7 +20,9 @@ class Logincontroller extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('email', 'password'), true)) { // Secara default mengaktifkan remember me untuk keandalan sesi lokal
+            $request->session()->regenerate();
+            
             $rute = route('dashboard');
             return response()->json([
                 'status' => 'success',
@@ -28,11 +30,20 @@ class Logincontroller extends Controller
                 'url' => $rute
             ]);
         }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Email atau password salah.'
+        ], 401);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
         return redirect('/login');
     }
 }

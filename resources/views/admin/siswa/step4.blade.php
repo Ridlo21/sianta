@@ -348,9 +348,14 @@
                                 data: $(this).serialize(),
                                 success: function(response) {
                                     if (response.status == 'success') {
-                                        $('#loader').css('display', 'none');
-                                        let url = "{{ route('siswa') }}"
-                                        window.location.href = url;
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                        }).then(() => {
+                                            let url = "{{ route('siswa') }}"
+                                            window.location.href = url;
+                                        });
                                     } else {
                                         $('#loader').css('display', 'none');
                                         Swal.fire({

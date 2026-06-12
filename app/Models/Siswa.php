@@ -108,4 +108,102 @@ class Siswa extends Model
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id');
     }
+
+    // =====================
+    // AYAH
+    // =====================
+    public function agamaAyah()
+    {
+        return $this->belongsTo(Agama::class, 'agama_a');
+    }
+
+    public function pekerjaanAyah()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'pkrjn_a');
+    }
+
+    public function pendidikanAyah()
+    {
+        return $this->belongsTo(Pendidikan::class, 'pndkn_a');
+    }
+
+    public function penghasilanAyah()
+    {
+        return $this->belongsTo(Penghasilan::class, 'penghasilan_a');
+    }
+
+    // =====================
+    // IBU
+    // =====================
+    public function agamaIbu()
+    {
+        return $this->belongsTo(Agama::class, 'agama_i');
+    }
+
+    public function pekerjaanIbu()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'pkrjn_i');
+    }
+
+    public function pendidikanIbu()
+    {
+        return $this->belongsTo(Pendidikan::class, 'pndkn_i');
+    }
+
+    public function penghasilanIbu()
+    {
+        return $this->belongsTo(Penghasilan::class, 'penghasilan_i');
+    }
+
+    // =====================
+    // WALI
+    // =====================
+    public function agamaWali()
+    {
+        return $this->belongsTo(Agama::class, 'agama_w');
+    }
+
+    public function pekerjaanWali()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'pkrjn_w');
+    }
+
+    public function pendidikanWali()
+    {
+        return $this->belongsTo(Pendidikan::class, 'pndkn_w');
+    }
+
+    public function penghasilanWali()
+    {
+        return $this->belongsTo(Penghasilan::class, 'penghasilan_w');
+    }
+
+    // =====================
+    // WILAYAH
+    // =====================
+
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class, 'prov');
+    }
+
+    public function kabupaten()
+    {
+        return $this->belongsTo(Kabupaten::class, 'kab');
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class, 'kec');
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa');
+    }
+
+    public function desaDetail()
+    {
+        return $this->belongsTo(Desa::class, 'desa', 'id');
+    }
 }

@@ -38,19 +38,19 @@ class Siswacontroller extends Controller
             ->addColumn('action', function ($row) {
                 $btn = '
                         <div class="d-flex gap-1">
-                            <a href="#" class="btn btn-info" title="Detail Siswa">
+                            <a href="' . route('siswa.show', $row->id_person) . '" class="btn btn-info" title="Detail Siswa">
                                 <i class="fas fa-info"></i>
                             </a>
                             <a href="' . route('siswa.edit.step1', [$row->id_person, 'e']) . '" class="btn btn-warning" title="Edit Siswa">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="#" class="btn btn-success" title="Berkas Siswa">
+                            <a href="' . route('siswa.upload', $row->id_person) . '" class="btn btn-success" title="Berkas Siswa">
                                 <i class="fas fa-image"></i>
                             </a>
-                            <a href="#" class="btn btn-secondary" title="Berkas Siswa">
+                            <a href="#" class="btn btn-secondary" title="Cetak Berkas">
                                 <i class="fas fa-print"></i>
                             </a>
-                            <button class="btn btn-danger btnHapus" title="Berkas Siswa" data-id="' . $row->id_person . '"> 
+                            <button class="btn btn-danger btnHapus" title="Hapus" data-id="' . $row->id_person . '"> 
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -406,6 +406,117 @@ class Siswacontroller extends Controller
         $siswa->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function show($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+        $title = 'Siswa';
+
+        return view('admin.siswa.show', compact('title', 'user', 'siswa'));
+    }
+
+    public function upload($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+        $title = 'Siswa';
+
+        return view('admin.siswa.upload', compact('title', 'user', 'siswa'));
+    }
+
+    public function updateUpload(Request $request, $id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        $rules = [
+            'foto_warna_santri' => ($siswa->foto_warna_santri ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_scan_kk' => ($siswa->foto_scan_kk ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_scan_akta' => ($siswa->foto_scan_akta ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_scan_skck' => ($siswa->foto_scan_skck ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_scan_ket_sehat' => ($siswa->foto_scan_ket_sehat ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_ijazah' => ($siswa->foto_ijazah ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+        ];
+
+        $messages = [
+            'required' => ':attribute wajib diunggah.',
+            'image' => ':attribute harus berupa gambar.',
+            'mimes' => ':attribute harus berformat JPG, JPEG, atau PNG.',
+            'max' => 'Ukuran :attribute maksimal 2 MB.',
+        ];
+
+        $attributes = [
+            'foto_warna_santri' => 'Foto Siswa',
+            'foto_scan_kk' => 'Foto Scan KK',
+            'foto_scan_akta' => 'Foto Scan Akta Lahir',
+            'foto_scan_skck' => 'Foto Scan SKCK',
+            'foto_scan_ket_sehat' => 'Foto Scan Surat Ket Sehat',
+            'foto_ijazah' => 'Foto Scan Ijazah',
+        ];
+
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules, $messages, $attributes);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
+        try {
+            $updateData = [];
+            $destinationPath = public_path('gambar_berkas/berkas_siswa');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $fields = [
+                'foto_warna_santri',
+                'foto_scan_kk',
+                'foto_scan_akta',
+                'foto_scan_skck',
+                'foto_scan_ket_sehat',
+                'foto_ijazah'
+            ];
+
+            foreach ($fields as $field) {
+                if ($request->hasFile($field)) {
+                    $file = $request->file($field);
+                    $filename = $field . '_' . $id . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+                    // Delete old file if it exists
+                    if ($siswa->$field && file_exists($destinationPath . '/' . $siswa->$field)) {
+                        @unlink($destinationPath . '/' . $siswa->$field);
+                    }
+
+                    // Move new file to public/gambar_berkas
+                    $file->move($destinationPath, $filename);
+                    $updateData[$field] = $filename;
+                }
+            }
+
+            if (!empty($updateData)) {
+                $siswa->update($updateData);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berkas berhasil diunggah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal mengunggah berkas: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function hapus(Request $request)
