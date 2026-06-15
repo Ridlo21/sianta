@@ -108,11 +108,11 @@
                 <div class="sidebar-user">
                     <div class="d-flex justify-content-center">
                         <div class="flex-shrink-0">
-                            <img src="{{ asset('asset_admin') }}/img/avatars/avatar.jpg"
-                                class="avatar img-fluid rounded me-1" alt="Charles Hall" />
+                            <img src="{{ $user->photo ? asset('gambar_berkas/avatars/' . $user->photo) : asset('asset_admin/img/avatars/avatar.png') }}"
+                                class="avatar img-fluid rounded me-1" alt="{{ $user->name }}" />
                         </div>
                         <div class="flex-grow-1 ps-2">
-                            <a class="sidebar-user-title" href="#">
+                            <a class="sidebar-user-title" href="{{ route('profile') }}">
                                 {{ $user->name }}
                             </a>
 
@@ -140,13 +140,15 @@
                             <li class="sidebar-item {{ $title == 'Periode Akademik' ? 'active' : '' }}"><a
                                     class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
                             </li>
-                            <li class="sidebar-item {{ $title == 'Jurusan' ? 'active' : '' }}"><a class='sidebar-link'
-                                    href='{{ route('jurusan') }}'>Jurusan</a>
+                            <li class="sidebar-item {{ $title == 'Jurusan' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('jurusan') }}'>Jurusan</a>
                             </li>
-                            <li class="sidebar-item {{ $title == 'Siswa' ? 'active' : '' }}"><a class='sidebar-link'
-                                    href="{{ route('siswa') }}">Siswa</a>
+                            <li class="sidebar-item {{ $title == 'Siswa' ? 'active' : '' }}">
+                                <a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-orders.html'>Guru</a></li>
+                            <li class="sidebar-item {{ $title == 'Guru' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{route('guru')}}'>Guru</a>
+                            </li>
                             <li class="sidebar-item"><a class='sidebar-link' href='pages-pricing.html'>Rombel</a>
                             </li>
                             <li class="sidebar-item"><a class='sidebar-link' href='pages-chat.html'>Mata
@@ -168,7 +170,7 @@
                 </a>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
-                        <li class="nav-item dropdown">
+                        {{-- <li class="nav-item dropdown">
                             <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown"
                                 data-bs-toggle="dropdown">
                                 <div class="position-relative">
@@ -314,32 +316,26 @@
                                     <a href="#" class="text-muted">Show all messages</a>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                         <li class="nav-item dropdown">
                             <a class="nav-flag dropdown-toggle" href="#" id="languageDropdown"
                                 data-bs-toggle="dropdown">
-                                <img src="{{ asset('asset_admin') }}/img/flags/us.png" alt="English" />
+                                @if(app()->getLocale() === 'id')
+                                    <img src="{{ asset('asset_admin') }}/img/flags/id.png" alt="Bahasa Indonesia" />
+                                @else
+                                    <img src="{{ asset('asset_admin') }}/img/flags/us.png" alt="English" />
+                                @endif
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item {{ app()->getLocale() === 'id' ? 'active' : '' }}" href="{{ route('lang.switch', 'id') }}">
+                                    <img src="{{ asset('asset_admin') }}/img/flags/id.png" alt="Bahasa Indonesia"
+                                        width="20" class="align-middle me-1" />
+                                    <span class="align-middle">Bahasa Indonesia</span>
+                                </a>
+                                <a class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}" href="{{ route('lang.switch', 'en') }}">
                                     <img src="{{ asset('asset_admin') }}/img/flags/us.png" alt="English"
                                         width="20" class="align-middle me-1" />
                                     <span class="align-middle">English</span>
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <img src="{{ asset('asset_admin') }}/img/flags/es.png" alt="Spanish"
-                                        width="20" class="align-middle me-1" />
-                                    <span class="align-middle">Spanish</span>
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <img src="{{ asset('asset_admin') }}/img/flags/ru.png" alt="Russian"
-                                        width="20" class="align-middle me-1" />
-                                    <span class="align-middle">Russian</span>
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <img src="{{ asset('asset_admin') }}/img/flags/de.png" alt="German"
-                                        width="20" class="align-middle me-1" />
-                                    <span class="align-middle">German</span>
                                 </a>
                             </div>
                         </li>
@@ -352,20 +348,12 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                <img src="{{ asset('asset_admin') }}/img/avatars/avatar.jpg"
-                                    class="avatar img-fluid rounded" alt="Charles Hall" />
+                                <img src="{{ $user->photo ? asset('gambar_berkas/avatars/' . $user->photo) : asset('asset_admin/img/avatars/avatar.png') }}"
+                                    class="avatar img-fluid rounded" alt="{{ $user->name }}" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class='dropdown-item' href='pages-profile.html'><i class="align-middle me-1"
+                                <a class='dropdown-item' href='{{ route('profile') }}'><i class="align-middle me-1"
                                         data-feather="user"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                        data-feather="pie-chart"></i> Analytics</a>
-                                <div class="dropdown-divider"></div>
-                                <a class='dropdown-item' href='pages-settings.html'><i class="align-middle me-1"
-                                        data-feather="settings"></i> Settings &
-                                    Privacy</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                        data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
                             </div>

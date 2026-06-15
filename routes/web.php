@@ -5,11 +5,14 @@ use App\Http\Controllers\Jurusancontroller;
 use App\Http\Controllers\Logincontroller;
 use App\Http\Controllers\Periodecontroller;
 use App\Http\Controllers\Siswacontroller;
+use App\Http\Controllers\Profilecontroller;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [Logincontroller::class, 'index'])->name('login');
 Route::post('/loginUser', [Logincontroller::class, 'loginuser'])->middleware('throttle:5,1')->name('loginUser');
 Route::get('/logout', [Logincontroller::class, 'logout'])->name('logout');
+Route::get('/lang/{locale}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,4 +54,31 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/siswa_upload/{id}', [Siswacontroller::class, 'upload'])->name('siswa.upload');
     Route::put('update/upload/{id}', [Siswacontroller::class, 'updateUpload'])->name('siswa.update.upload');
     Route::post('/hapus', [Siswacontroller::class, 'hapus'])->name('siswa.hapus');
+
+    // GURU
+    Route::get('/admin/guru', [Gurucontroller::class, 'index'])->name('guru');
+    Route::get('/admin/guru_data', [Gurucontroller::class, 'guru_data'])->name('guru.data');
+    Route::post('admin/guru_simpan', [Gurucontroller::class, 'store'])->name('guru.store');
+    // Route::get('admin/guru_edit/step1/{id}/{st}', [Gurucontroller::class, 'editstep1'])->name('guru.edit.step1');
+    // Route::put('update/step1/{id}', [Gurucontroller::class, 'updateStep1'])->name('guru.update.step1');
+    // Route::get('admin/guru_edit/step2/{id}/{st}', [Gurucontroller::class, 'editstep2'])->name('guru.edit.step2');
+    // Route::put('update/step2/{id}', [Gurucontroller::class, 'updateStep2'])->name('guru.update.step2');
+    // Route::get('admin/guru_edit/step3/{id}/{st}', [Gurucontroller::class, 'editstep3'])->name('guru.edit.step3');
+    // Route::put('update/step3/{id}', [Gurucontroller::class, 'updateStep3'])->name('guru.update.step3');
+    // Route::get('admin/guru_edit/step4/{id}/{st}', [Gurucontroller::class, 'editstep4'])->name('guru.edit.step4');
+    // Route::put('update/step4/{id}', [Gurucontroller::class, 'updateStep4'])->name('guru.update.step4');
+    Route::get('/get-kota/{provinsi_id}', [Gurucontroller::class, 'get_kabupaten']);
+    Route::get('/get-kecamatan/{kabupaten_id}', [Gurucontroller::class, 'get_kecamatan']);
+    Route::get('/get-desa/{kecamatan_id}', [Gurucontroller::class, 'get_desa']);
+    Route::post('/batal', [Gurucontroller::class, 'batal'])->name('guru.batal');
+    Route::get('admin/guru_show/{id}', [Gurucontroller::class, 'show'])->name('guru.show');
+    Route::get('admin/guru_download/{id}/{field}', [Gurucontroller::class, 'downloadBerkas'])->name('guru.download.berkas');
+    Route::get('admin/guru_upload/{id}', [Gurucontroller::class, 'upload'])->name('guru.upload');
+    Route::put('update/upload/{id}', [Gurucontroller::class, 'updateUpload'])->name('guru.update.upload');
+    Route::post('/hapus', [Gurucontroller::class, 'hapus'])->name('guru.hapus');
+
+    // USER PROFILE
+    Route::get('/admin/profile', [Profilecontroller::class, 'index'])->name('profile');
+    Route::post('/admin/profile/update', [Profilecontroller::class, 'update'])->name('profile.update');
+    Route::post('/admin/profile/password', [Profilecontroller::class, 'updatePassword'])->name('profile.password');
 });
