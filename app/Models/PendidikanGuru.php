@@ -18,7 +18,8 @@ class PendidikanGuru extends Model
         'nama_instansi',
         'tahun_masuk',
         'tahun_lulus',
-        'pendidikan_terakhir',
+        'nomor_ijazah',
+        'scan_file_ijazah',
     ];
 
     public function guru(): BelongsTo

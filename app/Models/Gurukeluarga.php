@@ -14,11 +14,15 @@ class Gurukeluarga extends Model
         'nama_ibu',
         'nama_pasangan',
         'pekerjaan_pasangan',
-        'kartu_pasangan',
     ];
 
     public function guru(): BelongsTo
     {
         return $this->belongsTo(Guru::class, 'guru_id', 'id');
+    }
+
+    public function pekerjaanPasangan()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_pasangan');
     }
 }

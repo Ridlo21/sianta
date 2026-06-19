@@ -29,6 +29,7 @@
                                     <th>NIP</th>
                                     <th>NUPTK</th>
                                     <th>Nama Lengkap</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -69,6 +70,9 @@
                     },
                     {
                         data: 'nama'
+                    },
+                    {
+                        data: 'jenis_kelamin'
                     },
                     {
                         data: 'action'

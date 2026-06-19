@@ -18,7 +18,7 @@
                         <div class="card-body">
                             <input hidden name="st" value="{{ $st }}">
                             <div class="row g-2">
-                                <div class="col-md-9">
+                                <div class="col-md-6">
                                     <label class="form-label">Nama Lengkap</label>
                                     <input type="text" name="nama" id="nama" value="{{ $guru->nama }}"
                                         class="form-control text-uppercase" required>
@@ -36,8 +36,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">NUPTK</label>
-                                    <input type="number" {{-- data-parsley-length="[16,16]" --}} {{-- data-parsley-length-message="Harus terdiri dari 16 digit angka" --}} name="nuptk"
-                                        value="{{ $guru->nuptk }}" class="form-control" required>
+                                    <input type="number" name="nuptk" value="{{ $guru->nuptk }}" class="form-control">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Jenis Kelamin</label>
@@ -83,7 +82,7 @@
                                         <option value="">-- Pilih Jurusan --</option>
                                         @foreach ($jurusan as $j)
                                             <option value="{{ $j->id }}"
-                                                {{ old('jurusan', $guru->jurusan->id ?? '') == $j->id ? 'selected' : '' }}>
+                                                {{ old('jurusan_id', $guru->jurusan->id ?? '') == $j->id ? 'selected' : '' }}>
                                                 {{ $j->program_keahlian }}
                                             </option>
                                         @endforeach
@@ -93,75 +92,110 @@
                                     <label class="form-label">Jenis PTK</label>
                                     <select name="jenis_gtk" id="jenis_gtk" class="form-select" required>
                                         <option value="">-- Pilih Jenis PTK --</option>
-                                        <option {{ old('jenis_gtk') == 'Guru' ? 'selected' : '' }} value="Guru">Guru
+                                        @php
+                                            $jenisGtk = old('jenis_gtk', $guru->jenis_gtk ?? '');
+                                        @endphp
+
+                                        <option value="Guru" {{ $jenisGtk == 'Guru' ? 'selected' : '' }}>Guru</option>
+                                        <option value="Kepala Sekolah"
+                                            {{ $jenisGtk == 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
+                                        <option value="Tenaga Administrasi Sekolah"
+                                            {{ $jenisGtk == 'Tenaga Administrasi Sekolah' ? 'selected' : '' }}>Tenaga
+                                            Administrasi Sekolah</option>
+                                        <option value="Pustakawan" {{ $jenisGtk == 'Pustakawan' ? 'selected' : '' }}>
+                                            Pustakawan</option>
+                                        <option value="Laboran" {{ $jenisGtk == 'Laboran' ? 'selected' : '' }}>Laboran
                                         </option>
-                                        <option {{ old('jenis_gtk') == 'Kepala Sekolah' ? 'selected' : '' }}
-                                            value="Kepala Sekolah">Kepala Sekolah</option>
-                                        <option {{ old('jenis_gtk') == 'Tenaga Administrasi Sekolah' ? 'selected' : '' }}
-                                            value="Tenaga Administrasi Sekolah">Tenaga Administrasi Sekolah</option>
-                                        <option {{ old('jenis_gtk') == 'Pustakawan' ? 'selected' : '' }}
-                                            value="Pustakawan">Pustakawan</option>
-                                        <option {{ old('jenis_gtk') == 'Laboran' ? 'selected' : '' }} value="Laboran">
-                                            Laboran</option>
-                                        <option {{ old('jenis_gtk') == 'Pengawas Sekolah' ? 'selected' : '' }}
-                                            value="Pengawas Sekolah">Pengawas Sekolah</option>
-                                        <option {{ old('jenis_gtk') == 'Lainnya' ? 'selected' : '' }} value="Lainnya">
-                                            Lainnya</option>
+                                        <option value="Pengawas Sekolah"
+                                            {{ $jenisGtk == 'Pengawas Sekolah' ? 'selected' : '' }}>Pengawas Sekolah
+                                        </option>
+                                        <option value="Lainnya" {{ $jenisGtk == 'Lainnya' ? 'selected' : '' }}>Lainnya
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Jabatan PTK</label>
                                     <select name="jabatan_gtk" id="jabatan_gtk" class="form-select" required>
                                         <option value="">-- Pilih Jabatan PTK --</option>
-                                        <option {{ old('jabatan_gtk') == 'Kepala Sekolah' ? 'selected' : '' }}
-                                            value="Kepala Sekolah">
-                                            Kepala Sekolah</option>
-                                        <option {{ old('jabatan_gtk') == 'Wakil Kepala Sekolah' ? 'selected' : '' }}
-                                            value="Wakil Kepala Sekolah">
-                                            Wakil Kepala Sekolah</option>
-                                        <option {{ old('jabatan_gtk') == 'Guru Mata Pelajaran' ? 'selected' : '' }}
-                                            value="Guru Mata Pelajaran">
-                                            Guru Mata Pelajaran</option>
-                                        <option {{ old('jabatan_gtk') == 'Guru Kelas' ? 'selected' : '' }}
-                                            value="Guru Kelas">
-                                            Guru Kelas</option>
-                                        <option {{ old('jabatan_gtk') == 'Guru BK' ? 'selected' : '' }} value="Guru BK">
-                                            Guru BK</option>
-                                        <option {{ old('jabatan_gtk') == 'Wali Kelas' ? 'selected' : '' }}
-                                            value="Wali Kelas">
-                                            Wali Kelas</option>
-                                        <option {{ old('jabatan_gtk') == 'Kepala Tata Usaha' ? 'selected' : '' }}
-                                            value="Kepala Tata Usaha">
-                                            Kepala Tata Usaha</option>
-                                        <option {{ old('jabatan_gtk') == 'Staf Tata Usaha' ? 'selected' : '' }}
-                                            value="Staf Tata Usaha">
-                                            Staf Tata Usaha</option>
-                                        <option {{ old('jabatan_gtk') == 'Operator Sekolah' ? 'selected' : '' }}
-                                            value="Operator Sekolah">
-                                            Operator Sekolah</option>
-                                        <option {{ old('jabatan_gtk') == 'Pustakawan' ? 'selected' : '' }}
-                                            value="Pustakawan">
+                                        @php
+                                            $jabatanGtk = old('jabatan_gtk', $guru->jabatan_gtk ?? '');
+                                        @endphp
+
+                                        <option value="Kepala Sekolah"
+                                            {{ $jabatanGtk == 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
+                                        <option value="Wakil Kepala Sekolah"
+                                            {{ $jabatanGtk == 'Wakil Kepala Sekolah' ? 'selected' : '' }}>Wakil Kepala
+                                            Sekolah</option>
+                                        <option value="Guru Mata Pelajaran"
+                                            {{ $jabatanGtk == 'Guru Mata Pelajaran' ? 'selected' : '' }}>Guru Mata
+                                            Pelajaran</option>
+                                        <option value="Guru Kelas" {{ $jabatanGtk == 'Guru Kelas' ? 'selected' : '' }}>Guru
+                                            Kelas</option>
+                                        <option value="Guru BK" {{ $jabatanGtk == 'Guru BK' ? 'selected' : '' }}>Guru BK
+                                        </option>
+                                        <option value="Wali Kelas" {{ $jabatanGtk == 'Wali Kelas' ? 'selected' : '' }}>Wali
+                                            Kelas</option>
+                                        <option value="Kepala Tata Usaha"
+                                            {{ $jabatanGtk == 'Kepala Tata Usaha' ? 'selected' : '' }}>Kepala Tata Usaha
+                                        </option>
+                                        <option value="Staf Tata Usaha"
+                                            {{ $jabatanGtk == 'Staf Tata Usaha' ? 'selected' : '' }}>Staf Tata Usaha
+                                        </option>
+                                        <option value="Operator Sekolah"
+                                            {{ $jabatanGtk == 'Operator Sekolah' ? 'selected' : '' }}>Operator Sekolah
+                                        </option>
+                                        <option value="Pustakawan" {{ $jabatanGtk == 'Pustakawan' ? 'selected' : '' }}>
                                             Pustakawan</option>
-                                        <option {{ old('jabatan_gtk') == 'Laboran' ? 'selected' : '' }} value="Laboran">
-                                            Laboran</option>
-                                        <option {{ old('jabatan_gtk') == 'Teknisi' ? 'selected' : '' }} value="Teknisi">
-                                            Teknisi</option>
-                                        <option {{ old('jabatan_gtk') == 'Satpam' ? 'selected' : '' }} value="Satpam">
-                                            Satpam</option>
-                                        <option {{ old('jabatan_gtk') == 'Petugas Kebersihan' ? 'selected' : '' }}
-                                            value="Petugas Kebersihan">
-                                            Petugas Kebersihan</option>
+                                        <option value="Laboran" {{ $jabatanGtk == 'Laboran' ? 'selected' : '' }}>Laboran
+                                        </option>
+                                        <option value="Teknisi" {{ $jabatanGtk == 'Teknisi' ? 'selected' : '' }}>Teknisi
+                                        </option>
+                                        <option value="Satpam" {{ $jabatanGtk == 'Satpam' ? 'selected' : '' }}>Satpam
+                                        </option>
+                                        <option value="Petugas Kebersihan"
+                                            {{ $jabatanGtk == 'Petugas Kebersihan' ? 'selected' : '' }}>Petugas Kebersihan
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Status Perkawinan</label>
                                     <select name="status_perkawinan" id="status_perkawinan" class="form-select" required>
                                         <option value="">-- Pilih Status Perkawinan --</option>
-                                        <option {{ old('status_perkawinan') == 'kawin' ? 'selected' : '' }}
-                                            value="kawin">Kawin</option>
-                                        <option {{ old('status_perkawinan') == 'belum' ? 'selected' : '' }}
-                                            value="belum">Belum</option>
+                                        <option value="kawin"
+                                            {{ old('status_perkawinan', $guru->status_perkawinan ?? '') == 'kawin' ? 'selected' : '' }}>
+                                            Kawin
+                                        </option>
+
+                                        <option value="belum"
+                                            {{ old('status_perkawinan', $guru->status_perkawinan ?? '') == 'belum' ? 'selected' : '' }}>
+                                            Belum
+                                        </option>
                                     </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Nama Pasangan</label>
+                                    <input type="text" name="nama_pasangan" id="nama_pasangan"
+                                        value="{{ $gurukeluarga->nama_pasangan ?? '' }}"
+                                        class="form-control text-uppercase">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Pekerjaan Pasangan</label>
+                                    <select name="pekerjaan_pasangan" id="pekerjaan_pasangan" class="form-select"
+                                        required>
+                                        <option value="">-- Pilih Pekerjaan --</option>
+                                        @foreach ($pekerjaan as $p)
+                                            <option value="{{ $p->id }}"
+                                                {{ old('pekerjaan_pasangan', $gurukeluarga ? $gurukeluarga->pekerjaan_pasangan : '') == $p->id ? 'selected' : '' }}>
+                                                {{ $p->nama_pekerjaan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Nama Ibu</label>
+                                    <input type="text" name="nama_ibu" id="nama_ibu"
+                                        value="{{ $gurukeluarga->nama_ibu ?? '' }}" class="form-control text-uppercase"
+                                        required>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Email</label>
@@ -227,7 +261,7 @@
                                         <i class="fas fa-times"></i> Batal
                                     </a>
                                 @else
-                                    <a href="{{ route('siswa') }}" class="btn btn-danger">
+                                    <a href="{{ route('guru') }}" class="btn btn-danger">
                                         <i class="fas fa-reply"></i> Kembali
                                     </a>
                                 @endif
@@ -383,6 +417,39 @@
                 }
             });
 
+            function togglePasangan() {
+                let status = $('#status_perkawinan').val();
+
+                if (status === 'kawin') {
+                    $('#nama_pasangan')
+                        .prop('disabled', false)
+                        .prop('required', true);
+
+                    $('#pekerjaan_pasangan')
+                        .prop('disabled', false)
+                        .prop('required', true);
+
+                } else {
+                    $('#nama_pasangan')
+                        .val('')
+                        .prop('disabled', true)
+                        .prop('required', false);
+
+                    $('#pekerjaan_pasangan')
+                        .val('')
+                        .prop('disabled', true)
+                        .prop('required', false);
+                }
+            }
+
+            // Jalankan saat halaman pertama kali dibuka
+            togglePasangan();
+
+            // Jalankan saat status berubah
+            $('#status_perkawinan').on('change', function() {
+                togglePasangan();
+            });
+
             $('#formSimpan').on('submit', function(e) {
                 e.preventDefault();
                 $(this).parsley().validate();
@@ -395,12 +462,14 @@
                         success: function(response) {
                             if (response.status == 'success') {
                                 $('#loader').css('display', 'none');
-                                let url =
-                                    "/admin/guru_edit/step2/" +
-                                    response
-                                    .id + "/" + response.st;
-
-                                window.location.href = url;
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                }).then(() => {
+                                    let url = "{{ route('guru.upload', $guru->id) }}"
+                                    window.location.href = url;
+                                });
                             } else {
                                 $('#loader').css('display', 'none');
                                 Swal.fire({

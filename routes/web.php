@@ -62,17 +62,19 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/guru_simpan', [Gurucontroller::class, 'store'])->name('guru.store');
     Route::get('admin/guru_edit/step1/{id}/{st}', [Gurucontroller::class, 'editstep1'])->name('guru.edit.step1');
     Route::put('update/step1/{id}', [Gurucontroller::class, 'updateStep1'])->name('guru.update.step1');
-    // Route::get('admin/guru_edit/step2/{id}/{st}', [Gurucontroller::class, 'editstep2'])->name('guru.edit.step2');
+    Route::get('admin/guru_edit/step2/{id}/{st}', [Gurucontroller::class, 'editstep2'])->name('guru.edit.step2');
     // Route::put('update/step2/{id}', [Gurucontroller::class, 'updateStep2'])->name('guru.update.step2');
     // Route::get('admin/guru_edit/step3/{id}/{st}', [Gurucontroller::class, 'editstep3'])->name('guru.edit.step3');
     // Route::put('update/step3/{id}', [Gurucontroller::class, 'updateStep3'])->name('guru.update.step3');
     // Route::get('admin/guru_edit/step4/{id}/{st}', [Gurucontroller::class, 'editstep4'])->name('guru.edit.step4');
     // Route::put('update/step4/{id}', [Gurucontroller::class, 'updateStep4'])->name('guru.update.step4');
     Route::post('/batal', [Gurucontroller::class, 'batal'])->name('guru.batal');
-    // Route::get('admin/guru_show/{id}', [Gurucontroller::class, 'show'])->name('guru.show');
-    // Route::get('admin/guru_download/{id}/{field}', [Gurucontroller::class, 'downloadBerkas'])->name('guru.download.berkas');
-    // Route::get('admin/guru_upload/{id}', [Gurucontroller::class, 'upload'])->name('guru.upload');
-    // Route::put('update/upload/{id}', [Gurucontroller::class, 'updateUpload'])->name('guru.update.upload');
+    Route::get('admin/guru_show/{id}', [Gurucontroller::class, 'show'])->name('guru.show');
+    Route::get('admin/guru_download/{id}/{field}', [Gurucontroller::class, 'downloadBerkas'])->name('guru.download.berkas');
+    Route::post('admin/guru/pendidikan', [Gurucontroller::class, 'storePendidikan'])->name('guru.pendidikan.store');
+    Route::get('admin/guru_pendidikan_download/{id}', [Gurucontroller::class, 'downloadPendidikanBerkas'])->name('guru.pendidikan.download');
+    Route::get('admin/guru_upload/{id}', [Gurucontroller::class, 'upload'])->name('guru.upload');
+    Route::put('admin/guru/update/upload/{id}', [Gurucontroller::class, 'updateUpload'])->name('guru.update.upload');
     Route::post('/hapus', [Gurucontroller::class, 'hapus'])->name('guru.hapus');
 
     // USER PROFILE
