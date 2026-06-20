@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Periode;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class Periodecontroller extends Controller
@@ -77,18 +79,41 @@ class Periodecontroller extends Controller
             ]);
         }
 
-        Periode::query()->update([
-            'status' => 0
-        ]);
+        DB::transaction(function () use ($request) {
 
-        Periode::create([
-            'awal'     => $request->awal,
-            'akhir'    => $request->akhir,
-            'semester' => $request->semester,
-            'status'   => 1,
-        ]);
+            // Nonaktifkan semua periode
+            Periode::query()->update([
+                'status' => 0
+            ]);
 
-        return response()->json(['status' => 'success', 'message' => 'Data Periode berhasil ditambahkan.']);
+            // Simpan periode baru
+            Periode::create([
+                'awal'     => $request->awal,
+                'akhir'    => $request->akhir,
+                'semester' => $request->semester,
+                'status'   => 1,
+            ]);
+
+            // Hanya jika semester ganjil
+            if ($request->semester == 'Ganjil') {
+
+                // Nonaktifkan semua tahun ajaran
+                TahunAjaran::query()->update([
+                    'status' => 0
+                ]);
+
+                // Simpan tahun ajaran baru
+                TahunAjaran::create([
+                    'tahun_ajaran' => $request->awal . '/' . $request->akhir,
+                    'status' => 1,
+                ]);
+            }
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Periode berhasil ditambahkan.'
+        ]);
     }
 
     public function edit($id)

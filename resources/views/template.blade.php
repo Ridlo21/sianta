@@ -125,41 +125,59 @@
                     <li class="sidebar-header">
                         Menu
                     </li>
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ $title == 'Dashboard' ? 'active' : '' }}">
                         <a class='sidebar-link' href="{{ route('dashboard') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span
                                 class="align-middle">Dashboard</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                            <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Pages</span>
+                    <!-- GROUP: DATA MASTER -->
+                    @php
+                        $isMasterActive = in_array($title, ['Periode Akademik', 'Jurusan', 'Guru', 'Siswa']);
+                    @endphp
+                    <li class="sidebar-item {{ $isMasterActive ? 'active' : '' }}">
+                        <a data-bs-target="#master" data-bs-toggle="collapse" class="sidebar-link {{ $isMasterActive ? '' : 'collapsed' }}">
+                            <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data Master</span>
                         </a>
-                        <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                            <li class="sidebar-item {{ $title == 'Periode Akademik' ? 'active' : '' }}"><a
-                                    class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
+                        <ul id="master" class="sidebar-dropdown list-unstyled collapse {{ $isMasterActive ? 'show' : '' }}" data-bs-parent="#sidebar">
+                            <li class="sidebar-item {{ $title == 'Periode Akademik' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
                             </li>
                             <li class="sidebar-item {{ $title == 'Jurusan' ? 'active' : '' }}">
                                 <a class='sidebar-link' href='{{ route('jurusan') }}'>Jurusan</a>
                             </li>
+                            <li class="sidebar-item {{ $title == 'Guru' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('guru') }}'>Guru</a>
+                            </li>
                             <li class="sidebar-item {{ $title == 'Siswa' ? 'active' : '' }}">
                                 <a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a>
                             </li>
-                            <li class="sidebar-item {{ $title == 'Guru' ? 'active' : '' }}">
-                                <a class='sidebar-link' href='{{route('guru')}}'>Guru</a>
+                        </ul>
+                    </li>
+
+                    <!-- GROUP: AKADEMIK -->
+                    @php
+                        $isAkademikActive = in_array($title, ['Rombel', 'Kelola Detail Rombel', 'Pembagian Kelas Massal', 'Mata Pelajaran', 'Sebaran Mapel']);
+                    @endphp
+                    <li class="sidebar-item {{ $isAkademikActive ? 'active' : '' }}">
+                        <a data-bs-target="#akademik" data-bs-toggle="collapse" class="sidebar-link {{ $isAkademikActive ? '' : 'collapsed' }}">
+                            <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Akademik</span>
+                        </a>
+                        <ul id="akademik" class="sidebar-dropdown list-unstyled collapse {{ $isAkademikActive ? 'show' : '' }}" data-bs-parent="#sidebar">
+                            <li class="sidebar-item {{ in_array($title, ['Rombel', 'Kelola Detail Rombel', 'Pembagian Kelas Massal']) ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('rombel') }}'>Rombel</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-pricing.html'>Rombel</a>
+                            <li class="sidebar-item {{ $title == 'Mata Pelajaran' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('mapel') }}'>Mata Pelajaran</a>
                             </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-chat.html'>Mata
-                                    Pelajaran</a>
-                            </li>
-                            <li class="sidebar-item"><a class='sidebar-link' href='pages-blank.html'>Sebaran
-                                    Mapel</a>
+                            <li class="sidebar-item {{ $title == 'Sebaran Mapel' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('sebaran-mapel') }}'>Sebaran Mapel</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
+
             </div>
         </nav>
 
@@ -317,28 +335,6 @@
                                 </div>
                             </div>
                         </li> --}}
-                        <li class="nav-item dropdown">
-                            <a class="nav-flag dropdown-toggle" href="#" id="languageDropdown"
-                                data-bs-toggle="dropdown">
-                                @if(app()->getLocale() === 'id')
-                                    <img src="{{ asset('asset_admin') }}/img/flags/id.png" alt="Bahasa Indonesia" />
-                                @else
-                                    <img src="{{ asset('asset_admin') }}/img/flags/us.png" alt="English" />
-                                @endif
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                                <a class="dropdown-item {{ app()->getLocale() === 'id' ? 'active' : '' }}" href="{{ route('lang.switch', 'id') }}">
-                                    <img src="{{ asset('asset_admin') }}/img/flags/id.png" alt="Bahasa Indonesia"
-                                        width="20" class="align-middle me-1" />
-                                    <span class="align-middle">Bahasa Indonesia</span>
-                                </a>
-                                <a class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}" href="{{ route('lang.switch', 'en') }}">
-                                    <img src="{{ asset('asset_admin') }}/img/flags/us.png" alt="English"
-                                        width="20" class="align-middle me-1" />
-                                    <span class="align-middle">English</span>
-                                </a>
-                            </div>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-icon js-fullscreen d-none d-lg-block" href="#">
                                 <div class="position-relative">
@@ -353,9 +349,9 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class='dropdown-item' href='{{ route('profile') }}'><i class="align-middle me-1"
-                                        data-feather="user"></i> Profile</a>
+                                        data-feather="user"></i> Profil</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -400,14 +396,14 @@
     <script>
         function logout() {
             Swal.fire({
-                title: 'Anda yakin?',
-                text: 'Apakah anda yakin untuk logout?',
+                title: '{{ __('Anda yakin?') }}',
+                text: '{{ __('Apakah anda yakin untuk logout?') }}',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                cancelButtonText: 'Tidak',
-                confirmButtonText: 'Ya, logout!'
+                cancelButtonText: '{{ __('Tidak') }}',
+                confirmButtonText: '{{ __('Ya, logout!') }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "{{ route('logout') }}";

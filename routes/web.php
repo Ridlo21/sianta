@@ -7,13 +7,14 @@ use App\Http\Controllers\Logincontroller;
 use App\Http\Controllers\Periodecontroller;
 use App\Http\Controllers\Siswacontroller;
 use App\Http\Controllers\Profilecontroller;
-use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Rombelcontroller;
+use App\Http\Controllers\MataPelajarancontroller;
+use App\Http\Controllers\PembelajaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [Logincontroller::class, 'index'])->name('login');
 Route::post('/loginUser', [Logincontroller::class, 'loginuser'])->middleware('throttle:5,1')->name('loginUser');
 Route::get('/logout', [Logincontroller::class, 'logout'])->name('logout');
-Route::get('/lang/{locale}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,12 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-kota/{provinsi_id}', [Siswacontroller::class, 'get_kabupaten']);
     Route::get('/get-kecamatan/{kabupaten_id}', [Siswacontroller::class, 'get_kecamatan']);
     Route::get('/get-desa/{kecamatan_id}', [Siswacontroller::class, 'get_desa']);
-    Route::post('/batal', [Siswacontroller::class, 'batal'])->name('siswa.batal');
+    Route::post('/admin/siswa/batal', [Siswacontroller::class, 'batal'])->name('siswa.batal');
     Route::get('admin/siswa_show/{id}', [Siswacontroller::class, 'show'])->name('siswa.show');
     Route::get('admin/siswa_download/{id}/{field}', [Siswacontroller::class, 'downloadBerkas'])->name('siswa.download.berkas');
     Route::get('admin/siswa_upload/{id}', [Siswacontroller::class, 'upload'])->name('siswa.upload');
     Route::put('update/upload/{id}', [Siswacontroller::class, 'updateUpload'])->name('siswa.update.upload');
-    Route::post('/hapus', [Siswacontroller::class, 'hapus'])->name('siswa.hapus');
+    Route::post('/admin/siswa/hapus', [Siswacontroller::class, 'hapus'])->name('siswa.hapus');
 
     // GURU
     Route::get('/admin/guru', [Gurucontroller::class, 'index'])->name('guru');
@@ -62,23 +63,47 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/guru_simpan', [Gurucontroller::class, 'store'])->name('guru.store');
     Route::get('admin/guru_edit/step1/{id}/{st}', [Gurucontroller::class, 'editstep1'])->name('guru.edit.step1');
     Route::put('update/step1/{id}', [Gurucontroller::class, 'updateStep1'])->name('guru.update.step1');
-    Route::get('admin/guru_edit/step2/{id}/{st}', [Gurucontroller::class, 'editstep2'])->name('guru.edit.step2');
-    // Route::put('update/step2/{id}', [Gurucontroller::class, 'updateStep2'])->name('guru.update.step2');
-    // Route::get('admin/guru_edit/step3/{id}/{st}', [Gurucontroller::class, 'editstep3'])->name('guru.edit.step3');
-    // Route::put('update/step3/{id}', [Gurucontroller::class, 'updateStep3'])->name('guru.update.step3');
-    // Route::get('admin/guru_edit/step4/{id}/{st}', [Gurucontroller::class, 'editstep4'])->name('guru.edit.step4');
-    // Route::put('update/step4/{id}', [Gurucontroller::class, 'updateStep4'])->name('guru.update.step4');
-    Route::post('/batal', [Gurucontroller::class, 'batal'])->name('guru.batal');
+    Route::post('/admin/guru/batal', [Gurucontroller::class, 'batal'])->name('guru.batal');
     Route::get('admin/guru_show/{id}', [Gurucontroller::class, 'show'])->name('guru.show');
     Route::get('admin/guru_download/{id}/{field}', [Gurucontroller::class, 'downloadBerkas'])->name('guru.download.berkas');
     Route::post('admin/guru/pendidikan', [Gurucontroller::class, 'storePendidikan'])->name('guru.pendidikan.store');
     Route::get('admin/guru_pendidikan_download/{id}', [Gurucontroller::class, 'downloadPendidikanBerkas'])->name('guru.pendidikan.download');
     Route::get('admin/guru_upload/{id}', [Gurucontroller::class, 'upload'])->name('guru.upload');
     Route::put('admin/guru/update/upload/{id}', [Gurucontroller::class, 'updateUpload'])->name('guru.update.upload');
-    Route::post('/hapus', [Gurucontroller::class, 'hapus'])->name('guru.hapus');
+    Route::post('/admin/guru/hapus', [Gurucontroller::class, 'hapus'])->name('guru.hapus');
+
+    // ROMBEL
+    Route::get('/admin/rombel', [Rombelcontroller::class, 'index'])->name('rombel');
+    Route::get('/admin/rombel/{id}/students', [Rombelcontroller::class, 'getStudents'])->name('rombel.students');
+    Route::post('/admin/rombel/simpan', [Rombelcontroller::class, 'store'])->name('rombel.simpan');
+    Route::get('/admin/rombel/edit/{id}', [Rombelcontroller::class, 'edit'])->name('rombel.edit');
+    Route::post('/admin/rombel/update', [Rombelcontroller::class, 'update'])->name('rombel.update');
+    Route::post('/admin/rombel/hapus', [Rombelcontroller::class, 'hapus'])->name('rombel.hapus');
+    Route::get('/admin/rombel/detail/{id}', [Rombelcontroller::class, 'show'])->name('rombel.show-detail');
+    Route::post('/admin/rombel/set-wali', [Rombelcontroller::class, 'setWali'])->name('rombel.set-wali');
+    Route::post('/admin/rombel/pindah-siswa', [Rombelcontroller::class, 'pindahSiswa'])->name('rombel.pindah-siswa');
+    Route::post('/admin/rombel/tambah-siswa', [Rombelcontroller::class, 'tambahSiswa'])->name('rombel.tambah-siswa');
+    Route::get('/admin/rombel/pembagian-massal', [Rombelcontroller::class, 'pembagianMassal'])->name('rombel.pembagian-massal');
+    Route::post('/admin/rombel/proses-pembagian-massal', [Rombelcontroller::class, 'prosesPembagianMassal'])->name('rombel.proses-pembagian-massal');
 
     // USER PROFILE
     Route::get('/admin/profile', [Profilecontroller::class, 'index'])->name('profile');
     Route::post('/admin/profile/update', [Profilecontroller::class, 'update'])->name('profile.update');
     Route::post('/admin/profile/password', [Profilecontroller::class, 'updatePassword'])->name('profile.password');
+
+    // MATA PELAJARAN
+    Route::get('/admin/mapel', [MataPelajarancontroller::class, 'index'])->name('mapel');
+    Route::get('/admin/mapel_data', [MataPelajarancontroller::class, 'mapel_data'])->name('mapel.data');
+    Route::post('/admin/mapel_simpan', [MataPelajarancontroller::class, 'store'])->name('mapel.simpan');
+    Route::get('/admin/mapel_edit/{id}', [MataPelajarancontroller::class, 'edit'])->name('mapel.edit');
+    Route::post('/admin/mapel_update', [MataPelajarancontroller::class, 'update'])->name('mapel.update');
+    Route::post('/admin/mapel_hapus', [MataPelajarancontroller::class, 'hapus'])->name('mapel.hapus');
+
+    // SEBARAN MAPEL (PEMBELAJARAN)
+    Route::get('/admin/sebaran-mapel', [PembelajaranController::class, 'index'])->name('sebaran-mapel');
+    Route::get('/admin/sebaran-mapel/rombel/{id}', [PembelajaranController::class, 'manage'])->name('sebaran-mapel.manage');
+    Route::post('/admin/sebaran-mapel/simpan', [PembelajaranController::class, 'store'])->name('sebaran-mapel.simpan');
+    Route::get('/admin/sebaran-mapel/edit/{id}', [PembelajaranController::class, 'edit'])->name('sebaran-mapel.edit');
+    Route::post('/admin/sebaran-mapel/update', [PembelajaranController::class, 'update'])->name('sebaran-mapel.update');
+    Route::post('/admin/sebaran-mapel/hapus', [PembelajaranController::class, 'hapus'])->name('sebaran-mapel.hapus');
 });
