@@ -44,7 +44,7 @@
         #loader {
             position: fixed;
             inset: 0;
-            background: rgb(255, 255, 255);
+            background: rgb(255, 255, 255, 0.5);
             /* transparan */
             justify-content: center;
             align-items: center;
@@ -137,18 +137,22 @@
                         $isMasterActive = in_array($title, ['Periode Akademik', 'Jurusan', 'Guru', 'Siswa']);
                     @endphp
                     <li class="sidebar-item {{ $isMasterActive ? 'active' : '' }}">
-                        <a data-bs-target="#master" data-bs-toggle="collapse" class="sidebar-link {{ $isMasterActive ? '' : 'collapsed' }}">
-                            <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data Master</span>
+                        <a data-bs-target="#master" data-bs-toggle="collapse"
+                            class="sidebar-link {{ $isMasterActive ? '' : 'collapsed' }}">
+                            <i class="align-middle" data-feather="database"></i> <span class="align-middle">Data
+                                Master</span>
                         </a>
-                        <ul id="master" class="sidebar-dropdown list-unstyled collapse {{ $isMasterActive ? 'show' : '' }}" data-bs-parent="#sidebar">
+                        <ul id="master"
+                            class="sidebar-dropdown list-unstyled collapse {{ $isMasterActive ? 'show' : '' }}"
+                            data-bs-parent="#sidebar">
                             <li class="sidebar-item {{ $title == 'Periode Akademik' ? 'active' : '' }}">
                                 <a class='sidebar-link' href='{{ route('periode') }}'>Periode</a>
                             </li>
                             <li class="sidebar-item {{ $title == 'Jurusan' ? 'active' : '' }}">
                                 <a class='sidebar-link' href='{{ route('jurusan') }}'>Jurusan</a>
                             </li>
-                            <li class="sidebar-item {{ $title == 'Guru' ? 'active' : '' }}">
-                                <a class='sidebar-link' href='{{ route('guru') }}'>Guru</a>
+                            <li class="sidebar-item {{ $title == 'Guru & Tendik' ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('guru') }}'>Guru & Tendik</a>
                             </li>
                             <li class="sidebar-item {{ $title == 'Siswa' ? 'active' : '' }}">
                                 <a class='sidebar-link' href="{{ route('siswa') }}">Siswa</a>
@@ -158,14 +162,25 @@
 
                     <!-- GROUP: AKADEMIK -->
                     @php
-                        $isAkademikActive = in_array($title, ['Rombel', 'Kelola Detail Rombel', 'Pembagian Kelas Massal', 'Mata Pelajaran', 'Sebaran Mapel']);
+                        $isAkademikActive = in_array($title, [
+                            'Rombel',
+                            'Kelola Detail Rombel',
+                            'Pembagian Kelas Massal',
+                            'Mata Pelajaran',
+                            'Sebaran Mapel',
+                        ]);
                     @endphp
                     <li class="sidebar-item {{ $isAkademikActive ? 'active' : '' }}">
-                        <a data-bs-target="#akademik" data-bs-toggle="collapse" class="sidebar-link {{ $isAkademikActive ? '' : 'collapsed' }}">
-                            <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Akademik</span>
+                        <a data-bs-target="#akademik" data-bs-toggle="collapse"
+                            class="sidebar-link {{ $isAkademikActive ? '' : 'collapsed' }}">
+                            <i class="align-middle" data-feather="book-open"></i> <span
+                                class="align-middle">Akademik</span>
                         </a>
-                        <ul id="akademik" class="sidebar-dropdown list-unstyled collapse {{ $isAkademikActive ? 'show' : '' }}" data-bs-parent="#sidebar">
-                            <li class="sidebar-item {{ in_array($title, ['Rombel', 'Kelola Detail Rombel', 'Pembagian Kelas Massal']) ? 'active' : '' }}">
+                        <ul id="akademik"
+                            class="sidebar-dropdown list-unstyled collapse {{ $isAkademikActive ? 'show' : '' }}"
+                            data-bs-parent="#sidebar">
+                            <li
+                                class="sidebar-item {{ in_array($title, ['Rombel', 'Kelola Detail Rombel', 'Pembagian Kelas Massal']) ? 'active' : '' }}">
                                 <a class='sidebar-link' href='{{ route('rombel') }}'>Rombel</a>
                             </li>
                             <li class="sidebar-item {{ $title == 'Mata Pelajaran' ? 'active' : '' }}">
