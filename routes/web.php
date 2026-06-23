@@ -17,7 +17,9 @@ Route::post('/loginUser', [Logincontroller::class, 'loginuser'])->middleware('th
 Route::get('/logout', [Logincontroller::class, 'logout'])->name('logout');
 
 Route::get('/', function () {
-    return view('welcome');
+    $siswaAktifCount = \App\Models\Siswa::where('status', 'Aktif')->count();
+    $guruAktifCount = \App\Models\Guru::where('status_aktif', 1)->count();
+    return view('welcome', compact('siswaAktifCount', 'guruAktifCount'));
 });
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [Admincontroller::class, 'index'])->name('dashboard');

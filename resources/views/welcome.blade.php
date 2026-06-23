@@ -163,11 +163,11 @@
                                         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                                     </svg>
                                 </div>
-                                <div class="stat-info">
-                                    <span class="stat-title">Data Siswa</span>
-                                    <span class="stat-value">1.245+</span>
-                                    <span class="stat-desc">Siswa Aktif</span>
-                                </div>
+                                 <div class="stat-info">
+                                     <span class="stat-title">Data Siswa</span>
+                                     <span class="stat-value">{{ $siswaAktifCount }}</span>
+                                     <span class="stat-desc">Siswa Aktif</span>
+                                 </div>
                             </div>
 
                             <!-- Stat: Guru -->
@@ -180,11 +180,11 @@
                                         <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
                                     </svg>
                                 </div>
-                                <div class="stat-info">
-                                    <span class="stat-title">Data Guru</span>
-                                    <span class="stat-value">87+</span>
-                                    <span class="stat-desc">Tenaga Pendidik</span>
-                                </div>
+                                 <div class="stat-info">
+                                     <span class="stat-title">Data Guru</span>
+                                     <span class="stat-value">{{ $guruAktifCount }}</span>
+                                     <span class="stat-desc">Tenaga Pendidik</span>
+                                 </div>
                             </div>
 
                             <!-- Stat: Alumni -->
