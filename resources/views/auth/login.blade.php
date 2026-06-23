@@ -30,7 +30,7 @@
         #loader {
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255);
+            background: rgba(255, 255, 255, 0.5);
             justify-content: center;
             align-items: center;
             z-index: 9999;
@@ -686,7 +686,8 @@
                             $('#loader').css('display', 'none');
                             let message = 'Terjadi kesalahan pada server.';
                             if (xhr.status === 429) {
-                                message = 'Terlalu banyak percobaan login. Silakan coba lagi dalam beberapa saat.';
+                                message =
+                                    'Terlalu banyak percobaan login. Silakan coba lagi dalam beberapa saat.';
                             } else if (xhr.responseJSON && xhr.responseJSON.message) {
                                 message = xhr.responseJSON.message;
                             }

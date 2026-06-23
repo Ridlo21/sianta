@@ -6,6 +6,14 @@
                 <h3><strong>{{ $title }}</strong></h3>
             </div>
             <div class="col-auto ms-auto text-end mt-n1">
+                <select class="form-select form-select-sm me-2" id="filter_status"
+                    style="width: 150px; display: inline-block;">
+                    <option value="">Pilih Status</option>
+                    <option selected value="Aktif">Aktif</option>
+                    <option value="Lulus">Lulus</option>
+                    <option value="Pindah">Mutasi Keluar</option>
+                    <option value="Keluar">Berhenti</option>
+                </select>
                 <button class="btn btn-primary" id="bt_tambah"><i class="fas fa-plus"></i> Tambah Siswa</button>
             </div>
         </div>
@@ -28,6 +36,7 @@
                                     <th>NISN</th>
                                     <th>Nama Lengkap</th>
                                     <th>Asal Sekolah</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -44,7 +53,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#datatables-reponsive').DataTable({
+            var table = $('#datatables-reponsive').DataTable({
                 paging: true,
                 lengthChange: false,
                 searching: true,
@@ -54,7 +63,12 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('siswa.data') }}",
+                ajax: {
+                    url: "{{ route('siswa.data') }}",
+                    data: function(d) {
+                        d.status = $('#filter_status').val();
+                    }
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -73,9 +87,16 @@
                         data: 'asal_sekolah'
                     },
                     {
+                        data: 'stats'
+                    },
+                    {
                         data: 'action'
                     }
                 ]
+            });
+
+            $('#filter_status').on('change', function() {
+                table.draw();
             });
 
             $('#datatables-reponsive').on("click", '.btnHapus', function() {

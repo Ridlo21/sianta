@@ -22,7 +22,7 @@ class Gurucontroller extends Controller
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $title = 'Guru';
+        $title = 'Guru & Tendik';
 
         return view('admin.guru.index', compact('title', 'user'));
     }
@@ -95,7 +95,7 @@ class Gurucontroller extends Controller
         $provinsi = Provinsi::all();
         $gurukeluarga = Gurukeluarga::where('guru_id', $id)->first();
         $pekerjaan = Pekerjaan::all();
-        $title = 'Guru';
+        $title = 'Guru & Tendik';
         return view('admin.guru.step1', compact('guru', 'pekerjaan', 'gurukeluarga', 'agama', 'jurusan', 'provinsi', 'st', 'user', 'title'));
     }
 
@@ -186,7 +186,7 @@ class Gurucontroller extends Controller
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $title = 'Guru';
+        $title = 'Guru & Tendik';
 
         return view('admin.guru.show', compact('title', 'user', 'guru'));
     }
@@ -329,7 +329,7 @@ class Gurucontroller extends Controller
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $title = 'Guru';
+        $title = 'Guru & Tendik';
 
         return view('admin.guru.upload', compact('title', 'user', 'guru'));
     }

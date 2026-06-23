@@ -29,11 +29,17 @@ class Siswacontroller extends Controller
         return view('admin.siswa.index', compact('title', 'user'));
     }
 
-    public function siswa_data()
+    public function siswa_data(Request $request)
     {
-        $siswa = Siswa::where('status', 'Aktif')->orderBy('id_person', 'desc')->get();
+        $query = Siswa::query()->whereNotNull('nis')->where('nis', '!=', '');
 
-        return DataTables::of($siswa)
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $query->orderBy('id_person', 'desc');
+
+        return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 $btn = '
@@ -47,7 +53,7 @@ class Siswacontroller extends Controller
                             <a href="' . route('siswa.upload', $row->id_person) . '" class="btn btn-success" title="Berkas Siswa">
                                 <i class="fas fa-image"></i>
                             </a>
-                            <a href="#" class="btn btn-secondary" title="Cetak Berkas">
+                            <a href="' . route('siswa.print', $row->id_person) . '" target="_blank" class="btn btn-secondary" title="Cetak Berkas">
                                 <i class="fas fa-print"></i>
                             </a>
                             <button class="btn btn-danger btnHapus" title="Hapus" data-id="' . $row->id_person . '"> 
@@ -56,6 +62,19 @@ class Siswacontroller extends Controller
                         </div>
                         ';
                 return $btn;
+            })
+            ->addColumn('stats', function ($row) {
+                $status = '';
+                if ($row->status == 'Aktif') {
+                    $status = '<span class="badge badge-primary-light">Aktif</span>';
+                } elseif ($row->status == 'Lulus') {
+                    $status = '<span class="badge badge-success-light">Lulus</span>';
+                } elseif ($row->status == 'Pindah') {
+                    $status = '<span class="badge badge-warning-light">Mutasi Keluar</span>';
+                } elseif ($row->status == 'Keluar') {
+                    $status = '<span class="badge badge-danger-light">Berhenti</span>';
+                }
+                return $status;
             })
             ->rawColumns(['action', 'stats'])
             ->make(true);
@@ -418,6 +437,51 @@ class Siswacontroller extends Controller
         $title = 'Siswa';
 
         return view('admin.siswa.show', compact('title', 'user', 'siswa'));
+    }
+
+    public function print($id)
+    {
+        $siswa = Siswa::with([
+            'agama',
+            'jurusan',
+            'agamaAyah',
+            'pekerjaanAyah',
+            'pendidikanAyah',
+            'penghasilanAyah',
+            'agamaIbu',
+            'pekerjaanIbu',
+            'pendidikanIbu',
+            'penghasilanIbu',
+            'agamaWali',
+            'pekerjaanWali',
+            'pendidikanWali',
+            'penghasilanWali',
+            'provinsi',
+            'kabupaten',
+            'kecamatan',
+            'desa'
+        ])->findOrFail($id);
+
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Fetch student's active rombel assignment
+        $placement = \App\Models\PenempatanRombel::where('siswa_id', $siswa->id_person)
+            ->where('status_aktif', 1)
+            ->with('rombel.kelas')
+            ->first();
+
+        // Resolve wali address details
+        $wali_address_details = [
+            'desa' => $siswa->desa_w ? (\App\Models\Desa::find($siswa->desa_w)->name ?? '') : '',
+            'kec' => $siswa->kec_w ? (\App\Models\Kecamatan::find($siswa->kec_w)->name ?? '') : '',
+            'kab' => $siswa->kab_w ? (\App\Models\Kabupaten::find($siswa->kab_w)->name ?? '') : '',
+            'prov' => $siswa->prov_w ? (\App\Models\Provinsi::find($siswa->prov_w)->name ?? '') : '',
+        ];
+
+        return view('admin.siswa.print', compact('siswa', 'placement', 'wali_address_details'));
     }
 
     public function upload($id)

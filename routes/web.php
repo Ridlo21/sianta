@@ -40,21 +40,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/siswa_data', [Siswacontroller::class, 'siswa_data'])->name('siswa.data');
     Route::post('admin/siswa_simpan', [Siswacontroller::class, 'store'])->name('siswa.store');
     Route::get('admin/siswa_edit/step1/{id}/{st}', [Siswacontroller::class, 'editstep1'])->name('siswa.edit.step1');
-    Route::put('update/step1/{id}', [Siswacontroller::class, 'updateStep1'])->name('siswa.update.step1');
+    Route::put('admin/siswa/update/step1/{id}', [Siswacontroller::class, 'updateStep1'])->name('siswa.update.step1');
     Route::get('admin/siswa_edit/step2/{id}/{st}', [Siswacontroller::class, 'editstep2'])->name('siswa.edit.step2');
-    Route::put('update/step2/{id}', [Siswacontroller::class, 'updateStep2'])->name('siswa.update.step2');
+    Route::put('admin/siswa/update/step2/{id}', [Siswacontroller::class, 'updateStep2'])->name('siswa.update.step2');
     Route::get('admin/siswa_edit/step3/{id}/{st}', [Siswacontroller::class, 'editstep3'])->name('siswa.edit.step3');
-    Route::put('update/step3/{id}', [Siswacontroller::class, 'updateStep3'])->name('siswa.update.step3');
+    Route::put('admin/siswa/update/step3/{id}', [Siswacontroller::class, 'updateStep3'])->name('siswa.update.step3');
     Route::get('admin/siswa_edit/step4/{id}/{st}', [Siswacontroller::class, 'editstep4'])->name('siswa.edit.step4');
-    Route::put('update/step4/{id}', [Siswacontroller::class, 'updateStep4'])->name('siswa.update.step4');
+    Route::put('admin/siswa/update/step4/{id}', [Siswacontroller::class, 'updateStep4'])->name('siswa.update.step4');
     Route::get('/get-kota/{provinsi_id}', [Siswacontroller::class, 'get_kabupaten']);
     Route::get('/get-kecamatan/{kabupaten_id}', [Siswacontroller::class, 'get_kecamatan']);
     Route::get('/get-desa/{kecamatan_id}', [Siswacontroller::class, 'get_desa']);
     Route::post('/admin/siswa/batal', [Siswacontroller::class, 'batal'])->name('siswa.batal');
     Route::get('admin/siswa_show/{id}', [Siswacontroller::class, 'show'])->name('siswa.show');
+    Route::get('admin/siswa_print/{id}', [Siswacontroller::class, 'print'])->name('siswa.print');
     Route::get('admin/siswa_download/{id}/{field}', [Siswacontroller::class, 'downloadBerkas'])->name('siswa.download.berkas');
     Route::get('admin/siswa_upload/{id}', [Siswacontroller::class, 'upload'])->name('siswa.upload');
-    Route::put('update/upload/{id}', [Siswacontroller::class, 'updateUpload'])->name('siswa.update.upload');
+    Route::put('admin/siswa/update/upload/{id}', [Siswacontroller::class, 'updateUpload'])->name('siswa.update.upload');
     Route::post('/admin/siswa/hapus', [Siswacontroller::class, 'hapus'])->name('siswa.hapus');
 
     // GURU
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/guru_data', [Gurucontroller::class, 'guru_data'])->name('guru.data');
     Route::post('admin/guru_simpan', [Gurucontroller::class, 'store'])->name('guru.store');
     Route::get('admin/guru_edit/step1/{id}/{st}', [Gurucontroller::class, 'editstep1'])->name('guru.edit.step1');
-    Route::put('update/step1/{id}', [Gurucontroller::class, 'updateStep1'])->name('guru.update.step1');
+    Route::put('admin/guru/update/step1/{id}', [Gurucontroller::class, 'updateStep1'])->name('guru.update.step1');
     Route::post('/admin/guru/batal', [Gurucontroller::class, 'batal'])->name('guru.batal');
     Route::get('admin/guru_show/{id}', [Gurucontroller::class, 'show'])->name('guru.show');
     Route::get('admin/guru_download/{id}/{field}', [Gurucontroller::class, 'downloadBerkas'])->name('guru.download.berkas');
