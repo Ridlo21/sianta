@@ -189,6 +189,9 @@ class Rombelcontroller extends Controller
                         ->where('penempatan_rombel.status_aktif', 1)
                         ->where('penempatan_rombel.tahun_ajaran_id', $tahun->id);
                 })
+                ->when($rombel->jurusan_id, function ($query) use ($rombel) {
+                    $query->where('siswa.jurusan_id', $rombel->jurusan_id);
+                })
                 ->orderBy('nama', 'asc')
                 ->get();
         }

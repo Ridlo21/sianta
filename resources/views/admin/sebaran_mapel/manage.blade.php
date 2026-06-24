@@ -104,9 +104,9 @@
                                                 <td><strong class="text-dark">{{ $p->mataPelajaran->nama_mapel }}</strong></td>
                                                 <td>
                                                     @if($p->guru)
-                                                        <strong class="text-secondary">{{ $p->guru->nama }}</strong>
-                                                        @if($p->guru->nip)
-                                                            <small class="text-muted d-block">NIP. {{ $p->guru->nip }}</small>
+                                                        <strong class="text-secondary">{{ $p->guru->nama_lengkap }}</strong>
+                                                        @if($p->guru->niy)
+                                                            <small class="text-muted d-block">NIY. {{ $p->guru->niy }}</small>
                                                         @endif
                                                     @else
                                                         <span class="text-danger small fw-semibold"><i data-feather="alert-triangle" class="feather-sm me-0.5"></i> Belum Ditentukan</span>
@@ -192,7 +192,7 @@
                                 <option value="" selected>Belum Ditentukan (Kosongkan)</option>
                                 @foreach($gurus as $g)
                                     <option value="{{ $g->id }}">
-                                        {{ $g->nama }} (NIP. {{ $g->nip ?? '-' }})
+                                        {{ $g->nama_lengkap }} (NIY. {{ $g->niy ?? '-' }})
                                     </option>
                                 @endforeach
                             </select>
@@ -244,7 +244,7 @@
                                 <option value="" selected>Belum Ditentukan (Kosongkan)</option>
                                 @foreach($gurus as $g)
                                     <option value="{{ $g->id }}">
-                                        {{ $g->nama }} (NIP. {{ $g->nip ?? '-' }})
+                                        {{ $g->nama_lengkap }} (NIY. {{ $g->niy ?? '-' }})
                                     </option>
                                 @endforeach
                             </select>

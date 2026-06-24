@@ -55,7 +55,7 @@
         $(document).ready(function() {
             var table = $('#datatables-reponsive').DataTable({
                 paging: true,
-                lengthChange: false,
+                lengthChange: true,
                 searching: true,
                 ordering: false,
                 info: true,

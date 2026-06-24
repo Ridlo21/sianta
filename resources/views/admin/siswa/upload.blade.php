@@ -268,7 +268,7 @@
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
                     $.ajax({
-                        url: "{{ route('siswa.update.upload', $siswa->id_person) }}",
+                        url: "{{ route('siswa.update.upload', $siswa) }}",
                         type: "POST",
                         data: formData,
                         processData: false,

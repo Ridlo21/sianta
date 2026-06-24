@@ -18,10 +18,21 @@
                         <div class="card-body">
                             <input hidden name="st" value="{{ $st }}">
                             <div class="row g-2">
+                                <div class="col-md-2">
+                                    <label class="form-label">Gelar Depan</label>
+                                    <input type="text" name="gelar_depan" id="gelar_depan"
+                                        value="{{ $guru->gelar_depan }}" class="form-control" placeholder="Contoh: Dr.">
+                                </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Nama Lengkap</label>
                                     <input type="text" name="nama" id="nama" value="{{ $guru->nama }}"
                                         class="form-control text-uppercase" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Gelar Belakang</label>
+                                    <input type="text" name="gelar_belakang" id="gelar_belakang"
+                                        value="{{ $guru->gelar_belakang }}" class="form-control"
+                                        placeholder="Contoh: S.Kom.">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">NIK</label>
@@ -30,9 +41,9 @@
                                         value="{{ $guru->nik }}" class="form-control" required>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label">NIP</label>
-                                    <input {{-- data-parsley-length="[16,16]" --}} {{-- data-parsley-length-message="Harus terdiri dari 16 digit angka"  --}} type="number" name="nip"
-                                        value="{{ $guru->nip }}" class="form-control" required>
+                                    <label class="form-label">NIY</label>
+                                    <input type="text" name="niy" value="{{ $guru->niy }}" class="form-control"
+                                        required>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">NUPTK</label>
@@ -77,87 +88,6 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label">Jurusan</label>
-                                    <select name="jurusan" class="form-select" required>
-                                        <option value="">-- Pilih Jurusan --</option>
-                                        @foreach ($jurusan as $j)
-                                            <option value="{{ $j->id }}"
-                                                {{ old('jurusan_id', $guru->jurusan->id ?? '') == $j->id ? 'selected' : '' }}>
-                                                {{ $j->program_keahlian }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Jenis PTK</label>
-                                    <select name="jenis_gtk" id="jenis_gtk" class="form-select" required>
-                                        <option value="">-- Pilih Jenis PTK --</option>
-                                        @php
-                                            $jenisGtk = old('jenis_gtk', $guru->jenis_gtk ?? '');
-                                        @endphp
-
-                                        <option value="Guru" {{ $jenisGtk == 'Guru' ? 'selected' : '' }}>Guru</option>
-                                        <option value="Kepala Sekolah"
-                                            {{ $jenisGtk == 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
-                                        <option value="Tenaga Administrasi Sekolah"
-                                            {{ $jenisGtk == 'Tenaga Administrasi Sekolah' ? 'selected' : '' }}>Tenaga
-                                            Administrasi Sekolah</option>
-                                        <option value="Pustakawan" {{ $jenisGtk == 'Pustakawan' ? 'selected' : '' }}>
-                                            Pustakawan</option>
-                                        <option value="Laboran" {{ $jenisGtk == 'Laboran' ? 'selected' : '' }}>Laboran
-                                        </option>
-                                        <option value="Pengawas Sekolah"
-                                            {{ $jenisGtk == 'Pengawas Sekolah' ? 'selected' : '' }}>Pengawas Sekolah
-                                        </option>
-                                        <option value="Lainnya" {{ $jenisGtk == 'Lainnya' ? 'selected' : '' }}>Lainnya
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Jabatan PTK</label>
-                                    <select name="jabatan_gtk" id="jabatan_gtk" class="form-select" required>
-                                        <option value="">-- Pilih Jabatan PTK --</option>
-                                        @php
-                                            $jabatanGtk = old('jabatan_gtk', $guru->jabatan_gtk ?? '');
-                                        @endphp
-
-                                        <option value="Kepala Sekolah"
-                                            {{ $jabatanGtk == 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
-                                        <option value="Wakil Kepala Sekolah"
-                                            {{ $jabatanGtk == 'Wakil Kepala Sekolah' ? 'selected' : '' }}>Wakil Kepala
-                                            Sekolah</option>
-                                        <option value="Guru Mata Pelajaran"
-                                            {{ $jabatanGtk == 'Guru Mata Pelajaran' ? 'selected' : '' }}>Guru Mata
-                                            Pelajaran</option>
-                                        <option value="Guru Kelas" {{ $jabatanGtk == 'Guru Kelas' ? 'selected' : '' }}>Guru
-                                            Kelas</option>
-                                        <option value="Guru BK" {{ $jabatanGtk == 'Guru BK' ? 'selected' : '' }}>Guru BK
-                                        </option>
-                                        <option value="Wali Kelas" {{ $jabatanGtk == 'Wali Kelas' ? 'selected' : '' }}>Wali
-                                            Kelas</option>
-                                        <option value="Kepala Tata Usaha"
-                                            {{ $jabatanGtk == 'Kepala Tata Usaha' ? 'selected' : '' }}>Kepala Tata Usaha
-                                        </option>
-                                        <option value="Staf Tata Usaha"
-                                            {{ $jabatanGtk == 'Staf Tata Usaha' ? 'selected' : '' }}>Staf Tata Usaha
-                                        </option>
-                                        <option value="Operator Sekolah"
-                                            {{ $jabatanGtk == 'Operator Sekolah' ? 'selected' : '' }}>Operator Sekolah
-                                        </option>
-                                        <option value="Pustakawan" {{ $jabatanGtk == 'Pustakawan' ? 'selected' : '' }}>
-                                            Pustakawan</option>
-                                        <option value="Laboran" {{ $jabatanGtk == 'Laboran' ? 'selected' : '' }}>Laboran
-                                        </option>
-                                        <option value="Teknisi" {{ $jabatanGtk == 'Teknisi' ? 'selected' : '' }}>Teknisi
-                                        </option>
-                                        <option value="Satpam" {{ $jabatanGtk == 'Satpam' ? 'selected' : '' }}>Satpam
-                                        </option>
-                                        <option value="Petugas Kebersihan"
-                                            {{ $jabatanGtk == 'Petugas Kebersihan' ? 'selected' : '' }}>Petugas Kebersihan
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
                                     <label class="form-label">Status Perkawinan</label>
                                     <select name="status_perkawinan" id="status_perkawinan" class="form-select" required>
                                         <option value="">-- Pilih Status Perkawinan --</option>
@@ -172,13 +102,13 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="form-label">Nama Pasangan</label>
                                     <input type="text" name="nama_pasangan" id="nama_pasangan"
                                         value="{{ $gurukeluarga->nama_pasangan ?? '' }}"
                                         class="form-control text-uppercase">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="form-label">Pekerjaan Pasangan</label>
                                     <select name="pekerjaan_pasangan" id="pekerjaan_pasangan" class="form-select"
                                         required>
@@ -191,7 +121,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="form-label">Nama Ibu</label>
                                     <input type="text" name="nama_ibu" id="nama_ibu"
                                         value="{{ $gurukeluarga->nama_ibu ?? '' }}" class="form-control text-uppercase"
@@ -202,19 +132,19 @@
                                     <input type="email" name="email" id="email" class="form-control" required
                                         data-parsley-type-message="Format email tidak valid" value="{{ $guru->email }}">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label">No Handphone</label>
                                     <input type="number" name="no_hp" id="no_hp" class="form-control" required
                                         data-parsley-length="[11,13]"
                                         data-parsley-length-message="Harus terdiri dari 11 sampai 13 digit angka"
                                         value="{{ $guru->no_hp }}">
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-5">
                                     <label class="form-label">Alamat Sesuai KTP</label>
                                     <input type="text" name="alamat" id="alamat" value="{{ $guru->alamat }}"
                                         class="form-control text-uppercase" required>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label">Kode Pos</label>
                                     <input type="number" name="pos" id="pos" value="{{ $guru->pos }}"
                                         class="form-control" required>
@@ -231,21 +161,18 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <!-- Kabupaten -->
                                 <div class="col-md-3">
                                     <label class="form-label">Kabupaten</label>
                                     <select name="kab" id="kab" class="form-control select2" required>
                                         <option value="">-- Pilih Kabupaten --</option>
                                     </select>
                                 </div>
-                                <!-- Kecamatan -->
                                 <div class="col-md-3">
                                     <label class="form-label">Kecamatan</label>
                                     <select name="kec" id="kec" class="form-control select2" required>
                                         <option value="">-- Pilih Kecamatan --</option>
                                     </select>
                                 </div>
-                                <!-- Desa -->
                                 <div class="col-md-3">
                                     <label class="form-label">Desa</label>
                                     <select name="desa" id="desa" class="form-control select2" required>
@@ -456,7 +383,7 @@
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
                     $.ajax({
-                        url: "{{ route('guru.update.step1', $guru->id) }}",
+                        url: "{{ route('guru.update.step1', $guru) }}",
                         type: "PUT",
                         data: $(this).serialize(),
                         success: function(response) {
@@ -467,7 +394,8 @@
                                     title: 'Berhasil',
                                     text: response.message,
                                 }).then(() => {
-                                    let url = "{{ route('guru.upload', $guru->id) }}"
+                                    let url =
+                                        "{{ route('guru.edit.step2', [$guru, $st]) }}"
                                     window.location.href = url;
                                 });
                             } else {
@@ -510,7 +438,7 @@
                         url: "{{ route('guru.batal') }}",
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            "id": "{{ $guru->id }}"
+                            "id": "{{ $guru->getRouteKey() }}"
                         },
                         success: function(hasil) {
                             $('#loader').css('display', 'none');

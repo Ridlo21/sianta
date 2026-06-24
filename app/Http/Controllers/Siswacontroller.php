@@ -44,19 +44,19 @@ class Siswacontroller extends Controller
             ->addColumn('action', function ($row) {
                 $btn = '
                         <div class="d-flex gap-1">
-                            <a href="' . route('siswa.show', $row->id_person) . '" class="btn btn-info" title="Detail Siswa">
+                            <a href="' . route('siswa.show', $row) . '" class="btn btn-info" title="Detail Siswa">
                                 <i class="fas fa-info"></i>
                             </a>
-                            <a href="' . route('siswa.edit.step1', [$row->id_person, 'e']) . '" class="btn btn-warning" title="Edit Siswa">
+                            <a href="' . route('siswa.edit.step1', [$row, 'e']) . '" class="btn btn-warning" title="Edit Siswa">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="' . route('siswa.upload', $row->id_person) . '" class="btn btn-success" title="Berkas Siswa">
+                            <a href="' . route('siswa.upload', $row) . '" class="btn btn-success" title="Berkas Siswa">
                                 <i class="fas fa-image"></i>
                             </a>
-                            <a href="' . route('siswa.print', $row->id_person) . '" target="_blank" class="btn btn-secondary" title="Cetak Berkas">
+                            <a href="' . route('siswa.print', $row) . '" target="_blank" class="btn btn-secondary" title="Cetak Berkas">
                                 <i class="fas fa-print"></i>
                             </a>
-                            <button class="btn btn-danger btnHapus" title="Hapus" data-id="' . $row->id_person . '"> 
+                            <button class="btn btn-danger btnHapus" title="Hapus" data-id="' . $row->getRouteKey() . '"> 
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -89,8 +89,7 @@ class Siswacontroller extends Controller
             }
         }
         $siswa = Siswa::create($data);
-        $id = $siswa->id_person;
-        return $id;
+        return $siswa->getRouteKey();
     }
 
     public function get_kabupaten($provinsi_id)
@@ -111,24 +110,21 @@ class Siswacontroller extends Controller
         return response()->json($desa);
     }
 
-    public function editstep1($id, $st)
+    public function editstep1(Siswa $siswa, $st)
     {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $siswa = Siswa::findOrFail($id);
         $agama = Agama::all();
         $jurusan = Jurusan::all();
         $title = 'Siswa';
         return view('admin.siswa.step1', compact('siswa', 'agama', 'jurusan', 'st', 'user', 'title'));
     }
 
-    public function updateStep1(Request $request, $id)
+    public function updateStep1(Request $request, Siswa $siswa)
     {
         try {
-            $siswa = Siswa::findOrFail($id);
-
             $siswa->update([
                 'nama' => strtoupper($request->nama),
                 'nik' => $request->nik,
@@ -159,7 +155,7 @@ class Siswacontroller extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Step 1 berhasil tersimpan',
-                'id_person' => $id,
+                'id_person' => $siswa->getRouteKey(),
                 'st' => $request->st
             ]);
         } catch (\Throwable $th) {
@@ -169,22 +165,19 @@ class Siswacontroller extends Controller
         }
     }
 
-    public function editstep2($id, $st)
+    public function editstep2(Siswa $siswa, $st)
     {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $siswa = Siswa::findOrFail($id);
         $provinsi = Provinsi::all();
         $title = 'Siswa';
         return view('admin.siswa.step2', compact('siswa', 'provinsi', 'st', 'user', 'title'));
     }
 
-    public function updateStep2(Request $request, $id)
+    public function updateStep2(Request $request, Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
-
         $request->validate([
             'kewarganegaraan' => 'required',
             'alamat_lengkap' => 'required',
@@ -210,7 +203,7 @@ class Siswacontroller extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Step 2 berhasil tersimpan',
-                'id_person' => $id,
+                'id_person' => $siswa->getRouteKey(),
                 'st' => $request->st
             ]);
         } catch (\Exception $e) {
@@ -221,13 +214,12 @@ class Siswacontroller extends Controller
         }
     }
 
-    public function editstep3($id, $st)
+    public function editstep3(Siswa $siswa, $st)
     {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $siswa = Siswa::findOrFail($id);
         $pekerjaan = Pekerjaan::all();
         $pendidikan = Pendidikan::all();
         $penghasilan = Penghasilan::all();
@@ -235,15 +227,13 @@ class Siswacontroller extends Controller
         $title = 'Siswa';
         // proteksi step
         if ($siswa->status_step < 2) {
-            return redirect()->route('murid.edit.step2', [$id, $st]);
+            return redirect()->route('siswa.edit.step2', [$siswa, $st]);
         }
         return view('admin.siswa.step3', compact('siswa', 'pekerjaan', 'pendidikan', 'penghasilan', 'agama', 'st', 'user', 'title'));
     }
 
-    public function updateStep3(Request $request, $id)
+    public function updateStep3(Request $request, Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
-
         $request->validate([
             'nik_a' => 'required',
             'nm_a' => 'required',
@@ -290,7 +280,7 @@ class Siswacontroller extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Step 3 berhasil tersimpan',
-                'id_person' => $id,
+                'id_person' => $siswa->getRouteKey(),
                 'st' => $request->st
             ]);
         } catch (\Exception $e) {
@@ -301,13 +291,12 @@ class Siswacontroller extends Controller
         }
     }
 
-    public function editstep4($id, $st)
+    public function editstep4(Siswa $siswa, $st)
     {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $siswa = Siswa::findOrFail($id);
         $pekerjaan = Pekerjaan::all();
         $pendidikan = Pendidikan::all();
         $penghasilan = Penghasilan::all();
@@ -316,15 +305,13 @@ class Siswacontroller extends Controller
         $title = 'Siswa';
         // proteksi step
         if ($siswa->status_step < 3) {
-            return redirect()->route('murid.edit.step3', [$id, $st]);
+            return redirect()->route('siswa.edit.step3', [$siswa, $st]);
         }
         return view('admin.siswa.step4', compact('siswa', 'pekerjaan', 'pendidikan', 'penghasilan', 'agama', 'provinsi', 'st', 'user', 'title'));
     }
 
-    public function updateStep4(Request $request, $id)
+    public function updateStep4(Request $request, Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
-
         $jurusan = Jurusan::findOrFail($siswa->jurusan_id);
 
         $nomorUmum = Siswa::whereNotNull('nis')->count() + 1;
@@ -406,7 +393,7 @@ class Siswacontroller extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Step 4 berhasil tersimpan',
-                'id_person' => $id,
+                'id_person' => $siswa->getRouteKey(),
                 'st' => $request->st
             ]);
         } catch (\Exception $e) {
@@ -419,17 +406,19 @@ class Siswacontroller extends Controller
 
     public function batal(Request $request)
     {
-        $id = $request->id;
-        $siswa = Siswa::findOrFail($id);
+        $decoded = \Hashids::decode($request->id);
+        if (empty($decoded)) {
+            return response()->json(['success' => false, 'message' => 'ID tidak valid.']);
+        }
+        $siswa = Siswa::findOrFail($decoded[0]);
 
         $siswa->delete();
 
         return response()->json(['success' => true]);
     }
 
-    public function show($id)
+    public function show(Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -439,9 +428,9 @@ class Siswacontroller extends Controller
         return view('admin.siswa.show', compact('title', 'user', 'siswa'));
     }
 
-    public function print($id)
+    public function print(Siswa $siswa)
     {
-        $siswa = Siswa::with([
+        $siswa->load([
             'agama',
             'jurusan',
             'agamaAyah',
@@ -460,7 +449,7 @@ class Siswacontroller extends Controller
             'kabupaten',
             'kecamatan',
             'desa'
-        ])->findOrFail($id);
+        ]);
 
         $user = Auth::user();
         if (!$user) {
@@ -484,9 +473,8 @@ class Siswacontroller extends Controller
         return view('admin.siswa.print', compact('siswa', 'placement', 'wali_address_details'));
     }
 
-    public function upload($id)
+    public function upload(Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -496,10 +484,8 @@ class Siswacontroller extends Controller
         return view('admin.siswa.upload', compact('title', 'user', 'siswa'));
     }
 
-    public function updateUpload(Request $request, $id)
+    public function updateUpload(Request $request, Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
-
         $rules = [
             'foto_warna_santri' => ($siswa->foto_warna_santri ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
             'foto_scan_kk' => ($siswa->foto_scan_kk ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
@@ -554,7 +540,7 @@ class Siswacontroller extends Controller
             foreach ($fields as $field) {
                 if ($request->hasFile($field)) {
                     $file = $request->file($field);
-                    $filename = $field . '_' . $id . '_' . time() . '.' . $file->getClientOriginalExtension();
+                    $filename = $field . '_' . $siswa->id_person . '_' . time() . '.' . $file->getClientOriginalExtension();
 
                     // Delete old file if it exists
                     if ($siswa->$field && file_exists($destinationPath . '/' . $siswa->$field)) {
@@ -583,9 +569,8 @@ class Siswacontroller extends Controller
         }
     }
 
-    public function downloadBerkas($id, $field)
+    public function downloadBerkas(Siswa $siswa, $field)
     {
-        $siswa = Siswa::findOrFail($id);
         $fileName = $siswa->$field;
         if (!$fileName) {
             abort(404, 'Berkas tidak ditemukan');
@@ -623,7 +608,11 @@ class Siswacontroller extends Controller
 
     public function hapus(Request $request)
     {
-        Siswa::where('id_person', $request->id)->update([
+        $decoded = \Hashids::decode($request->id);
+        if (empty($decoded)) {
+            return response()->json(['status' => 'error', 'message' => 'ID tidak valid.']);
+        }
+        Siswa::where('id_person', $decoded[0])->update([
             'status' => 'Keluar'
         ]);
 

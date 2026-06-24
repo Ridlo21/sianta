@@ -194,7 +194,7 @@
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
                     $.ajax({
-                        url: "{{ route('guru.update.upload', $guru->id) }}",
+                        url: "{{ route('guru.update.upload', $guru) }}",
                         type: "POST",
                         data: formData,
                         processData: false,

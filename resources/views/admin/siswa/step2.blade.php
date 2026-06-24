@@ -88,7 +88,7 @@
                                 </a>
                             @endif
                             <div class="float-end">
-                                <a href="{{ route('siswa.edit.step1', [$siswa->id_person, $st]) }}"
+                                <a href="{{ route('siswa.edit.step1', [$siswa, $st]) }}"
                                     class="btn btn-primary">
                                     <i class="fas fa-arrow-left"></i> Sebelumnya
                                 </a>
@@ -247,7 +247,7 @@
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
                     $.ajax({
-                        url: "{{ route('siswa.update.step2', $siswa->id_person) }}",
+                        url: "{{ route('siswa.update.step2', $siswa) }}",
                         type: "PUT",
                         data: $(this).serialize(),
                         success: function(response) {

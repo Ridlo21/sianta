@@ -149,7 +149,7 @@
                                         <img src="{{ asset('asset_admin/img/avatars/avatar.png') }}" id="infoWaliAvatar" class="avatar img-fluid rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;" alt="Avatar" />
                                         <div>
                                             <strong class="text-dark d-block fs-6" id="infoWaliName">Belum Ditentukan</strong>
-                                            <span class="text-muted small" id="infoWaliNip">-</span>
+                                            <span class="text-muted small" id="infoWaliNiy">-</span>
                                         </div>
                                     </div>
                                 </div>
@@ -227,12 +227,12 @@
                         let photoUrl = guru.foto ? "{{ asset('gambar_berkas/avatars/') }}/" + guru.foto : "{{ asset('asset_admin/img/avatars/avatar.png') }}";
                         
                         $('#infoWaliAvatar').attr('src', photoUrl);
-                        $('#infoWaliName').text(guru.nama);
-                        $('#infoWaliNip').text('NIP. ' + (guru.nip ?? '-'));
+                        $('#infoWaliName').text(guru.nama_lengkap);
+                        $('#infoWaliNiy').text('NIY. ' + (guru.niy ?? '-'));
                     } else {
                         $('#infoWaliAvatar').attr('src', "{{ asset('asset_admin/img/avatars/avatar.png') }}");
                         $('#infoWaliName').text('Belum Ditentukan');
-                        $('#infoWaliNip').text('-');
+                        $('#infoWaliNiy').text('-');
                     }
                     
                     $('#targetInfoCard').removeClass('d-none');

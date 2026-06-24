@@ -77,10 +77,10 @@
                                 <img src="{{ $activeWali->guru->foto ? asset('gambar_berkas/avatars/' . $activeWali->guru->foto) : asset('asset_admin/img/avatars/avatar.png') }}"
                                     class="img-fluid rounded-circle border border-primary border-3 shadow-xs" 
                                     style="width: 100px; height: 100px; object-fit: cover;" 
-                                    alt="{{ $activeWali->guru->nama }}" />
+                                    alt="{{ $activeWali->guru->nama_lengkap }}" />
                             </div>
-                            <h4 class="fw-extrabold text-dark mb-1">{{ $activeWali->guru->nama }}</h4>
-                            <p class="text-muted small mb-0">NIP: {{ $activeWali->guru->nip ?? '-' }}</p>
+                            <h4 class="fw-extrabold text-dark mb-1">{{ $activeWali->guru->nama_lengkap }}</h4>
+                            <p class="text-muted small mb-0">NIY: {{ $activeWali->guru->niy ?? '-' }}</p>
                             <span class="badge bg-success-light text-success fw-bold px-3 py-1.5 rounded-pill mt-2">Aktif Jabatan</span>
                         @else
                             <div class="py-4">
@@ -206,7 +206,7 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
-                        <p class="text-muted mb-3">Menampilkan siswa aktif yang belum terdaftar di Rombel manapun untuk tahun ajaran aktif berjalan.</p>
+                        <p class="text-muted mb-3">Menampilkan siswa aktif dengan jurusan yang sesuai yang belum terdaftar di Rombel manapun untuk tahun ajaran aktif berjalan.</p>
                         <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                             <table class="table table-hover table-striped align-middle" id="tableUnassignedSiswa" style="width: 100%;">
                                 <thead class="table-light">
@@ -269,7 +269,7 @@
                                 <option value="" disabled selected>Pilih Guru...</option>
                                 @foreach($gurus as $g)
                                     <option value="{{ $g->id }}" {{ $activeWali && $activeWali->guru_id == $g->id ? 'selected' : '' }}>
-                                        {{ $g->nama }} (NIP: {{ $g->nip ?? '-' }})
+                                        {{ $g->nama_lengkap }} (NIY: {{ $g->niy ?? '-' }})
                                     </option>
                                 @endforeach
                             </select>

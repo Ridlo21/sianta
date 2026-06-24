@@ -33,22 +33,25 @@ class Gurucontroller extends Controller
 
         return DataTables::of($guru)
             ->addIndexColumn()
+            ->editColumn('nama', function ($row) {
+                return $row->nama_lengkap;
+            })
             ->addColumn('action', function ($row) {
                 $btn = '
                         <div class="d-flex gap-1">
-                            <a href="' . route('guru.show', $row->id) . '" class="btn btn-info" title="Detail guru">
+                            <a href="' . route('guru.show', $row) . '" class="btn btn-info" title="Detail guru">
                                 <i class="fas fa-info"></i>
                             </a>
-                            <a href="' . route('guru.edit.step1', [$row->id, 'e']) . '" class="btn btn-warning" title="Edit guru">
+                            <a href="' . route('guru.edit.step1', [$row, 'e']) . '" class="btn btn-warning" title="Edit guru">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="' . route('guru.upload', $row->id) . '" class="btn btn-success" title="Berkas guru">
+                            <a href="' . route('guru.upload', $row) . '" class="btn btn-success" title="Berkas guru">
                                 <i class="fas fa-image"></i>
                             </a>
-                            <a href="#" class="btn btn-secondary" title="Cetak Berkas">
+                            <a href="' . route('guru.print', $row) . '" target="_blank" class="btn btn-secondary" title="Cetak Berkas">
                                 <i class="fas fa-print"></i>
                             </a>
-                            <button class="btn btn-danger btnHapus" title="Hapus" data-id="' . $row->id . '"> 
+                            <button class="btn btn-danger btnHapus" title="Hapus" data-id="' . $row->getRouteKey() . '"> 
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -79,46 +82,40 @@ class Gurucontroller extends Controller
             Gurukeluarga::create([
                 'guru_id' => $guru->id,
             ]);
-            return $guru->id;
+            return $guru->getRouteKey();
         });
     }
 
-    public function editstep1($id, $st)
+    public function editstep1(Guru $guru, $st)
     {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
         }
-        $guru = Guru::findOrFail($id);
         $agama = Agama::all();
-        $jurusan = Jurusan::all();
         $provinsi = Provinsi::all();
-        $gurukeluarga = Gurukeluarga::where('guru_id', $id)->first();
+        $gurukeluarga = Gurukeluarga::where('guru_id', $guru->id)->first();
         $pekerjaan = Pekerjaan::all();
         $title = 'Guru & Tendik';
-        return view('admin.guru.step1', compact('guru', 'pekerjaan', 'gurukeluarga', 'agama', 'jurusan', 'provinsi', 'st', 'user', 'title'));
+        return view('admin.guru.step1', compact('guru', 'pekerjaan', 'gurukeluarga', 'agama', 'provinsi', 'st', 'user', 'title'));
     }
 
-    public function updateStep1(Request $request, $id)
+    public function updateStep1(Request $request, Guru $guru)
     {
         DB::beginTransaction();
 
         try {
-
-            $guru = Guru::findOrFail($id);
-
             $guru->update([
                 'nama' => strtoupper($request->nama),
+                'gelar_depan' => $request->gelar_depan,
+                'gelar_belakang' => $request->gelar_belakang,
                 'nik' => $request->nik,
-                'nip' => $request->nip,
+                'niy' => $request->niy,
                 'nuptk' => $request->nuptk,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'tempat_lahir' => strtoupper($request->tempat_lahir),
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'agama_id' => $request->agama,
-                'jurusan_id' => $request->jurusan,
-                'jenis_gtk' => $request->jenis_gtk,
-                'jabatan_gtk' => $request->jabatan_gtk,
                 'status_perkawinan' => $request->status_perkawinan,
                 'email' => $request->email,
                 'no_hp' => $request->no_hp,
@@ -154,7 +151,7 @@ class Gurucontroller extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Step 1 berhasil tersimpan',
-                'id' => $id,
+                'id' => $guru->getRouteKey(),
                 'st' => $request->st
             ]);
         } catch (\Throwable $th) {
@@ -169,19 +166,71 @@ class Gurucontroller extends Controller
         }
     }
 
+    public function editstep2(Guru $guru, $st)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+        $title = 'Guru & Tendik';
+        return view('admin.guru.step2', compact('guru', 'st', 'user', 'title'));
+    }
+
+    public function updateStep2(Request $request, Guru $guru)
+    {
+        DB::beginTransaction();
+
+        try {
+            $guru->update([
+                'jenis_gtk' => $request->jenis_gtk,
+                'jabatan_gtk' => $request->jabatan_gtk,
+                'status_kepegawaian' => $request->status_kepegawaian,
+                'sk_pengangkatan' => strtoupper($request->sk_pengangkatan),
+                'tmt_pengangkatan' => $request->tmt_pengangkatan,
+                'lembaga_pengangkat' => strtoupper($request->lembaga_pengangkat),
+                'npwp' => $request->npwp,
+                'nama_wajib_pajak' => $request->nama_wajib_pajak,
+                'status_kuliah' => $request->status_kuliah,
+                'no_surat_tugas' => strtoupper($request->no_surat_tugas),
+                'tgl_surat_tugas' => $request->tgl_surat_tugas,
+                'tahun_pensiun' => $request->tahun_pensiun,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Step 2 berhasil tersimpan',
+                'id' => $guru->getRouteKey(),
+                'st' => $request->st
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menyimpan data step 2',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     public function batal(Request $request)
     {
-        $id = $request->id;
-        $guru = Guru::findOrFail($id);
-
+        $decoded = \Hashids::decode($request->id);
+        if (empty($decoded)) {
+            return response()->json(['success' => false, 'message' => 'ID tidak valid.']);
+        }
+        $guru = Guru::findOrFail($decoded[0]);
+        GuruKeluarga::where('guru_id', $guru->id)->delete();
         $guru->delete();
 
         return response()->json(['success' => true]);
     }
 
-    public function show($id)
+    public function show(Guru $guru)
     {
-        $guru = Guru::with(['keluarga', 'pendidikan', 'provinsi', 'kabupaten', 'kecamatan', 'desaDetail', 'jurusan', 'agama'])->findOrFail($id);
+        $guru->load(['keluarga', 'pendidikan', 'provinsi', 'kabupaten', 'kecamatan', 'desaDetail', 'agama']);
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -191,9 +240,8 @@ class Gurucontroller extends Controller
         return view('admin.guru.show', compact('title', 'user', 'guru'));
     }
 
-    public function downloadBerkas($id, $field)
+    public function downloadBerkas(Guru $guru, $field)
     {
-        $guru = Guru::findOrFail($id);
         $fileName = $guru->$field;
         if (!$fileName) {
             abort(404, 'Berkas tidak ditemukan');
@@ -322,9 +370,8 @@ class Gurucontroller extends Controller
         return response()->download($filePath, $downloadName);
     }
 
-    public function upload($id)
+    public function upload(Guru $guru)
     {
-        $guru = Guru::findOrFail($id);
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -334,10 +381,8 @@ class Gurucontroller extends Controller
         return view('admin.guru.upload', compact('title', 'user', 'guru'));
     }
 
-    public function updateUpload(Request $request, $id)
+    public function updateUpload(Request $request, Guru $guru)
     {
-        $guru = Guru::findOrFail($id);
-
         $rules = [
             'foto' => ($guru->foto ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
             'scan_kk' => ($guru->scan_kk ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
@@ -392,7 +437,7 @@ class Gurucontroller extends Controller
             foreach ($fields as $field) {
                 if ($request->hasFile($field)) {
                     $file = $request->file($field);
-                    $filename = $field . '_' . $id . '_' . time() . '.' . $file->getClientOriginalExtension();
+                    $filename = $field . '_' . $guru->id . '_' . time() . '.' . $file->getClientOriginalExtension();
 
                     // Delete old file if it exists
                     if ($guru->$field && file_exists($destinationPath . '/' . $guru->$field)) {
@@ -421,9 +466,102 @@ class Gurucontroller extends Controller
         }
     }
 
+    public function print(Guru $guru)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        $guru->load([
+            'agama',
+            'keluarga.pekerjaanPasangan',
+            'pendidikan',
+            'provinsi',
+            'kabupaten',
+            'kecamatan',
+            'desaDetail'
+        ]);
+
+        $tahunAktif = \App\Models\TahunAjaran::where('status', '1')->first();
+        $tahunAktifId = $tahunAktif ? $tahunAktif->id : null;
+
+        // Active pembelajaran
+        $activePembelajaran = $guru->pembelajaran()
+            ->where('status_aktif', 1)
+            ->whereHas('rombel', function ($q) use ($tahunAktifId) {
+                if ($tahunAktifId) {
+                    $q->where('tahun_ajaran_id', $tahunAktifId);
+                }
+            })
+            ->with(['rombel.kelas', 'rombel.jurusan', 'mataPelajaran'])
+            ->get();
+
+        // Total teaching hours
+        $totalJamMengajar = $activePembelajaran->sum('jam_mengajar');
+
+        // Total students
+        $uniqueRombelIds = $activePembelajaran->pluck('rombel_id')->unique();
+        $totalSiswa = 0;
+        if ($uniqueRombelIds->isNotEmpty()) {
+            $totalSiswa = \App\Models\PenempatanRombel::whereIn('rombel_id', $uniqueRombelIds)
+                ->where('status_aktif', 1)
+                ->count();
+        }
+
+        // Education priority
+        $jenjangPriority = [
+            'S3' => 10,
+            'S2' => 9,
+            'S1' => 8,
+            'D4' => 7,
+            'D3' => 6,
+            'D2' => 5,
+            'D1' => 4,
+            'SMA' => 3,
+            'SMK' => 3,
+            'MA' => 3,
+            'SMP' => 2,
+            'MTS' => 2,
+            'SD' => 1,
+            'MI' => 1,
+        ];
+        
+        $highestPendidikan = $guru->pendidikan->sortByDesc(function ($p) use ($jenjangPriority) {
+            $priority = $jenjangPriority[strtoupper($p->jenjang)] ?? 0;
+            return [$priority, (int)$p->tahun_lulus];
+        })->first();
+
+        $pendidikanTerakhir = $highestPendidikan 
+            ? ($highestPendidikan->jenjang . ($highestPendidikan->jurusan ? ' - ' . $highestPendidikan->jurusan : ''))
+            : '-';
+
+        // Get the active principal (kepala sekolah)
+        $kepalaSekolah = Guru::where('status_aktif', '1')
+            ->where(function ($q) {
+                $q->where('jabatan_gtk', 'Kepala Sekolah')
+                  ->orWhere('jenis_gtk', 'Kepala Sekolah');
+            })
+            ->first();
+
+        return view('admin.guru.print', compact(
+            'guru', 
+            'tahunAktif', 
+            'activePembelajaran', 
+            'totalJamMengajar', 
+            'totalSiswa', 
+            'pendidikanTerakhir',
+            'kepalaSekolah'
+        ));
+    }
+
     public function hapus(Request $request)
     {
-        Guru::where('id', $request->id)->update([
+        $decoded = \Hashids::decode($request->id);
+        if (empty($decoded)) {
+            return response()->json(['status' => 'error', 'message' => 'ID tidak valid.']);
+        }
+        Guru::where('id', $decoded[0])->update([
             'status_aktif' => '0'
         ]);
 

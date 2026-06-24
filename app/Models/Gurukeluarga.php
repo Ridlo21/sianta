@@ -14,6 +14,7 @@ class Gurukeluarga extends Model
         'nama_ibu',
         'nama_pasangan',
         'pekerjaan_pasangan',
+        'kartu_pasangan',
     ];
 
     public function guru(): BelongsTo

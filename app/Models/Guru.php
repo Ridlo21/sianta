@@ -4,14 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Hashidable;
 
 class Guru extends Model
 {
-    use HasFactory;
+    use HasFactory, Hashidable;
     protected $table = 'guru';
 
+    protected $appends = ['nama_lengkap'];
+
     protected $fillable = [
-        'nip',
+        'niy',
+        'gelar_depan',
+        'gelar_belakang',
         'nuptk',
         'nik',
         'nama',
@@ -37,7 +42,15 @@ class Guru extends Model
         'jenis_gtk',
         'jabatan_gtk',
         'status_kepegawaian',
-        'jurusan_id',
+        'sk_pengangkatan',
+        'tmt_pengangkatan',
+        'lembaga_pengangkat',
+        'npwp',
+        'nama_wajib_pajak',
+        'sekolah_induk',
+        'status_kuliah',
+        'no_surat_tugas',
+        'tgl_surat_tugas',
         'status_aktif',
         'tahun_pensiun',
     ];
@@ -45,11 +58,6 @@ class Guru extends Model
     public function agama()
     {
         return $this->belongsTo(Agama::class, 'agama_id');
-    }
-
-    public function jurusan()
-    {
-        return $this->belongsTo(Jurusan::class, 'jurusan_id');
     }
 
     public function keluarga()
@@ -90,5 +98,12 @@ class Guru extends Model
     public function pembelajaran()
     {
         return $this->hasMany(Pembelajaran::class, 'guru_id');
+    }
+
+    public function getNamaLengkapAttribute()
+    {
+        $gelarDepan = $this->gelar_depan ? trim($this->gelar_depan) . ' ' : '';
+        $gelarBelakang = $this->gelar_belakang ? ', ' . trim($this->gelar_belakang) : '';
+        return $gelarDepan . $this->nama . $gelarBelakang;
     }
 }

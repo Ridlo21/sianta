@@ -26,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>NIP</th>
+                                    <th>NIY</th>
                                     <th>NUPTK</th>
                                     <th>Nama Lengkap</th>
                                     <th>Jenis Kelamin</th>
@@ -48,7 +48,7 @@
         $(document).ready(function() {
             $('#datatables-reponsive').DataTable({
                 paging: true,
-                lengthChange: false,
+                lengthChange: true,
                 searching: true,
                 ordering: false,
                 info: true,
@@ -63,7 +63,7 @@
                         searchable: false
                     },
                     {
-                        data: 'nip'
+                        data: 'niy'
                     },
                     {
                         data: 'nuptk'

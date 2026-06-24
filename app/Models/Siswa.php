@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Hashidable;
 
 class Siswa extends Model
 {
-    use HasFactory;
+    use HasFactory, Hashidable;
     protected $table = 'siswa';
     protected $primaryKey = 'id_person';
 

@@ -174,7 +174,7 @@
                                 </a>
                             @endif
                             <div class="float-end">
-                                <a href="{{ route('siswa.edit.step3', [$siswa->id_person, $st]) }}"
+                                <a href="{{ route('siswa.edit.step3', [$siswa, $st]) }}"
                                     class="btn btn-primary">
                                     <i class="fas fa-arrow-left"></i> Sebelumnya
                                 </a>
@@ -343,7 +343,7 @@
                         if (result.isConfirmed) {
                             $('#loader').css('display', 'flex');
                             $.ajax({
-                                url: "{{ route('siswa.update.step4', $siswa->id_person) }}",
+                                url: "{{ route('siswa.update.step4', $siswa) }}",
                                 type: "PUT",
                                 data: $(this).serialize(),
                                 success: function(response) {

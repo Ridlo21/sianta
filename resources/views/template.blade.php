@@ -134,7 +134,7 @@
 
                     <!-- GROUP: DATA MASTER -->
                     @php
-                        $isMasterActive = in_array($title, ['Periode Akademik', 'Jurusan', 'Guru', 'Siswa']);
+                        $isMasterActive = in_array($title, ['Periode Akademik', 'Jurusan', 'Guru & Tendik', 'Siswa']);
                     @endphp
                     <li class="sidebar-item {{ $isMasterActive ? 'active' : '' }}">
                         <a data-bs-target="#master" data-bs-toggle="collapse"
@@ -168,7 +168,7 @@
                             'Pembagian Kelas Massal',
                             'Mata Pelajaran',
                             'Sebaran Mapel',
-                        ]);
+                        ]) || str_contains($title, 'Jadwal');
                     @endphp
                     <li class="sidebar-item {{ $isAkademikActive ? 'active' : '' }}">
                         <a data-bs-target="#akademik" data-bs-toggle="collapse"
@@ -188,6 +188,9 @@
                             </li>
                             <li class="sidebar-item {{ $title == 'Sebaran Mapel' ? 'active' : '' }}">
                                 <a class='sidebar-link' href='{{ route('sebaran-mapel') }}'>Sebaran Mapel</a>
+                            </li>
+                            <li class="sidebar-item {{ str_contains($title, 'Jadwal') ? 'active' : '' }}">
+                                <a class='sidebar-link' href='{{ route('jadwal') }}'>Jadwal Pelajaran</a>
                             </li>
                         </ul>
                     </li>

@@ -221,7 +221,7 @@
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
                     $.ajax({
-                        url: "{{ route('siswa.update.step1', $siswa->id_person) }}",
+                        url: "{{ route('siswa.update.step1', $siswa) }}",
                         type: "PUT",
                         data: $(this).serialize(),
                         success: function(response) {
@@ -273,7 +273,7 @@
                         url: "{{ route('siswa.batal') }}",
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            "id": "{{ $siswa->id_person }}"
+                            "id": "{{ $siswa->getRouteKey() }}"
                         },
                         success: function(hasil) {
                             $('#loader').css('display', 'none');

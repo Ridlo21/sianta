@@ -4,6 +4,7 @@
         .container-fluid .card {
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
+
         .container-fluid .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
@@ -14,10 +15,11 @@
             <div class="col-auto d-none d-sm-block">
                 <h3><strong>Dashboard</strong></h3>
             </div>
-            @if($periodeAktif)
+            @if ($periodeAktif)
                 <div class="col-auto ms-auto text-end mt-n1">
                     <span class="badge bg-primary p-2">
-                        Periode Aktif: {{ $periodeAktif->awal }}/{{ $periodeAktif->akhir }} - Semester {{ $periodeAktif->semester }}
+                        Periode Aktif: {{ $periodeAktif->awal }}/{{ $periodeAktif->akhir }} - Semester
+                        {{ $periodeAktif->semester }}
                     </span>
                 </div>
             @endif
@@ -156,53 +158,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Row Tables (Siswa Pendaftar Terbaru) -->
-        <div class="row">
-            <div class="col-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Pendaftaran Siswa Terbaru</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover my-0">
-                            <thead>
-                                <tr>
-                                    <th>Nama Siswa</th>
-                                    <th class="d-none d-xl-table-cell">NISN</th>
-                                    <th class="d-none d-xl-table-cell">Asal Sekolah</th>
-                                    <th>Status Data</th>
-                                    <th>Jurusan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($siswaTerbaru as $siswa)
-                                    <tr>
-                                        <td><strong>{{ $siswa->nama }}</strong></td>
-                                        <td class="d-none d-xl-table-cell">{{ $siswa->nisn ?? '-' }}</td>
-                                        <td class="d-none d-xl-table-cell">{{ $siswa->asal_sekolah ?? '-' }}</td>
-                                        <td>
-                                            @if($siswa->status_step == 4)
-                                                <span class="badge bg-success">Lengkap (Step 4)</span>
-                                            @else
-                                                <span class="badge bg-warning">Proses (Step {{ $siswa->status_step }})</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-info">{{ $siswa->jurusan->kode_nomenklatur ?? '-' }}</span>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted">Belum ada data pendaftar.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
