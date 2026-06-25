@@ -123,3 +123,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/jadwal/version/{id}/delete', [App\Http\Controllers\JadwalController::class, 'deleteVersion'])->name('jadwal.version.delete');
     Route::post('/admin/jadwal/version/{id}/activate', [App\Http\Controllers\JadwalController::class, 'activateVersion'])->name('jadwal.version.activate');
 });
+

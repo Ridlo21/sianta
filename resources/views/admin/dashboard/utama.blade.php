@@ -2,12 +2,66 @@
 @section('content')
     <style>
         .container-fluid .card {
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-left-width 0.15s ease;
+            border-left: 4px solid transparent;
+            border-radius: 0.5rem;
+        }
+
+        .container-fluid .card-border-primary {
+            border-left-color: #3b7ddd !important;
+        }
+        .container-fluid .card-border-success {
+            border-left-color: #1cbb8c !important;
+        }
+        .container-fluid .card-border-warning {
+            border-left-color: #fcb92c !important;
+        }
+        .container-fluid .card-border-purple {
+            border-left-color: #8f5fe8 !important;
         }
 
         .container-fluid .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+            border-left-width: 7px;
+        }
+
+        .container-fluid .card-border-primary:hover {
+            box-shadow: 0 12px 24px rgba(59, 125, 221, 0.15) !important;
+        }
+        .container-fluid .card-border-success:hover {
+            box-shadow: 0 12px 24px rgba(28, 187, 140, 0.15) !important;
+        }
+        .container-fluid .card-border-warning:hover {
+            box-shadow: 0 12px 24px rgba(252, 185, 44, 0.15) !important;
+        }
+        .container-fluid .card-border-purple:hover {
+            box-shadow: 0 12px 24px rgba(143, 95, 232, 0.15) !important;
+        }
+
+        /* Stat Icon Hover Micro-animation */
+        .container-fluid .card .stat i {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .container-fluid .card:hover .stat i {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        /* Custom stat icon colors */
+        .stat-icon-primary {
+            background: rgba(59, 125, 221, 0.1) !important;
+            color: #3b7ddd !important;
+        }
+        .stat-icon-success {
+            background: rgba(28, 187, 140, 0.1) !important;
+            color: #1cbb8c !important;
+        }
+        .stat-icon-warning {
+            background: rgba(252, 185, 44, 0.1) !important;
+            color: #fcb92c !important;
+        }
+        .stat-icon-purple {
+            background: rgba(143, 95, 232, 0.1) !important;
+            color: #8f5fe8 !important;
         }
     </style>
     <div class="container-fluid p-0">
@@ -29,14 +83,14 @@
         <div class="row">
             <!-- Total Siswa -->
             <div class="col-sm-6 col-xl-3">
-                <div class="card">
+                <div class="card card-border-primary">
                     <div class="card-body">
                         <div class="row">
                             <div class="col mt-0">
                                 <h5 class="card-title">Total Siswa Aktif</h5>
                             </div>
                             <div class="col-auto">
-                                <div class="stat text-primary">
+                                <div class="stat stat-icon-primary">
                                     <i class="align-middle" data-feather="users"></i>
                                 </div>
                             </div>
@@ -51,14 +105,14 @@
 
             <!-- Total Guru -->
             <div class="col-sm-6 col-xl-3">
-                <div class="card">
+                <div class="card card-border-success">
                     <div class="card-body">
                         <div class="row">
                             <div class="col mt-0">
                                 <h5 class="card-title">Guru & Pendidik</h5>
                             </div>
                             <div class="col-auto">
-                                <div class="stat text-primary">
+                                <div class="stat stat-icon-success">
                                     <i class="align-middle" data-feather="user-check"></i>
                                 </div>
                             </div>
@@ -73,14 +127,14 @@
 
             <!-- Total Rombel -->
             <div class="col-sm-6 col-xl-3">
-                <div class="card">
+                <div class="card card-border-warning">
                     <div class="card-body">
                         <div class="row">
                             <div class="col mt-0">
                                 <h5 class="card-title">Rombongan Belajar</h5>
                             </div>
                             <div class="col-auto">
-                                <div class="stat text-primary">
+                                <div class="stat stat-icon-warning">
                                     <i class="align-middle" data-feather="home"></i>
                                 </div>
                             </div>
@@ -95,14 +149,14 @@
 
             <!-- Total Mapel -->
             <div class="col-sm-6 col-xl-3">
-                <div class="card">
+                <div class="card card-border-purple">
                     <div class="card-body">
                         <div class="row">
                             <div class="col mt-0">
                                 <h5 class="card-title">Mata Pelajaran</h5>
                             </div>
                             <div class="col-auto">
-                                <div class="stat text-primary">
+                                <div class="stat stat-icon-purple">
                                     <i class="align-middle" data-feather="book"></i>
                                 </div>
                             </div>
@@ -148,11 +202,17 @@
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
-                                        <td>Laki-laki (L)</td>
+                                        <td>
+                                            <span class="d-inline-block rounded-circle me-2" style="width: 10px; height: 10px; background-color: #3b7ddd; vertical-align: middle; margin-top: -2px;"></span>
+                                            Laki-laki (L)
+                                        </td>
                                         <td class="text-end font-weight-bold">{{ $siswaLaki }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Perempuan (P)</td>
+                                        <td>
+                                            <span class="d-inline-block rounded-circle me-2" style="width: 10px; height: 10px; background-color: #ff758c; vertical-align: middle; margin-top: -2px;"></span>
+                                            Perempuan (P)
+                                        </td>
                                         <td class="text-end font-weight-bold">{{ $siswaPerempuan }}</td>
                                     </tr>
                                 </tbody>
@@ -169,18 +229,30 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // 1. Chart Batang (Jurusan)
-            new Chart(document.getElementById("chart-jurusan"), {
+            const ctxJurusan = document.getElementById("chart-jurusan").getContext("2d");
+            const gradientJurusan = ctxJurusan.createLinearGradient(0, 0, 0, 300);
+            gradientJurusan.addColorStop(0, "rgba(59, 125, 221, 0.85)"); // primary top
+            gradientJurusan.addColorStop(0.5, "rgba(95, 116, 232, 0.55)"); // indigo middle
+            gradientJurusan.addColorStop(1, "rgba(143, 95, 232, 0.05)"); // purple faded bottom
+
+            const gradientJurusanHover = ctxJurusan.createLinearGradient(0, 0, 0, 300);
+            gradientJurusanHover.addColorStop(0, "rgba(59, 125, 221, 1)");
+            gradientJurusanHover.addColorStop(0.5, "rgba(95, 116, 232, 0.75)");
+            gradientJurusanHover.addColorStop(1, "rgba(143, 95, 232, 0.15)");
+
+            new Chart(ctxJurusan, {
                 type: "bar",
                 data: {
                     labels: {!! json_encode($jurusanLabels) !!},
                     datasets: [{
                         label: "Jumlah Siswa",
-                        backgroundColor: window.theme.primary,
-                        borderColor: window.theme.primary,
-                        hoverBackgroundColor: window.theme.primary,
-                        hoverBorderColor: window.theme.primary,
+                        backgroundColor: gradientJurusan,
+                        borderColor: "rgba(59, 125, 221, 1)",
+                        borderWidth: 1.5,
+                        hoverBackgroundColor: gradientJurusanHover,
+                        hoverBorderColor: "rgba(59, 125, 221, 1)",
                         data: {!! json_encode($jurusanCounts) !!},
-                        barPercentage: .75,
+                        barPercentage: .6,
                         categoryPercentage: .5
                     }]
                 },
@@ -192,35 +264,65 @@
                     scales: {
                         yAxes: [{
                             gridLines: {
-                                display: false
+                                display: true,
+                                color: "rgba(0, 0, 0, 0.04)",
+                                zeroLineColor: "transparent",
+                                drawBorder: false
                             },
                             stacked: false,
                             ticks: {
-                                stepSize: 20
+                                stepSize: 20,
+                                fontColor: "#8e9aad",
+                                fontSize: 11
                             }
                         }],
                         xAxes: [{
                             stacked: false,
                             gridLines: {
-                                color: "transparent"
+                                color: "transparent",
+                                drawBorder: false
+                            },
+                            ticks: {
+                                fontColor: "#8e9aad",
+                                fontSize: 11
                             }
                         }]
+                    },
+                    tooltips: {
+                        intersect: false,
+                        backgroundColor: "rgba(30, 41, 59, 0.95)",
+                        titleFontColor: "#fff",
+                        bodyFontColor: "#fff",
+                        bodySpacing: 4,
+                        padding: 10,
+                        cornerRadius: 6,
+                        displayColors: false
                     }
                 }
             });
 
             // 2. Chart Donat (Gender)
-            new Chart(document.getElementById("chart-gender"), {
+            const ctxGender = document.getElementById("chart-gender").getContext("2d");
+            const gradientMale = ctxGender.createLinearGradient(0, 0, 0, 200);
+            gradientMale.addColorStop(0, "#3b7ddd");
+            gradientMale.addColorStop(1, "#5b9cfd");
+
+            const gradientFemale = ctxGender.createLinearGradient(0, 0, 0, 200);
+            gradientFemale.addColorStop(0, "#ff758c");
+            gradientFemale.addColorStop(1, "#ff7eb3");
+
+            new Chart(ctxGender, {
                 type: "doughnut",
                 data: {
                     labels: ["Laki-laki", "Perempuan"],
                     datasets: [{
                         data: [{{ $siswaLaki }}, {{ $siswaPerempuan }}],
                         backgroundColor: [
-                            window.theme.primary,
-                            window.theme.warning
+                            gradientMale,
+                            gradientFemale
                         ],
-                        borderWidth: 5
+                        borderWidth: 4,
+                        borderColor: "#ffffff"
                     }]
                 },
                 options: {
@@ -229,7 +331,14 @@
                     legend: {
                         display: false
                     },
-                    cutoutPercentage: 75
+                    cutoutPercentage: 75,
+                    tooltips: {
+                        backgroundColor: "rgba(30, 41, 59, 0.95)",
+                        bodyFontColor: "#fff",
+                        padding: 10,
+                        cornerRadius: 6,
+                        displayColors: true
+                    }
                 }
             });
         });
