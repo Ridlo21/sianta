@@ -15,4 +15,9 @@ class Periode extends Model
         'semester',
         'status',
     ];
+
+    public function getTahunAttribute()
+    {
+        return $this->awal . '/' . $this->akhir;
+    }
 }

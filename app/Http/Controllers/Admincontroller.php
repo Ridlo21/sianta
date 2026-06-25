@@ -43,7 +43,7 @@ class Admincontroller extends Controller
         $jurusanLabels = [];
         $jurusanCounts = [];
         foreach ($jurusanList as $jurusan) {
-            $jurusanLabels[] = $jurusan->kode_nomenklatur;
+            $jurusanLabels[] = $jurusan->kons_keahlian;
             $jurusanCounts[] = Siswa::where('status', 'Aktif')->where('jurusan_id', $jurusan->id)->count();
         }
 

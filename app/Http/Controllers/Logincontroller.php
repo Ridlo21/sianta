@@ -10,7 +10,8 @@ class Logincontroller extends Controller
     public function index()
     {
         $title = 'Login | SIANTA';
-        return view('auth.login', compact('title'));
+        $tahunAjaran = \App\Models\Periode::where('status', 1)->first();
+        return view('auth.login', compact('title', 'tahunAjaran'));
     }
 
     public function loginuser(Request $request)

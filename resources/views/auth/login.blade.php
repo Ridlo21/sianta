@@ -459,9 +459,10 @@
 
                                     <input type="email" class="form-control" name="email" id="email"
                                         placeholder="Masukkan email" data-parsley-required="true"
-                                        data-parsley-type="email">
+                                        data-parsley-type="email" data-parsley-errors-container="#email-errors">
 
                                 </div>
+                                <div id="email-errors"></div>
 
                             </div>
 
@@ -479,13 +480,15 @@
                                     </span>
 
                                     <input type="password" class="form-control" name="password" id="password"
-                                        placeholder="Masukkan password" data-parsley-required="true">
+                                        placeholder="Masukkan password" data-parsley-required="true"
+                                        data-parsley-errors-container="#password-errors">
 
                                     <span class="input-group-text" id="togglePassword" style="cursor:pointer">
                                         <i class="bi bi-eye-slash"></i>
                                     </span>
 
                                 </div>
+                                <div id="password-errors"></div>
 
                             </div>
 
@@ -513,7 +516,7 @@
                         </div>
 
                         <!-- INFO -->
-                        {{-- <div class="info-box mb-3">
+                        <div class="info-box mb-3">
 
                             <div class="d-flex align-items-center gap-3">
 
@@ -524,7 +527,11 @@
                                 <div>
 
                                     <div class="fw-bold">
-                                        Tahun Ajaran 2026/2027
+                                        @if ($tahunAjaran)
+                                            Periode {{ $tahunAjaran->tahun }} Semester {{ $tahunAjaran->semester }}
+                                        @else
+                                            Tahun Ajaran
+                                        @endif
                                     </div>
 
                                     <div class="small text-muted">
@@ -535,7 +542,7 @@
 
                             </div>
 
-                        </div> --}}
+                        </div>
 
                         <!-- STATS -->
                         <div class="row g-3">
