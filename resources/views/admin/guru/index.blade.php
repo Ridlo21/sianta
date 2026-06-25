@@ -14,11 +14,14 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">List Guru</h5>
-                        <h6 class="card-subtitle text-muted">Daftar guru yang terdaftar dan aktif dalam sistem akademik.
-                            Data guru digunakan sebagai dasar pengelolaan tenaga pendidik, pembagian tugas mengajar,
+                        <h5 class="card-title">List Guru & Tendik</h5>
+                        <h6 class="card-subtitle text-muted">Daftar guru dan tendik yang terdaftar dan aktif dalam sistem
+                            akademik.
+                            Data guru dan tendik digunakan sebagai dasar pengelolaan tenaga pendidik, pembagian tugas
+                            mengajar,
                             penjadwalan pelajaran, penetapan wali kelas, serta berbagai proses administrasi dan akademik
-                            lainnya. Pastikan data guru selalu diperbarui sesuai dengan kondisi dan penugasan yang berlaku.
+                            lainnya. Pastikan data guru dan tendik selalu diperbarui sesuai dengan kondisi dan penugasan
+                            yang berlaku.
                         </h6>
                     </div>
                     <div class="card-body">

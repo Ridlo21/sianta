@@ -47,6 +47,16 @@ class Admincontroller extends Controller
             $jurusanCounts[] = Siswa::where('status', 'Aktif')->where('jurusan_id', $jurusan->id)->count();
         }
 
+        // 4. Data Terbaru
+        $recentSiswa = Siswa::where('status', 'Aktif')
+            ->latest('id_person')
+            ->take(5)
+            ->get();
+        $recentGuru = Guru::where('status_aktif', 1)
+            ->latest('id')
+            ->take(5)
+            ->get();
+
         // 5. Periode Aktif
         $periodeAktif = Periode::where('status', 1)->first();
 
@@ -61,7 +71,9 @@ class Admincontroller extends Controller
             'siswaPerempuan',
             'jurusanLabels',
             'jurusanCounts',
-            'periodeAktif'
+            'periodeAktif',
+            'recentSiswa',
+            'recentGuru'
         ));
     }
 }

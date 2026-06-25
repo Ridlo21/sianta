@@ -19,23 +19,22 @@
         <!-- Academic Year Section -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="card border-0 shadow-sm bg-primary text-white overflow-hidden mb-0">
+                <div class="card border-0 shadow-sm bg-primary overflow-hidden mb-0">
                     <div class="card-body p-4 position-relative">
                         <div class="row align-items-center">
                             <div class="col-md-8">
-                                <h3 class="fw-bold text-white mb-1">Manajemen Rombel</h3>
-                                <p class="text-white-50 mb-0 font-weight-normal">Kelola kelompok belajar (rombel)
+                                <h3 class="fw-bold mb-1">Manajemen Rombel</h3>
+                                <p class="mb-0 font-weight-normal">Kelola kelompok belajar (rombel)
                                     berdasarkan tingkat kelas, jurusan, dan alokasikan siswa untuk periode akademik
                                     berjalan.</p>
                             </div>
                             <div class="col-md-4 text-md-end mt-3 mt-md-0">
                                 <div
                                     class="d-inline-flex align-items-center bg-white bg-opacity-10 px-4 py-2.5 rounded-3 border border-white border-opacity-10 shadow-xs">
-                                    <i data-feather="calendar" class="text-white me-2"
-                                        style="width: 20px; height: 20px;"></i>
+                                    <i data-feather="calendar" class="me-2" style="width: 20px; height: 20px;"></i>
                                     <div>
-                                        <div class="text-xs text-white-50 lh-1">Tahun Ajaran Aktif</div>
-                                        <div class="fw-bold text-white fs-5 mt-0.5">
+                                        <div class="text-xs lh-1">Tahun Ajaran Aktif</div>
+                                        <div class="fw-bold fs-5 mt-0.5">
                                             {{ $tahun ? $tahun->tahun_ajaran : 'Tidak Ada' }}</div>
                                     </div>
                                 </div>
