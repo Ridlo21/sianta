@@ -21,6 +21,9 @@ Route::get('/', function () {
     $guruAktifCount = \App\Models\Guru::where('status_aktif', 1)->count();
     return view('welcome', compact('siswaAktifCount', 'guruAktifCount'));
 });
+
+Route::get('/guru/profile/{guru}', [Gurucontroller::class, 'publicProfile'])->name('guru.public-profile');
+
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [Admincontroller::class, 'index'])->name('dashboard');
 

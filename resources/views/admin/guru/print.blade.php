@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
         * {
             box-sizing: border-box;
         }
+
         body {
             background-color: #f1f3f5;
             margin: 0;
@@ -35,6 +37,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.06);
         }
+
         .btn {
             padding: 8px 16px;
             border-radius: 6px;
@@ -48,21 +51,26 @@
             text-decoration: none;
             transition: all 0.2s ease;
         }
+
         .btn-back {
             background-color: #e9ecef;
             color: #495057;
         }
+
         .btn-back:hover {
             background-color: #dee2e6;
         }
+
         .btn-print {
             background-color: #3b7ddd;
             color: #ffffff;
         }
+
         .btn-print:hover {
             background-color: #2b6cb0;
             box-shadow: 0 4px 12px rgba(59, 125, 221, 0.3);
         }
+
         .control-title {
             font-weight: bold;
             color: #212529;
@@ -91,52 +99,62 @@
             margin-bottom: 15px;
             width: 100%;
         }
+
         .kop-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
         .kop-logo-container {
             width: 80px;
             display: flex;
             justify-content: flex-start;
             align-items: center;
         }
+
         .kop-logo {
             width: 80px;
             height: auto;
             object-fit: contain;
         }
+
         .kop-text {
             text-align: center;
             flex-grow: 1;
             padding: 0 10px;
         }
+
         .kop-right-spacer {
             width: 80px;
         }
+
         .kop-yayasan {
             font-size: 14pt;
             font-weight: bold;
             margin: 0;
             line-height: 1.2;
         }
+
         .kop-smk {
             font-size: 18pt;
             font-weight: bold;
             margin: 2px 0 4px 0;
             line-height: 1.2;
         }
+
         .kop-nss {
             font-size: 9.5pt;
             font-weight: bold;
             margin: 2px 0;
         }
+
         .kop-kompetensi {
             font-size: 8.5pt;
             font-weight: bold;
             margin: 2px 0;
         }
+
         .kop-address {
             border: 1px solid #000000;
             padding: 3px 6px;
@@ -146,6 +164,7 @@
             margin-top: 8px;
             line-height: 1.3;
         }
+
         .kop-address .underline {
             text-decoration: underline;
         }
@@ -160,6 +179,7 @@
             margin-top: 10px;
             margin-bottom: 5px;
         }
+
         .doc-meta {
             text-align: center;
             font-size: 8.5pt;
@@ -172,13 +192,16 @@
             border-collapse: collapse;
             margin-bottom: 10px;
         }
-        .print-table th, .print-table td {
+
+        .print-table th,
+        .print-table td {
             border: 1px solid #999;
             padding: 4px 8px;
             font-size: 8.5pt;
             vertical-align: middle;
             text-align: left;
         }
+
         .print-table th {
             background-color: #f8f9fa;
             font-weight: bold;
@@ -191,9 +214,11 @@
             font-weight: bold;
             font-style: italic;
         }
+
         .col-val {
             width: 45%;
         }
+
         .col-info {
             width: 30%;
             color: #555;
@@ -204,12 +229,15 @@
             width: 6%;
             text-align: center;
         }
+
         .col-rombel {
             width: 47%;
         }
+
         .col-mapel {
             width: 37%;
         }
+
         .col-jam {
             width: 10%;
             text-align: center;
@@ -224,37 +252,45 @@
             padding-right: 20px;
             padding-left: 20px;
         }
+
         .qr-container {
             width: 120px;
             text-align: center;
         }
+
         .qr-box {
             border: 1px solid #ccc;
             padding: 5px;
             background: #fff;
             display: inline-block;
         }
+
         .qr-box img {
             width: 110px;
             height: 110px;
             display: block;
         }
+
         .sig-container {
             width: 250px;
             text-align: left;
             font-size: 9.5pt;
         }
+
         .sig-date {
             margin-bottom: 5px;
         }
+
         .sig-title {
             margin-bottom: 60px;
         }
+
         .sig-name {
             font-weight: bold;
             text-decoration: underline;
             text-transform: uppercase;
         }
+
         .sig-niy {
             font-size: 9pt;
             color: #111;
@@ -267,14 +303,17 @@
             line-height: 1.4;
             color: #222;
         }
+
         .notes-section h4 {
             margin: 0 0 5px 0;
             font-weight: bold;
         }
+
         .notes-section ol {
             margin: 0;
             padding-left: 15px;
         }
+
         .notes-section li {
             margin-bottom: 4px;
             text-align: justify;
@@ -286,6 +325,7 @@
                 size: A4 portrait;
                 margin: 12mm 15mm 12mm 15mm;
             }
+
             body {
                 background-color: #ffffff;
                 margin: 0;
@@ -293,9 +333,11 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
             .no-print {
                 display: none !important;
             }
+
             .print-page {
                 box-shadow: none !important;
                 border: none !important;
@@ -304,6 +346,7 @@
                 padding: 0 !important;
                 margin: 0 !important;
             }
+
             .page-break {
                 page-break-after: always;
                 height: 0;
@@ -311,12 +354,15 @@
                 padding: 0;
                 border: none;
             }
-            .print-table th, .print-table td {
+
+            .print-table th,
+            .print-table td {
                 border: 1px solid #000000 !important;
             }
         }
     </style>
 </head>
+
 <body>
 
     <!-- On-screen Navigation and Action Control Bar -->
@@ -341,20 +387,25 @@
                 <div class="kop-text">
                     <div class="kop-yayasan">YAYASAN NURUL ABROR AL-ROBBANIYIN</div>
                     <div class="kop-smk">SMK NURUL ABROR AL-ROBBANIYIN</div>
-                    <div class="kop-nss">NSS : 402052521043 &nbsp;&nbsp;&nbsp;&nbsp; NPSN : 69852107 &nbsp;&nbsp;&nbsp;&nbsp; Terakreditasi : B</div>
-                    <div class="kop-kompetensi">Kompetensi Keahlian : 833 - Akuntansi dan Keuangan Lembaga &nbsp;&nbsp;&nbsp;&nbsp; 411 - Rekayasa Perangkat Lunak</div>
+                    <div class="kop-nss">NSS : 402052521043 &nbsp;&nbsp;&nbsp;&nbsp; NPSN : 69852107
+                        &nbsp;&nbsp;&nbsp;&nbsp; Terakreditasi : B</div>
+                    <div class="kop-kompetensi">Kompetensi Keahlian : 833 - Akuntansi dan Keuangan Lembaga
+                        &nbsp;&nbsp;&nbsp;&nbsp; 411 - Rekayasa Perangkat Lunak</div>
                 </div>
                 <div class="kop-right-spacer"></div>
             </div>
             <div class="kop-address">
-                Jl. KH. Agus Salim No. 165 Alasbuluh Wongsorejo Banyuwangi 68453 HP. 0813 8002 6064 e-mail : <span class="underline">smkrobbany@gmail.com</span>, Website : <span class="underline">http://www.smknaa.com</span>
+                Jl. KH. Agus Salim No. 165 Alasbuluh Wongsorejo Banyuwangi 68453 HP. 0813 8002 6064 e-mail : <span
+                    class="underline">smkrobbany@gmail.com</span>, Website : <span
+                    class="underline">http://www.smknaa.com</span>
             </div>
         </div>
 
         <!-- Title -->
         <div class="doc-title">Profil Guru</div>
         <div class="doc-meta">
-            Data berikut dikeluarkan melalui aplikasi SIANTA pada tanggal {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }} Pukul: {{ \Carbon\Carbon::now()->format('H:i:s') }}
+            Data berikut dikeluarkan melalui aplikasi SIANTA pada tanggal
+            {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }} Pukul: {{ \Carbon\Carbon::now()->format('H:i:s') }}
         </div>
 
         <!-- Attributes Table -->
@@ -370,17 +421,7 @@
                 <tr>
                     <td class="col-attr">Tanggal Perubahan</td>
                     <td class="col-val">{{ $guru->updated_at ? $guru->updated_at->format('Y-m-d H:i:s') : '-' }}</td>
-                    <td class="col-info">Diperoleh dari tabel GTK</td>
-                </tr>
-                <tr>
-                    <td class="col-attr">Sinkronisasi Terakhir</td>
-                    <td class="col-val">
-                        @php
-                            $syncTime = $guru->updated_at ? $guru->updated_at->subMinutes(15) : \Carbon\Carbon::now()->subMinutes(15);
-                        @endphp
-                        {{ $syncTime->format('Y-m-d H:i:s') }}
-                    </td>
-                    <td class="col-info">Diperoleh dari tabel log sinkronisasi</td>
+                    <td class="col-info">Diperoleh dari tabel Guru & Tendik</td>
                 </tr>
                 <tr>
                     <td class="col-attr">Nomor Surat Tugas</td>
@@ -418,7 +459,7 @@
                 <tr>
                     <td class="col-attr">TTL</td>
                     <td class="col-val">
-                        {{ strtoupper($guru->tempat_lahir ?? '-') }}, 
+                        {{ strtoupper($guru->tempat_lahir ?? '-') }},
                         {{ $guru->tanggal_lahir ? \Carbon\Carbon::parse($guru->tanggal_lahir)->translatedFormat('d F Y') : '-' }}
                     </td>
                     <td class="col-info">Tempat dan tanggal lahir</td>
@@ -464,7 +505,9 @@
                 </tr>
                 <tr>
                     <td class="col-attr">Pekerjaan {{ $guru->jenis_kelamin == 'L' ? 'Istri' : 'Suami' }}</td>
-                    <td class="col-val">{{ $guru->keluarga->pekerjaanPasangan->nama_pekerjaan ?? $guru->keluarga->pekerjaan_pasangan ?? '-' }}</td>
+                    <td class="col-val">
+                        {{ $guru->keluarga->pekerjaanPasangan->nama_pekerjaan ?? ($guru->keluarga->pekerjaan_pasangan ?? '-') }}
+                    </td>
                     <td class="col-info"></td>
                 </tr>
                 <tr>
@@ -577,7 +620,8 @@
                             Tingkat: Kelas {{ $p->rombel->kelas->nama_kelas ?? '-' }}<br>
                             Nama: {{ $p->rombel->nama_rombel ?? '-' }}<br>
                             Kurikulum: SMK Merdeka {{ $p->rombel->jurusan->kons_keahlian ?? '' }}<br>
-                            Jumlah Anggota Rombel: {{ $p->rombel->penempatanRombel()->where('status_aktif', 1)->count() }}
+                            Jumlah Anggota Rombel:
+                            {{ $p->rombel->penempatanRombel()->where('status_aktif', 1)->count() }}
                         </td>
                         <td class="col-mapel">
                             {{ $p->mataPelajaran->kode_mapel ?? '' }} - {{ $p->mataPelajaran->nama_mapel ?? '' }}<br>
@@ -587,11 +631,13 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" style="text-align: center; font-style: italic; padding: 10px;">Tidak ada data pembelajaran aktif.</td>
+                        <td colspan="4" style="text-align: center; font-style: italic; padding: 10px;">Tidak ada
+                            data pembelajaran aktif.</td>
                     </tr>
                 @endforelse
                 <tr style="font-weight: bold;">
-                    <td colspan="3" style="text-align: center; text-transform: uppercase;">Jumlah Total Jam Mengajar</td>
+                    <td colspan="3" style="text-align: center; text-transform: uppercase;">Jumlah Total Jam
+                        Mengajar</td>
                     <td class="col-jam">{{ $totalJamMengajar }}</td>
                 </tr>
             </tbody>
@@ -603,9 +649,10 @@
             <div class="qr-container">
                 <div class="qr-box">
                     @php
-                        $qrData = urlencode(route('guru.print', $guru));
+                        $qrData = urlencode(route('guru.public-profile', $guru));
                     @endphp
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=110&data={{ $qrData }}" alt="Tanda Tangan Elektronik QR">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=110&data={{ $qrData }}"
+                        alt="Tanda Tangan Elektronik QR">
                 </div>
             </div>
 
@@ -614,15 +661,15 @@
                 <div class="sig-date">Kab. Banyuwangi, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
                 <div class="sig-title">Menyetujui,</div>
                 <div class="sig-name">
-                    @if($kepalaSekolah)
+                    @if ($kepalaSekolah)
                         {{ $kepalaSekolah->nama_lengkap }}
                     @else
                         NAILUL FAUZIYAH, S.Pd.
                     @endif
                 </div>
                 <div class="sig-niy">
-                    NIY/NIGK: 
-                    @if($kepalaSekolah)
+                    NIY/NIGK:
+                    @if ($kepalaSekolah)
                         {{ $kepalaSekolah->niy ?? '-' }}
                     @else
                         33302330138066
@@ -635,13 +682,19 @@
         <div class="notes-section">
             <h4>Catatan:</h4>
             <ol>
-                <li>Data dalam formulir ini bersifat sangat rahasia, mohon digunakan secara bijak. Menyebarkan data berikut tanpa seizin pemilik data dapat dikenakan sanksi sesuai dengan undang-undang yang berlaku.</li>
-                <li>Untuk kepentingan tunjangan dan aneka kebijakan akan dilakukan validasi dan verifikasi oleh Direktorat Jenderal Guru dan Tenaga Kependidikan, Kemendikdasmen.</li>
-                <li>Kebenaran data merupakan tanggung jawab dari pendidik yang bersangkutan</li>
-                <li>Untuk kelompok mata pelajaran muatan sekolah dan tambahan tidak diperhitungkan untuk beban mengajar kecuali Guru BK dan Guru TIK pada Kurikulum 2013</li>
+                <li>Data yang diinput pada formulir ini bersifat rahasia dan hanya digunakan untuk kepentingan
+                    administrasi melalui aplikasi SIANTA.
+                </li>
+                <li>Pastikan seluruh data yang diisikan benar, lengkap, dan sesuai dengan dokumen yang dimiliki.</li>
+                <li>Data dapat diverifikasi dan divalidasi oleh administrator sebelum digunakan dalam proses
+                    administrasi.</li>
+                <li>Pengguna bertanggung jawab atas kebenaran data yang diinput.</li>
+                <li>Dilarang menyebarluaskan data pribadi tanpa izin dari pemilik data sesuai dengan ketentuan peraturan
+                    perundang-undangan yang berlaku.</li>
             </ol>
         </div>
     </div>
 
 </body>
+
 </html>

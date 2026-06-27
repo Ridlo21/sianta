@@ -555,6 +555,70 @@ class Gurucontroller extends Controller
         ));
     }
 
+    public function publicProfile(Guru $guru)
+    {
+        $guru->load([
+            'agama',
+            'pendidikan',
+            'provinsi',
+            'kabupaten',
+            'kecamatan',
+            'desaDetail'
+        ]);
+
+        $tahunAktif = \App\Models\TahunAjaran::where('status', '1')->first();
+        $tahunAktifId = $tahunAktif ? $tahunAktif->id : null;
+
+        // Active pembelajaran
+        $activePembelajaran = $guru->pembelajaran()
+            ->where('status_aktif', 1)
+            ->whereHas('rombel', function ($q) use ($tahunAktifId) {
+                if ($tahunAktifId) {
+                    $q->where('tahun_ajaran_id', $tahunAktifId);
+                }
+            })
+            ->with(['rombel.kelas', 'rombel.jurusan', 'mataPelajaran'])
+            ->get();
+
+        // Total teaching hours
+        $totalJamMengajar = $activePembelajaran->sum('jam_mengajar');
+
+        // Education priority
+        $jenjangPriority = [
+            'S3' => 10,
+            'S2' => 9,
+            'S1' => 8,
+            'D4' => 7,
+            'D3' => 6,
+            'D2' => 5,
+            'D1' => 4,
+            'SMA' => 3,
+            'SMK' => 3,
+            'MA' => 3,
+            'SMP' => 2,
+            'MTS' => 2,
+            'SD' => 1,
+            'MI' => 1,
+        ];
+        
+        $highestPendidikan = $guru->pendidikan->sortByDesc(function ($p) use ($jenjangPriority) {
+            $priority = $jenjangPriority[strtoupper($p->jenjang)] ?? 0;
+            return [$priority, (int)$p->tahun_lulus];
+        })->first();
+
+        $pendidikanTerakhir = $highestPendidikan 
+            ? ($highestPendidikan->jenjang . ($highestPendidikan->jurusan ? ' - ' . $highestPendidikan->jurusan : ''))
+            : '-';
+
+        return view('admin.guru.public_profile', compact(
+            'guru', 
+            'tahunAktif', 
+            'activePembelajaran', 
+            'totalJamMengajar', 
+            'pendidikanTerakhir'
+        ));
+    }
+
     public function hapus(Request $request)
     {
         $decoded = \Hashids::decode($request->id);
