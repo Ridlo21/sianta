@@ -664,7 +664,7 @@
                     @if ($kepalaSekolah)
                         {{ $kepalaSekolah->nama_lengkap }}
                     @else
-                        NAILUL FAUZIYAH, S.Pd.
+                        Anda Belum Mengaktifkan Akun Kepala Sekolah
                     @endif
                 </div>
                 <div class="sig-niy">
