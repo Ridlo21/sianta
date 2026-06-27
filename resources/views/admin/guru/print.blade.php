@@ -664,7 +664,7 @@
                     @if ($kepalaSekolah)
                         {{ $kepalaSekolah->nama_lengkap }}
                     @else
-                        Anda Belum Mengaktifkan Akun Kepala Sekolah
+                        Kepala Sekolah Belum Diinput
                     @endif
                 </div>
                 <div class="sig-niy">
