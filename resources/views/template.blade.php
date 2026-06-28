@@ -910,6 +910,18 @@
     <script src="{{ asset('asset_admin') }}/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('asset_admin') }}/select2/js/select2.full.min.js"></script>
     <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+
+            if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+                e.preventDefault();
+            }
+        });
+
         function logout() {
             Swal.fire({
                 title: '{{ __('Anda yakin?') }}',
@@ -944,15 +956,6 @@
             });
         });
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12') {
-                e.preventDefault();
-            }
-
-            if (e.ctrlKey && e.key.toLowerCase() === 'u') {
-                e.preventDefault();
-            }
-        });
         // Theme Switcher Functions
         function setTheme(mode) {
             localStorage.setItem('theme', mode);
