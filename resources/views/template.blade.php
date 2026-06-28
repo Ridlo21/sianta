@@ -27,11 +27,11 @@
             if (savedTheme === 'auto') {
                 theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
-            
-            const themeUrl = theme === 'dark' 
-                ? '{{ asset("asset_admin/css/dark.css") }}' 
-                : '{{ asset("asset_admin/css/light.css") }}';
-            
+
+            const themeUrl = theme === 'dark' ?
+                '{{ asset('asset_admin/css/dark.css') }}' :
+                '{{ asset('asset_admin/css/light.css') }}';
+
             document.write('<link id="theme-stylesheet" href="' + themeUrl + '" rel="stylesheet">');
             document.documentElement.setAttribute('data-theme', theme);
         })();
@@ -60,7 +60,8 @@
 
         [data-theme="dark"] {
             /* Variables for Dark Theme */
-            --bg-card: #151c2e; /* dark blue-slate */
+            --bg-card: #151c2e;
+            /* dark blue-slate */
             --border-card: rgba(255, 255, 255, 0.05);
             --text-main: #94a3b8;
             --text-muted: #64748b;
@@ -75,6 +76,7 @@
             --input-border: rgba(255, 255, 255, 0.08);
             --input-text: #f8fafc;
         }
+
         body {
             opacity: 0;
         }
@@ -120,7 +122,8 @@
 
         /* Premium Modern Sidebar Theme Overrides */
         .sidebar {
-            background: #09142e !important; /* Deep midnight navy blue */
+            background: #09142e !important;
+            /* Deep midnight navy blue */
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.03);
         }
@@ -218,7 +221,7 @@
         }
 
         /* Active Sidebar Link (Top-Level) */
-        .sidebar-item.active > .sidebar-link {
+        .sidebar-item.active>.sidebar-link {
             background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%) !important;
             color: #ffffff !important;
             border-left-color: #60a5fa !important;
@@ -226,7 +229,7 @@
             font-weight: 600 !important;
         }
 
-        .sidebar-item.active > .sidebar-link i {
+        .sidebar-item.active>.sidebar-link i {
             color: #ffffff !important;
         }
 
@@ -285,7 +288,7 @@
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
-        
+
         .card-header {
             background: transparent !important;
             border-bottom: 1px solid var(--border-card) !important;
@@ -319,7 +322,7 @@
         }
 
         /* Style for small buttons (.btn-sm) and table actions to keep them neat, compact, and equal size */
-        .btn-sm, 
+        .btn-sm,
         .table .btn,
         .dataTables_wrapper .btn {
             padding: 0.35rem 0.6rem !important;
@@ -378,12 +381,14 @@
             border: 1px solid var(--input-border) !important;
             color: var(--input-text) !important;
             border-radius: 10px !important;
-            padding: 0.45rem 2.25rem 0.45rem 0.85rem !important; /* Space for the dropdown arrow */
+            padding: 0.45rem 2.25rem 0.45rem 0.85rem !important;
+            /* Space for the dropdown arrow */
             font-size: 0.875rem !important;
             transition: all 0.2s ease !important;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #3b82f6 !important;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
             outline: none !important;
@@ -455,9 +460,11 @@
             width: 100% !important;
             display: block !important;
         }
+
         .dataTables_wrapper {
             width: 100% !important;
         }
+
         .dataTables_wrapper .col-sm-12 {
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
@@ -472,27 +479,33 @@
             height: 38px !important;
             border-radius: 10px !important;
         }
+
         [data-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: var(--input-text) !important;
             line-height: 36px !important;
         }
+
         [data-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 36px !important;
         }
+
         [data-theme="dark"] .select2-dropdown {
             background-color: var(--input-bg) !important;
             border-color: var(--input-border) !important;
             color: var(--input-text) !important;
             border-radius: 10px !important;
         }
+
         [data-theme="dark"] .select2-container--default .select2-results__option--highlighted[aria-selected] {
             background-color: #2563eb !important;
             color: #ffffff !important;
         }
+
         [data-theme="dark"] .select2-container--default .select2-results__option[aria-selected=true] {
             background-color: rgba(37, 99, 235, 0.15) !important;
             color: #ffffff !important;
         }
+
         [data-theme="dark"] .select2-search--dropdown .select2-search__field {
             background-color: var(--input-bg) !important;
             border-color: var(--input-border) !important;
@@ -506,6 +519,7 @@
             border-color: var(--input-border) !important;
             border-radius: 4px !important;
         }
+
         .form-check-input:checked {
             background-color: #2563eb !important;
             border-color: #2563eb !important;
@@ -520,7 +534,10 @@
             padding-left: 0 !important;
             font-weight: 600;
         }
-        input.parsley-error, select.parsley-error, textarea.parsley-error {
+
+        input.parsley-error,
+        select.parsley-error,
+        textarea.parsley-error {
             border-color: #ef4444 !important;
             box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
         }
@@ -620,13 +637,14 @@
 
                     <!-- GROUP: AKADEMIK -->
                     @php
-                        $isAkademikActive = in_array($title, [
-                            'Rombel',
-                            'Kelola Detail Rombel',
-                            'Pembagian Kelas Massal',
-                            'Mata Pelajaran',
-                            'Sebaran Mapel',
-                        ]) || str_contains($title, 'Jadwal');
+                        $isAkademikActive =
+                            in_array($title, [
+                                'Rombel',
+                                'Kelola Detail Rombel',
+                                'Pembagian Kelas Massal',
+                                'Mata Pelajaran',
+                                'Sebaran Mapel',
+                            ]) || str_contains($title, 'Jadwal');
                     @endphp
                     <li class="sidebar-item {{ $isAkademikActive ? 'active' : '' }}">
                         <a data-bs-target="#akademik" data-bs-toggle="collapse"
@@ -813,19 +831,23 @@
                         </li> --}}
                         <!-- Theme Toggle Selector -->
                         <li class="nav-item dropdown me-2">
-                            <a class="nav-icon dropdown-toggle" href="#" id="themeDropdown" data-bs-toggle="dropdown">
+                            <a class="nav-icon dropdown-toggle" href="#" id="themeDropdown"
+                                data-bs-toggle="dropdown">
                                 <div class="position-relative" id="theme-icon-container">
                                     <i class="align-middle" data-feather="sun"></i>
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
-                                <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setTheme('light'); event.preventDefault();">
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="#"
+                                    onclick="setTheme('light'); event.preventDefault();">
                                     <i data-feather="sun" style="width: 14px; height: 14px;"></i> Terang (Light)
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setTheme('dark'); event.preventDefault();">
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="#"
+                                    onclick="setTheme('dark'); event.preventDefault();">
                                     <i data-feather="moon" style="width: 14px; height: 14px;"></i> Gelap (Dark)
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setTheme('auto'); event.preventDefault();">
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="#"
+                                    onclick="setTheme('auto'); event.preventDefault();">
                                     <i data-feather="monitor" style="width: 14px; height: 14px;"></i> Sistem (Auto)
                                 </a>
                             </div>
@@ -869,8 +891,7 @@
                         <div class="col-6 text-end">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <span class="text-muted" href="#">Developed By <a
-                                            href="https://github.com/Ridlo21" target="_blank">Inurri99</a></span>
+                                    <span class="text-muted">Version <a>1.0</a></span>
                                 </li>
                             </ul>
                         </div>
@@ -939,23 +960,23 @@
             if (mode === 'auto') {
                 theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
-            
+
             // Update stylesheet link
             const stylesheet = document.getElementById('theme-stylesheet');
             if (stylesheet) {
-                const themeUrl = theme === 'dark' 
-                    ? '{{ asset("asset_admin/css/dark.css") }}' 
-                    : '{{ asset("asset_admin/css/light.css") }}';
+                const themeUrl = theme === 'dark' ?
+                    '{{ asset('asset_admin/css/dark.css') }}' :
+                    '{{ asset('asset_admin/css/light.css') }}';
                 stylesheet.setAttribute('href', themeUrl);
             }
-            
+
             // Set attributes
             document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'default');
             document.documentElement.setAttribute('data-theme', theme);
-            
+
             // Update Toggle icons
             updateThemeToggleUI(mode);
-            
+
             // Trigger customized chart color changes if we are on dashboard
             if (typeof updateChartsTheme === 'function') {
                 updateChartsTheme(theme);
@@ -965,14 +986,14 @@
         function updateThemeToggleUI(mode) {
             const container = document.getElementById('theme-icon-container');
             if (!container) return;
-            
+
             let featherIcon = 'sun';
             if (mode === 'dark') {
                 featherIcon = 'moon';
             } else if (mode === 'auto') {
                 featherIcon = 'monitor';
             }
-            
+
             container.innerHTML = `<i class="align-middle" data-feather="${featherIcon}"></i>`;
             if (window.feather) {
                 feather.replace();
@@ -982,7 +1003,7 @@
         // Apply theme early on load
         (function() {
             const savedTheme = localStorage.getItem('theme') || 'auto';
-            
+
             // Listen for system theme changes if set to auto
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
                 if (localStorage.getItem('theme') === 'auto') {
@@ -993,15 +1014,15 @@
             document.addEventListener('DOMContentLoaded', function() {
                 // Set initial opacity to show body smoothly after theme resolves
                 document.body.style.opacity = 1;
-                
+
                 let theme = savedTheme;
                 if (savedTheme === 'auto') {
                     theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
                 }
-                
+
                 document.body.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'default');
                 document.documentElement.setAttribute('data-theme', theme);
-                
+
                 updateThemeToggleUI(savedTheme);
             });
         })();
