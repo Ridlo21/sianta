@@ -47,18 +47,39 @@ class Admincontroller extends Controller
             $jurusanCounts[] = Siswa::where('status', 'Aktif')->where('jurusan_id', $jurusan->id)->count();
         }
 
-        // 4. Data Terbaru
-        $recentSiswa = Siswa::where('status', 'Aktif')
-            ->latest('id_person')
-            ->take(5)
+        // 4. Data Grafik Siswa per Angkatan (Tahun Masuk)
+        $angkatanList = Siswa::selectRaw('YEAR(COALESCE(tgl_daftar, created_at)) as angkatan, count(*) as total')
+            ->where('status', 'Aktif')
+            ->groupBy('angkatan')
+            ->orderBy('angkatan', 'asc')
             ->get();
-        $recentGuru = Guru::where('status_aktif', 1)
-            ->latest('id')
-            ->take(5)
-            ->get();
+
+        $angkatanLabels = [];
+        $angkatanCounts = [];
+        foreach ($angkatanList as $item) {
+            $angkatanLabels[] = 'Angkatan ' . ($item->angkatan ?? 'N/A');
+            $angkatanCounts[] = $item->total;
+        }
 
         // 5. Periode Aktif
         $periodeAktif = Periode::where('status', 1)->first();
+
+        // 6. Data Grafik Rombel (Jumlah Siswa per Rombel)
+        $rombelList = Rombel::where('status', 1)
+            ->when($tahunAktif, function ($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })
+            ->withCount(['penempatanRombel' => function ($query) {
+                $query->where('status_aktif', 1);
+            }])
+            ->get();
+
+        $rombelLabels = [];
+        $rombelCounts = [];
+        foreach ($rombelList as $rombel) {
+            $rombelLabels[] = $rombel->nama_rombel;
+            $rombelCounts[] = $rombel->penempatan_rombel_count;
+        }
 
         return view('admin.dashboard.utama', compact(
             'title',
@@ -72,8 +93,10 @@ class Admincontroller extends Controller
             'jurusanLabels',
             'jurusanCounts',
             'periodeAktif',
-            'recentSiswa',
-            'recentGuru'
+            'rombelLabels',
+            'rombelCounts',
+            'angkatanLabels',
+            'angkatanCounts'
         ));
     }
 }
