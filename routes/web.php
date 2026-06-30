@@ -91,7 +91,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/rombel/update', [Rombelcontroller::class, 'update'])->name('rombel.update');
     Route::post('/admin/rombel/hapus', [Rombelcontroller::class, 'hapus'])->name('rombel.hapus');
     Route::get('/admin/rombel/detail/{id}', [Rombelcontroller::class, 'show'])->name('rombel.show-detail');
-    Route::get('/admin/rombel/detail-json/{id}', [Rombelcontroller::class, 'detailJson'])->name('rombel.detail.json');
     Route::post('/admin/rombel/set-wali', [Rombelcontroller::class, 'setWali'])->name('rombel.set-wali');
     Route::post('/admin/rombel/pindah-siswa', [Rombelcontroller::class, 'pindahSiswa'])->name('rombel.pindah-siswa');
     Route::post('/admin/rombel/tambah-siswa', [Rombelcontroller::class, 'tambahSiswa'])->name('rombel.tambah-siswa');

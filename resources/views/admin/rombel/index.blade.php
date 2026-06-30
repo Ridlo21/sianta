@@ -364,6 +364,8 @@
                             let jurusanName = r.jurusan ? r.jurusan.program_keahlian : 'Umum';
                             let detailUrl = "{{ route('rombel.show-detail', ':id') }}".replace(
                                 ':id', r.id);
+                            let printUrl = "{{ route('rombel.print', ':id') }}".replace(
+                                ':id', r.id);
                             html += `
                                 <tr>
                                     <td>${idx + 1}</td>
@@ -378,6 +380,9 @@
                                         <div class="d-flex justify-content-center gap-1">
                                             <a href="${detailUrl}" class="btn btn-sm btn-primary" title="Kelola Rombel Detail">
                                                 <i class="align-middle" data-feather="external-link" style="width: 14px; height: 14px;"></i>
+                                            </a>
+                                            <a href="${printUrl}" target="_blank" class="btn btn-sm btn-success" title="Cetak PDF">
+                                                <i class="align-middle" data-feather="printer" style="width: 14px; height: 14px;"></i>
                                             </a>
                                             <button class="btn btn-sm btn-info btnViewStudents" data-id="${r.id}" title="Lihat Siswa">
                                                 <i class="align-middle" data-feather="users" style="width: 14px; height: 14px;"></i>
@@ -435,6 +440,8 @@
                         let jurusanName = r.jurusan ? r.jurusan.program_keahlian : 'Umum';
                         let detailUrl = "{{ route('rombel.show-detail', ':id') }}".replace(':id', r
                             .id);
+                        let printUrl = "{{ route('rombel.print', ':id') }}".replace(':id', r
+                            .id);
                         html += `
                             <tr>
                                 <td>${idx + 1}</td>
@@ -449,6 +456,9 @@
                                     <div class="d-flex justify-content-center gap-1">
                                         <a href="${detailUrl}" class="btn btn-sm btn-primary" title="Kelola Rombel Detail">
                                             <i class="align-middle" data-feather="external-link" style="width: 14px; height: 14px;"></i>
+                                        </a>
+                                        <a href="${printUrl}" target="_blank" class="btn btn-sm btn-success" title="Cetak PDF">
+                                            <i class="align-middle" data-feather="printer" style="width: 14px; height: 14px;"></i>
                                         </a>
                                         <button class="btn btn-sm btn-info btnViewStudents" data-id="${r.id}" title="Lihat Siswa">
                                             <i class="align-middle" data-feather="users" style="width: 14px; height: 14px;"></i>

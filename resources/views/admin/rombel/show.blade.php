@@ -104,6 +104,9 @@
                                 <h5 class="card-title mb-0 fw-bold">Daftar Siswa Rombel</h5>
                             </div>
                             <div class="col-auto text-end d-flex gap-2">
+                                <a href="{{ route('rombel.print', $rombel->id) }}" target="_blank" class="btn btn-sm btn-success shadow-sm fw-bold">
+                                    <i data-feather="printer" class="feather-sm me-1"></i> Cetak PDF
+                                </a>
                                 <button class="btn btn-sm btn-primary shadow-sm fw-bold" id="btnTambahSiswa">
                                     <i data-feather="user-plus" class="feather-sm"></i> Tambah Siswa
                                 </button>

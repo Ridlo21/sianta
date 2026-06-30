@@ -446,4 +446,26 @@ class Rombelcontroller extends Controller
             ]);
         }
     }
+
+    public function print($id)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        $rombel = Rombel::with(['kelas', 'jurusan'])->findOrFail($id);
+
+        $placements = PenempatanRombel::where('rombel_id', $id)
+            ->where('status_aktif', 1)
+            ->with('siswa')
+            ->get();
+            
+        $students = $placements->pluck('siswa')->sortBy('nama')->values();
+
+        $tahun = TahunAjaran::where('status', '1')->first();
+        $periode = \App\Models\Periode::where('status', 1)->first();
+
+        return view('admin.rombel.print', compact('rombel', 'students', 'tahun', 'periode'));
+    }
 }

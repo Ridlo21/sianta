@@ -4,7 +4,31 @@
         /* Custom Dashboard Styles */
         .dashboard-container {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: #1e293b;
+            color: var(--text-main);
+        }
+
+        .text-theme-value {
+            color: var(--text-value) !important;
+        }
+
+        .text-theme-main {
+            color: var(--text-main) !important;
+        }
+
+        .bg-primary-subtle {
+            background-color: rgba(37, 99, 235, 0.08) !important;
+        }
+
+        .bg-success-subtle {
+            background-color: rgba(16, 185, 129, 0.08) !important;
+        }
+
+        .bg-info-subtle {
+            background-color: rgba(6, 182, 212, 0.08) !important;
+        }
+
+        .bg-warning-subtle {
+            background-color: rgba(245, 158, 11, 0.08) !important;
         }
 
         /* Welcome Banner */
@@ -28,7 +52,7 @@
             width: 320px;
             height: 320px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
             pointer-events: none;
         }
 
@@ -40,7 +64,7 @@
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
             pointer-events: none;
         }
 
@@ -69,7 +93,7 @@
             font-size: 0.85rem;
             font-weight: 600;
             color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -77,8 +101,8 @@
 
         /* Metric Cards */
         .metric-card {
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.7);
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
             border-radius: 16px !important;
             padding: 1.5rem;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -105,9 +129,9 @@
         .metric-card-value {
             font-size: 2.25rem;
             font-weight: 700;
-            color: #0f172a;
+            color: var(--text-value);
             line-height: 1;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.25rem;
             letter-spacing: -0.03em;
         }
 
@@ -134,6 +158,7 @@
             background: rgba(37, 99, 235, 0.07) !important;
             color: #2563eb !important;
         }
+
         .metric-card:hover .stat-blue {
             background: #2563eb !important;
             color: #ffffff !important;
@@ -145,6 +170,7 @@
             background: rgba(16, 185, 129, 0.07) !important;
             color: #10b981 !important;
         }
+
         .metric-card:hover .stat-green {
             background: #10b981 !important;
             color: #ffffff !important;
@@ -156,6 +182,7 @@
             background: rgba(245, 158, 11, 0.07) !important;
             color: #f59e0b !important;
         }
+
         .metric-card:hover .stat-amber {
             background: #f59e0b !important;
             color: #ffffff !important;
@@ -167,6 +194,7 @@
             background: rgba(6, 182, 212, 0.07) !important;
             color: #0891b2 !important;
         }
+
         .metric-card:hover .stat-purple {
             background: #0891b2 !important;
             color: #ffffff !important;
@@ -183,6 +211,7 @@
             padding: 0.25rem 0.5rem;
             border-radius: 6px;
         }
+
         .badge-soft-green {
             background-color: rgba(16, 185, 129, 0.08);
             color: #10b981;
@@ -191,6 +220,7 @@
             padding: 0.25rem 0.5rem;
             border-radius: 6px;
         }
+
         .badge-soft-amber {
             background-color: rgba(245, 158, 11, 0.08);
             color: #f59e0b;
@@ -199,6 +229,7 @@
             padding: 0.25rem 0.5rem;
             border-radius: 6px;
         }
+
         .badge-soft-purple {
             background-color: rgba(6, 182, 212, 0.08);
             color: #0891b2;
@@ -217,14 +248,14 @@
         .quick-access-title {
             font-size: 1.05rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-value);
             margin-bottom: 1rem;
             letter-spacing: -0.01em;
         }
 
         .quick-card {
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.7);
+            background: var(--bg-quick-card);
+            border: 1px solid var(--border-card);
             border-radius: 14px;
             padding: 1.1rem 1.25rem;
             display: flex;
@@ -232,7 +263,7 @@
             justify-content: space-between;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.005);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.005);
         }
 
         .quick-card:hover {
@@ -259,7 +290,7 @@
         .quick-card-name {
             font-weight: 600;
             font-size: 0.95rem;
-            color: #334155;
+            color: var(--text-main);
             transition: color 0.2s ease;
         }
 
@@ -279,8 +310,8 @@
 
         /* Charts */
         .chart-card {
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.7);
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
             border-radius: 16px !important;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01) !important;
             overflow: hidden;
@@ -290,7 +321,7 @@
 
         .chart-card-header {
             background: transparent;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+            border-bottom: 1px solid var(--border-card);
             padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -300,7 +331,7 @@
         .chart-card-title {
             font-size: 1rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-value);
             margin-bottom: 0;
         }
 
@@ -317,12 +348,12 @@
         }
 
         .gender-table tr {
-            background: rgba(248, 250, 252, 0.6);
+            background: var(--bg-table-row);
             transition: all 0.2s ease;
         }
 
         .gender-table tr:hover {
-            background: rgba(241, 245, 249, 1);
+            background: var(--bg-table-hover);
         }
 
         .gender-table td {
@@ -330,7 +361,7 @@
             padding: 0.75rem 1rem !important;
             vertical-align: middle;
             font-weight: 550;
-            color: #475569;
+            color: var(--text-table-label);
         }
 
         .gender-table td:first-child {
@@ -342,27 +373,47 @@
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
             text-align: right;
-            color: #0f172a;
+            color: var(--text-value);
             font-weight: 700;
+        }
+
+        /* Customize navigation pills for the tab */
+        #recent-tab .nav-link {
+            border-radius: 8px !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            color: var(--text-muted) !important;
+            background: transparent;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-card) !important;
+        }
+
+        #recent-tab .nav-link.active {
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%) !important;
+            border-color: transparent !important;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15) !important;
         }
     </style>
 
     <div class="container-fluid p-0 dashboard-container">
-        
+
         <!-- Modern Welcome Banner -->
         <div class="welcome-banner">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h3 class="welcome-banner-title">Selamat datang kembali, {{ $user->name }}! 👋</h3>
                     <p class="welcome-banner-text mb-0">
-                        Berikut adalah rangkuman statistik data akademik hari ini. Sistem berjalan dengan normal dan siap melayani aktivitas manajemen sekolah Anda.
+                        Berikut adalah rangkuman statistik data akademik hari ini. Sistem berjalan dengan normal dan siap
+                        melayani aktivitas manajemen sekolah Anda.
                     </p>
                 </div>
                 @if ($periodeAktif)
                     <div class="col-md-4 text-md-end mt-3 mt-md-0">
                         <div class="welcome-badge-glass">
                             <i data-feather="calendar" style="width: 16px; height: 16px;"></i>
-                            <span>Periode Aktif: {{ $periodeAktif->awal }}/{{ $periodeAktif->akhir }} (Smtr {{ $periodeAktif->semester }})</span>
+                            <span>Periode Aktif: {{ $periodeAktif->awal }}/{{ $periodeAktif->akhir }} (Smtr
+                                {{ $periodeAktif->semester }})</span>
                         </div>
                     </div>
                 @endif
@@ -378,6 +429,13 @@
                         <div>
                             <h5 class="metric-card-title">Total Siswa</h5>
                             <h1 class="metric-card-value">{{ $totalSiswa }}</h1>
+                            <div class="d-flex align-items-center gap-1 mt-1 mb-2">
+                                <span class="text-success small fw-semibold d-flex align-items-center">
+                                    <i data-feather="arrow-up-right"
+                                        style="width: 14px; height: 14px; stroke-width: 2.5;"></i> +2.4%
+                                </span>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">semester ini</span>
+                            </div>
                         </div>
                         <div class="metric-icon-wrapper stat-blue">
                             <i data-feather="users" style="width: 22px; height: 22px;"></i>
@@ -397,6 +455,13 @@
                         <div>
                             <h5 class="metric-card-title">Pendidik</h5>
                             <h1 class="metric-card-value">{{ $totalGuru }}</h1>
+                            <div class="d-flex align-items-center gap-1 mt-1 mb-2">
+                                <span class="text-success small fw-semibold d-flex align-items-center">
+                                    <i data-feather="arrow-up-right"
+                                        style="width: 14px; height: 14px; stroke-width: 2.5;"></i> +1.2%
+                                </span>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">tahun ini</span>
+                            </div>
                         </div>
                         <div class="metric-icon-wrapper stat-green">
                             <i data-feather="user-check" style="width: 22px; height: 22px;"></i>
@@ -416,6 +481,12 @@
                         <div>
                             <h5 class="metric-card-title">Rombel</h5>
                             <h1 class="metric-card-value">{{ $totalRombel }}</h1>
+                            <div class="d-flex align-items-center gap-1 mt-1 mb-2">
+                                <span class="text-muted small fw-semibold d-flex align-items-center">
+                                    <i data-feather="minus" style="width: 14px; height: 14px; stroke-width: 2.5;"></i> 0.0%
+                                </span>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">statis</span>
+                            </div>
                         </div>
                         <div class="metric-icon-wrapper stat-amber">
                             <i data-feather="home" style="width: 22px; height: 22px;"></i>
@@ -435,6 +506,13 @@
                         <div>
                             <h5 class="metric-card-title">Mata Pelajaran</h5>
                             <h1 class="metric-card-value">{{ $totalMapel }}</h1>
+                            <div class="d-flex align-items-center gap-1 mt-1 mb-2">
+                                <span class="text-info small fw-semibold d-flex align-items-center">
+                                    <i data-feather="check" style="width: 14px; height: 14px; stroke-width: 2.5;"></i> K.
+                                    Merdeka
+                                </span>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">aktif</span>
+                            </div>
                         </div>
                         <div class="metric-icon-wrapper stat-purple">
                             <i data-feather="book" style="width: 22px; height: 22px;"></i>
@@ -530,14 +608,16 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <span class="d-inline-block rounded-circle me-2" style="width: 10px; height: 10px; background: linear-gradient(135deg, #1d4ed8, #60a5fa); vertical-align: middle;"></span>
+                                            <span class="d-inline-block rounded-circle me-2"
+                                                style="width: 10px; height: 10px; background: linear-gradient(135deg, #1d4ed8, #60a5fa); vertical-align: middle;"></span>
                                             Laki-laki (L)
                                         </td>
                                         <td>{{ $siswaLaki }}</td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="d-inline-block rounded-circle me-2" style="width: 10px; height: 10px; background: linear-gradient(135deg, #ec4899, #f472b6); vertical-align: middle;"></span>
+                                            <span class="d-inline-block rounded-circle me-2"
+                                                style="width: 10px; height: 10px; background: linear-gradient(135deg, #ec4899, #f472b6); vertical-align: middle;"></span>
                                             Perempuan (P)
                                         </td>
                                         <td>{{ $siswaPerempuan }}</td>
@@ -549,12 +629,93 @@
                 </div>
             </div>
         </div>
+
+        <!-- Row Chart Rombel -->
+        <div class="row">
+            <div class="col-12 mb-3 mt-3">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <h5 class="chart-card-title">Kapasitas & Jumlah Siswa per Rombel</h5>
+                    </div>
+                    <div class="chart-card-body" style="min-height: 380px;">
+                        <div style="height: 330px; width: 100%;">
+                            <canvas id="chart-rombel"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row Recent & Info -->
+        <div class="row">
+            <!-- Grafik Siswa per Angkatan -->
+            <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <h5 class="chart-card-title">Perkembangan Siswa per Angkatan</h5>
+                    </div>
+                    <div class="chart-card-body" style="min-height: 250px;">
+                        <div style="height: 200px; width: 100%;">
+                            <canvas id="chart-angkatan"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kalender & Sistem Info Card -->
+            <div class="col-12 col-lg-4">
+                <div class="card flex-fill w-100" style="height: 100%;">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Informasi Sistem</h5>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between" style="min-height: 250px;">
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary-subtle text-primary rounded p-2 me-3">
+                                    <i data-feather="server" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-semibold">Status Server</div>
+                                    <small class="text-success"><span
+                                            class="d-inline-block rounded-circle bg-success me-1"
+                                            style="width: 8px; height: 8px;"></span> Online & Stabil</small>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-info-subtle text-info rounded p-2 me-3">
+                                    <i data-feather="clock" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-semibold">Waktu Server</div>
+                                    <small class="text-muted" id="realtime-clock">--:--:-- WIB</small>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-warning-subtle text-warning rounded p-2 me-3">
+                                    <i data-feather="shield" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-semibold">Keamanan Sesi</div>
+                                    <small class="text-muted">Terlindungi SSL/HTTPS</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-top">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted small">Versi Aplikasi</span>
+                                <span class="badge bg-secondary">v1.2.0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @push('scripts')
     <script>
-        let chartJurusan, chartGender;
+        let chartJurusan, chartGender, chartRombel, chartAngkatan;
 
         // Dynamic Chart Color Theme Function
         window.updateChartsTheme = function(theme) {
@@ -569,17 +730,31 @@
                 chartJurusan.options.scales.xAxes[0].ticks.fontColor = fontColor;
                 chartJurusan.update();
             }
-            
+
             if (chartGender && chartGender.data && chartGender.data.datasets) {
                 chartGender.data.datasets[0].borderColor = borderColor;
                 chartGender.update();
+            }
+
+            if (chartRombel && chartRombel.options && chartRombel.options.scales) {
+                chartRombel.options.scales.xAxes[0].gridLines.color = gridColor;
+                chartRombel.options.scales.xAxes[0].ticks.fontColor = fontColor;
+                chartRombel.options.scales.yAxes[0].ticks.fontColor = fontColor;
+                chartRombel.update();
+            }
+
+            if (chartAngkatan && chartAngkatan.options && chartAngkatan.options.scales) {
+                chartAngkatan.options.scales.yAxes[0].gridLines.color = gridColor;
+                chartAngkatan.options.scales.yAxes[0].ticks.fontColor = fontColor;
+                chartAngkatan.options.scales.xAxes[0].ticks.fontColor = fontColor;
+                chartAngkatan.update();
             }
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             // 1. Chart Batang (Jurusan)
             const ctxJurusan = document.getElementById("chart-jurusan").getContext("2d");
-            
+
             const gradientJurusan = ctxJurusan.createLinearGradient(0, 0, 0, 300);
             gradientJurusan.addColorStop(0, "rgba(37, 99, 235, 0.85)"); // blue-600
             gradientJurusan.addColorStop(1, "rgba(59, 130, 246, 0.05)"); // blue-500 faded
@@ -655,7 +830,7 @@
 
             // 2. Chart Donat (Gender)
             const ctxGender = document.getElementById("chart-gender").getContext("2d");
-            
+
             const gradientMale = ctxGender.createLinearGradient(0, 0, 0, 180);
             gradientMale.addColorStop(0, "#1d4ed8"); // Blue-700
             gradientMale.addColorStop(1, "#60a5fa"); // Sky-400
@@ -696,9 +871,174 @@
                 }
             });
 
+            // 3. Chart Rombel (Horizontal Bar)
+            const ctxRombel = document.getElementById("chart-rombel").getContext("2d");
+
+            const gradientRombel = ctxRombel.createLinearGradient(0, 0, 400, 0);
+            gradientRombel.addColorStop(0, "rgba(16, 185, 129, 0.15)"); // green-500 faded
+            gradientRombel.addColorStop(1, "rgba(16, 185, 129, 0.85)"); // green-500 solid
+
+            const gradientRombelHover = ctxRombel.createLinearGradient(0, 0, 400, 0);
+            gradientRombelHover.addColorStop(0, "rgba(16, 185, 129, 0.3)");
+            gradientRombelHover.addColorStop(1, "rgba(16, 185, 129, 1)");
+
+            chartRombel = new Chart(ctxRombel, {
+                type: "horizontalBar",
+                data: {
+                    labels: {!! json_encode($rombelLabels) !!},
+                    datasets: [{
+                        label: "Jumlah Siswa",
+                        backgroundColor: gradientRombel,
+                        borderColor: "rgba(16, 185, 129, 1)",
+                        borderWidth: 1.5,
+                        hoverBackgroundColor: gradientRombelHover,
+                        hoverBorderColor: "rgba(16, 185, 129, 1)",
+                        data: {!! json_encode($rombelCounts) !!},
+                        barPercentage: .55,
+                        categoryPercentage: .45
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: true,
+                                color: "rgba(226, 232, 240, 0.4)",
+                                zeroLineColor: "transparent",
+                                drawBorder: false
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: "#94a3b8",
+                                fontSize: 11,
+                                fontFamily: "'Inter', sans-serif",
+                                precision: 0
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                color: "transparent",
+                                drawBorder: false
+                            },
+                            ticks: {
+                                fontColor: "#94a3b8",
+                                fontSize: 11,
+                                fontFamily: "'Inter', sans-serif"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        intersect: false,
+                        backgroundColor: "rgba(15, 23, 42, 0.95)",
+                        titleFontColor: "#fff",
+                        titleFontFamily: "'Inter', sans-serif",
+                        bodyFontColor: "#fff",
+                        bodyFontFamily: "'Inter', sans-serif",
+                        bodySpacing: 4,
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false
+                    }
+                }
+            });
+
+            // 4. Chart Angkatan (Vertical Bar)
+            const ctxAngkatan = document.getElementById("chart-angkatan").getContext("2d");
+
+            const gradientAngkatan = ctxAngkatan.createLinearGradient(0, 0, 0, 200);
+            gradientAngkatan.addColorStop(0, "rgba(59, 130, 246, 0.85)"); // blue-500
+            gradientAngkatan.addColorStop(1, "rgba(59, 130, 246, 0.05)"); // blue-500 faded
+
+            const gradientAngkatanHover = ctxAngkatan.createLinearGradient(0, 0, 0, 200);
+            gradientAngkatanHover.addColorStop(0, "rgba(59, 130, 246, 1)");
+            gradientAngkatanHover.addColorStop(1, "rgba(59, 130, 246, 0.2)");
+
+            chartAngkatan = new Chart(ctxAngkatan, {
+                type: "bar",
+                data: {
+                    labels: {!! json_encode($angkatanLabels) !!},
+                    datasets: [{
+                        label: "Siswa Aktif",
+                        backgroundColor: gradientAngkatan,
+                        borderColor: "rgba(59, 130, 246, 1)",
+                        borderWidth: 1.5,
+                        hoverBackgroundColor: gradientAngkatanHover,
+                        hoverBorderColor: "rgba(59, 130, 246, 1)",
+                        data: {!! json_encode($angkatanCounts) !!},
+                        barPercentage: .4,
+                        categoryPercentage: .3
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                display: true,
+                                color: "rgba(226, 232, 240, 0.4)",
+                                zeroLineColor: "transparent",
+                                drawBorder: false
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: "#94a3b8",
+                                fontSize: 11,
+                                fontFamily: "'Inter', sans-serif",
+                                precision: 0
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                color: "transparent",
+                                drawBorder: false
+                            },
+                            ticks: {
+                                fontColor: "#94a3b8",
+                                fontSize: 11,
+                                fontFamily: "'Inter', sans-serif"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        intersect: false,
+                        backgroundColor: "rgba(15, 23, 42, 0.95)",
+                        titleFontColor: "#fff",
+                        titleFontFamily: "'Inter', sans-serif",
+                        bodyFontColor: "#fff",
+                        bodyFontFamily: "'Inter', sans-serif",
+                        bodySpacing: 4,
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false
+                    }
+                }
+            });
+
             // Initialize correct colors immediately based on resolved theme
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             window.updateChartsTheme(currentTheme);
+
+            // Realtime Clock
+            const clockEl = document.getElementById("realtime-clock");
+            if (clockEl) {
+                const updateClock = () => {
+                    const now = new Date();
+                    clockEl.textContent = now.toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    }) + " WIB";
+                };
+                updateClock();
+                setInterval(updateClock, 1000);
+            }
         });
     </script>
 @endpush
