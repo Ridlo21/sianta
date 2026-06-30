@@ -485,7 +485,14 @@
 
                             {{-- TAB 4: DATA BERKAS --}}
                             <div class="tab-pane fade" id="tab-4" role="tabpanel">
-                                <h4 class="fw-bold mb-3 text-dark"><i class="fas fa-folder-open text-primary me-1"></i> Dokumen Pendukung & Berkas</h4>
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+                                    <h4 class="fw-bold mb-0 text-dark"><i class="fas fa-folder-open text-primary me-1"></i> Dokumen Pendukung & Berkas</h4>
+                                    @if ($guru->foto || $guru->scan_kk || $guru->scan_akta || $guru->scan_ktp || $guru->scan_sk || $guru->scan_transkrip_nilai)
+                                        <a href="{{ route('guru.download.zip', $guru) }}" class="btn btn-success fw-bold shadow-xs">
+                                            <i class="fas fa-file-archive me-1"></i> Unduh Semua Berkas (ZIP)
+                                        </a>
+                                    @endif
+                                </div>
                                 <div class="row g-4 justify-content-center">
                                     @php
                                         $foto_file = $guru->foto

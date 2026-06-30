@@ -348,6 +348,7 @@
                                 data: $(this).serialize(),
                                 success: function(response) {
                                     if (response.status == 'success') {
+                                        $('#loader').css('display', 'none');
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Berhasil',

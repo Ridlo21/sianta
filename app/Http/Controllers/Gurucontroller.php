@@ -48,6 +48,9 @@ class Gurucontroller extends Controller
                             <a href="' . route('guru.upload', $row) . '" class="btn btn-success" title="Berkas guru">
                                 <i class="fas fa-image"></i>
                             </a>
+                            <a href="' . route('guru.download.zip', $row) . '" class="btn btn-primary" title="Unduh Semua Berkas (ZIP)">
+                                <i class="fas fa-file-archive"></i>
+                            </a>
                             <a href="' . route('guru.print', $row) . '" target="_blank" class="btn btn-secondary" title="Cetak Berkas">
                                 <i class="fas fa-print"></i>
                             </a>
@@ -240,6 +243,55 @@ class Gurucontroller extends Controller
         return view('admin.guru.show', compact('title', 'user', 'guru'));
     }
 
+    public function downloadZip(Guru $guru)
+    {
+        $fields = [
+            'foto' => 'Foto_Guru',
+            'scan_kk' => 'Kartu_Keluarga',
+            'scan_akta' => 'Akta_Kelahiran',
+            'scan_ktp' => 'KTP',
+            'scan_sk' => 'SK',
+            'scan_transkrip_nilai' => 'Transkrip_Nilai'
+        ];
+
+        $filesToZip = [];
+        foreach ($fields as $field => $label) {
+            $fileName = $guru->$field;
+            if ($fileName) {
+                $filePath = public_path('gambar_berkas/berkas_guru/' . $fileName);
+                if (file_exists($filePath)) {
+                    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+                    $filesToZip[$filePath] = $label . '.' . $extension;
+                }
+            }
+        }
+
+        if (empty($filesToZip)) {
+            return back()->with('error', 'Tidak ada berkas yang diunggah untuk guru ini.');
+        }
+
+        $zipFileName = 'Berkas_' . str_replace(' ', '_', preg_replace('/[^A-Za-z0-9 ]/', '', $guru->nama)) . '_' . time() . '.zip';
+        
+        // Ensure temporary storage directory exists
+        $tempDir = storage_path('app/public/temp_zips');
+        if (!file_exists($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+        $zipPath = $tempDir . '/' . $zipFileName;
+
+        $zip = new \ZipArchive();
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            foreach ($filesToZip as $filePath => $localName) {
+                $zip->addFile($filePath, $localName);
+            }
+            $zip->close();
+        } else {
+            return back()->with('error', 'Gagal membuat file ZIP.');
+        }
+
+        return response()->download($zipPath)->deleteFileAfterSend(true);
+    }
+
     public function downloadBerkas(Guru $guru, $field)
     {
         $fileName = $guru->$field;
@@ -385,17 +437,18 @@ class Gurucontroller extends Controller
     {
         $rules = [
             'foto' => ($guru->foto ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'scan_kk' => ($guru->scan_kk ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'scan_akta' => ($guru->scan_akta ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'scan_ktp' => ($guru->scan_ktp ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'scan_sk' => ($guru->scan_sk ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'scan_transkrip_nilai' => ($guru->scan_transkrip_nilai ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'scan_kk' => ($guru->scan_kk ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'scan_akta' => ($guru->scan_akta ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'scan_ktp' => ($guru->scan_ktp ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'scan_sk' => ($guru->scan_sk ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'scan_transkrip_nilai' => ($guru->scan_transkrip_nilai ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ];
 
         $messages = [
             'required' => ':attribute wajib diunggah.',
             'image' => ':attribute harus berupa gambar.',
-            'mimes' => ':attribute harus berformat JPG, JPEG, atau PNG.',
+            'file' => ':attribute harus berupa berkas.',
+            'mimes' => ':attribute harus berformat JPG, JPEG, PNG, atau PDF.',
             'max' => 'Ukuran :attribute maksimal 2 MB.',
         ];
 

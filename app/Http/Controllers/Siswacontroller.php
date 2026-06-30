@@ -53,6 +53,9 @@ class Siswacontroller extends Controller
                             <a href="' . route('siswa.upload', $row) . '" class="btn btn-success" title="Berkas Siswa">
                                 <i class="fas fa-image"></i>
                             </a>
+                            <a href="' . route('siswa.download.zip', $row) . '" class="btn btn-primary" title="Unduh Semua Berkas (ZIP)">
+                                <i class="fas fa-file-archive"></i>
+                            </a>
                             <a href="' . route('siswa.print', $row) . '" target="_blank" class="btn btn-secondary" title="Cetak Berkas">
                                 <i class="fas fa-print"></i>
                             </a>
@@ -425,7 +428,13 @@ class Siswacontroller extends Controller
         }
         $title = 'Siswa';
 
-        return view('admin.siswa.show', compact('title', 'user', 'siswa'));
+        $rombelHistory = \App\Models\PenempatanRombel::where('siswa_id', $siswa->id_person)
+            ->with(['rombel.kelas', 'rombel.jurusan'])
+            ->orderBy('status_aktif', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('admin.siswa.show', compact('title', 'user', 'siswa', 'rombelHistory'));
     }
 
     public function print(Siswa $siswa)
@@ -488,17 +497,18 @@ class Siswacontroller extends Controller
     {
         $rules = [
             'foto_warna_santri' => ($siswa->foto_warna_santri ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'foto_scan_kk' => ($siswa->foto_scan_kk ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'foto_scan_akta' => ($siswa->foto_scan_akta ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'foto_scan_skck' => ($siswa->foto_scan_skck ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'foto_scan_ket_sehat' => ($siswa->foto_scan_ket_sehat ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
-            'foto_ijazah' => ($siswa->foto_ijazah ? 'nullable' : 'required') . '|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_scan_kk' => ($siswa->foto_scan_kk ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'foto_scan_akta' => ($siswa->foto_scan_akta ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'foto_scan_skck' => ($siswa->foto_scan_skck ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'foto_scan_ket_sehat' => ($siswa->foto_scan_ket_sehat ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'foto_ijazah' => ($siswa->foto_ijazah ? 'nullable' : 'required') . '|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ];
 
         $messages = [
             'required' => ':attribute wajib diunggah.',
             'image' => ':attribute harus berupa gambar.',
-            'mimes' => ':attribute harus berformat JPG, JPEG, atau PNG.',
+            'file' => ':attribute harus berupa berkas.',
+            'mimes' => ':attribute harus berformat JPG, JPEG, PNG, atau PDF.',
             'max' => 'Ukuran :attribute maksimal 2 MB.',
         ];
 
@@ -567,6 +577,55 @@ class Siswacontroller extends Controller
                 'message' => 'Gagal mengunggah berkas: ' . $e->getMessage()
             ]);
         }
+    }
+
+    public function downloadZip(Siswa $siswa)
+    {
+        $fields = [
+            'foto_warna_santri' => 'Foto_Siswa',
+            'foto_scan_kk' => 'Kartu_Keluarga',
+            'foto_scan_akta' => 'Akta_Kelahiran',
+            'foto_scan_skck' => 'SKCK',
+            'foto_scan_ket_sehat' => 'Surat_Sehat',
+            'foto_ijazah' => 'Ijazah'
+        ];
+
+        $filesToZip = [];
+        foreach ($fields as $field => $label) {
+            $fileName = $siswa->$field;
+            if ($fileName) {
+                $filePath = public_path('gambar_berkas/berkas_siswa/' . $fileName);
+                if (file_exists($filePath)) {
+                    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+                    $filesToZip[$filePath] = $label . '.' . $extension;
+                }
+            }
+        }
+
+        if (empty($filesToZip)) {
+            return back()->with('error', 'Tidak ada berkas yang diunggah untuk siswa ini.');
+        }
+
+        $zipFileName = 'Berkas_' . str_replace(' ', '_', preg_replace('/[^A-Za-z0-9 ]/', '', $siswa->nama)) . '_' . time() . '.zip';
+        
+        // Ensure temporary storage directory exists
+        $tempDir = storage_path('app/public/temp_zips');
+        if (!file_exists($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+        $zipPath = $tempDir . '/' . $zipFileName;
+
+        $zip = new \ZipArchive();
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            foreach ($filesToZip as $filePath => $localName) {
+                $zip->addFile($filePath, $localName);
+            }
+            $zip->close();
+        } else {
+            return back()->with('error', 'Gagal membuat file ZIP.');
+        }
+
+        return response()->download($zipPath)->deleteFileAfterSend(true);
     }
 
     public function downloadBerkas(Siswa $siswa, $field)

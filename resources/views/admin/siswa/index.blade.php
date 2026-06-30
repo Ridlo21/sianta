@@ -35,7 +35,7 @@
                                     <th>NIS</th>
                                     <th>NISN</th>
                                     <th>Nama Lengkap</th>
-                                    <th>Asal Sekolah</th>
+                                    <th>Nama Ibu</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -84,7 +84,7 @@
                         data: 'nama'
                     },
                     {
-                        data: 'asal_sekolah'
+                        data: 'nm_i'
                     },
                     {
                         data: 'stats'

@@ -299,6 +299,9 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-berkas-tab" data-bs-toggle="pill" data-bs-target="#tab-4" type="button" role="tab"><i class="fas fa-folder-open me-1"></i> Data Berkas</button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-rombel-tab" data-bs-toggle="pill" data-bs-target="#tab-5" type="button" role="tab"><i class="fas fa-history me-1"></i> Riwayat Rombel</button>
+                            </li>
                         </ul>
 
                         <div class="tab-content" id="pills-tabContent">
@@ -458,7 +461,14 @@
 
                             {{-- TAB 4: DATA BERKAS --}}
                             <div class="tab-pane fade" id="tab-4" role="tabpanel">
-                                <h4 class="fw-bold mb-3 text-dark"><i class="fas fa-folder-open text-primary me-1"></i> Dokumen Pendukung & Berkas</h4>
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+                                    <h4 class="fw-bold mb-0 text-dark"><i class="fas fa-folder-open text-primary me-1"></i> Dokumen Pendukung & Berkas</h4>
+                                    @if ($siswa->foto_warna_santri || $siswa->foto_scan_kk || $siswa->foto_scan_akta || $siswa->foto_scan_skck || $siswa->foto_scan_ket_sehat || $siswa->foto_ijazah)
+                                        <a href="{{ route('siswa.download.zip', $siswa) }}" class="btn btn-success fw-bold shadow-xs">
+                                            <i class="fas fa-file-archive me-1"></i> Unduh Semua Berkas (ZIP)
+                                        </a>
+                                    @endif
+                                </div>
                                 <div class="row g-4 justify-content-center">
                                     {{-- KK --}}
                                     <div class="col-md-6 col-lg-4">
@@ -626,6 +636,51 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- TAB 5: RIWAYAT ROMBEL --}}
+                            <div class="tab-pane fade" id="tab-5" role="tabpanel">
+                                <h4 class="fw-bold mb-3 text-dark"><i class="fas fa-history me-1 text-primary"></i> Riwayat Rombel (Kelas)</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered text-center align-middle">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama Rombel</th>
+                                                <th>Tingkat Kelas</th>
+                                                <th>Jurusan</th>
+                                                <th>Status Rombel</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($rombelHistory as $index => $history)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td class="fw-bold text-primary">{{ $history->rombel->nama_rombel }}</td>
+                                                    <td>{{ $history->rombel->kelas->nama_kelas }}</td>
+                                                    <td>{{ $history->rombel->jurusan->program_keahlian ?? '-' }}</td>
+                                                    <td>
+                                                        @if($history->status_aktif == 1)
+                                                            <span class="badge bg-success px-3 py-2 rounded-pill fs-7 fw-bold">Aktif Saat Ini</span>
+                                                        @else
+                                                            <span class="badge bg-secondary px-3 py-2 rounded-pill fs-7">Alumni / Non-Aktif</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-info text-white fw-bold px-3 shadow-xs" onclick="showRombelDetail({{ $history->rombel_id }})">
+                                                            <i class="fas fa-eye me-1"></i> Lihat Detail
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center text-muted py-4">Belum memiliki riwayat penempatan rombel.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -644,6 +699,49 @@
                 <div class="modal-body text-center bg-dark p-3 rounded-bottom d-flex align-items-center justify-content-center">
                     <img id="modalPreviewImg" src="" class="img-fluid rounded-3 shadow"
                         style="max-height: 75vh; object-fit: contain;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Rombel -->
+    <div class="modal fade" id="rombelDetailModal" tabindex="-1" aria-labelledby="rombelDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-primary text-white py-3 border-0">
+                    <h5 class="modal-title text-white fw-bold" id="rombelDetailModalLabel"><i class="fas fa-school me-2"></i>Detail Rombel</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="border rounded-4 bg-white overflow-hidden g-0">
+                        <div class="detail-row">
+                            <div class="detail-label"><i class="fas fa-school text-muted"></i> Nama Rombel</div>
+                            <div class="detail-value text-dark fw-bold" id="detail_nama_rombel">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label"><i class="fas fa-layer-group text-muted"></i> Tingkat Kelas</div>
+                            <div class="detail-value text-dark" id="detail_tingkat_kelas">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label"><i class="fas fa-graduation-cap text-muted"></i> Jurusan</div>
+                            <div class="detail-value text-dark" id="detail_jurusan">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label"><i class="fas fa-calendar-alt text-muted"></i> Tahun Ajaran</div>
+                            <div class="detail-value text-dark" id="detail_tahun_ajaran">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label"><i class="fas fa-user-tie text-muted"></i> Wali Kelas</div>
+                            <div class="detail-value text-primary fw-bold" id="detail_wali_kelas">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label"><i class="fas fa-users text-muted"></i> Jumlah Siswa</div>
+                            <div class="detail-value text-dark"><span class="badge bg-light text-dark border py-1.5 px-3 fs-7" id="detail_jumlah_siswa">0</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-0 py-3">
+                    <button type="button" class="btn btn-secondary px-4 fw-semibold" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -670,6 +768,42 @@
             
             var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
             myModal.show();
+        }
+
+        function showRombelDetail(rombelId) {
+            $('#loader').css('display', 'flex');
+            $.ajax({
+                url: '/admin/rombel/detail-json/' + rombelId,
+                type: 'GET',
+                success: function(response) {
+                    $('#loader').css('display', 'none');
+                    if (response.rombel) {
+                        $('#detail_nama_rombel').text(response.rombel.nama_rombel);
+                        $('#detail_tingkat_kelas').text(response.rombel.kelas.nama_kelas);
+                        $('#detail_jurusan').text(response.rombel.jurusan ? response.rombel.jurusan.program_keahlian : '-');
+                        $('#detail_tahun_ajaran').text(response.tahun_ajaran);
+                        $('#detail_wali_kelas').text(response.wali_kelas);
+                        $('#detail_jumlah_siswa').text(response.student_count + ' Siswa');
+                        
+                        var modal = new bootstrap.Modal(document.getElementById('rombelDetailModal'));
+                        modal.show();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Data rombel tidak ditemukan.'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    $('#loader').css('display', 'none');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Gagal mengambil data detail rombel.'
+                    });
+                }
+            });
         }
     </script>
 @endpush
