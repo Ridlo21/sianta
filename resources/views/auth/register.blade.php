@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title }}</title>
+    <title>Daftar Akun Guru | SIANTA</title>
     <link rel="shortcut icon" href="{{ asset('asset_login') }}/sianta.png" />
     <link rel="stylesheet" href="{{ asset('asset_admin') }}/parsleyjs/parsley.css" />
     <link href="{{ asset('asset_login') }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -84,8 +84,8 @@
             }
         }
 
-        /* LOGIN CARD */
-        .login-wrapper {
+        /* REGISTER CARD */
+        .register-wrapper {
             width: 100%;
             max-width: 1050px;
             height: 80vh;
@@ -114,7 +114,6 @@
             border-right: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        /* Glowing blob inside left-side */
         .left-side::after {
             content: '';
             position: absolute;
@@ -232,7 +231,7 @@
             color: #64748b;
         }
 
-        /* RIGHT SIDE (Login Form) */
+        /* RIGHT SIDE (Register Form) */
         .right-side {
             background: #ffffff;
             padding: 40px;
@@ -245,20 +244,7 @@
             width: 100%;
         }
 
-        .period-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 5px 12px;
-            background: rgba(99, 102, 241, 0.06);
-            border: 1px solid rgba(99, 102, 241, 0.15);
-            border-radius: 20px;
-            color: #4f46e5;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-        }
-
-        .welcome {
+        .register-title {
             font-family: 'Outfit', sans-serif;
             font-size: 24px;
             font-weight: 700;
@@ -267,9 +253,10 @@
             margin-bottom: 4px;
         }
 
-        .welcome-sub {
+        .register-sub {
             font-size: 13px;
             color: #64748b;
+            margin-bottom: 24px;
         }
 
         .form-label {
@@ -326,19 +313,7 @@
             color: #4f46e5;
         }
 
-        .forgot {
-            font-size: 12px;
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .forgot:hover {
-            color: #312e81;
-        }
-
-        .btn-login {
+        .btn-register-submit {
             height: 44px;
             border-radius: 12px;
             font-size: 13.5px;
@@ -350,17 +325,17 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .btn-login:hover {
+        .btn-register-submit:hover {
             background: linear-gradient(135deg, #4f46e5, #4338ca);
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
         }
 
-        .btn-login:active {
+        .btn-register-submit:active {
             transform: translateY(1px);
         }
 
-        .btn-register {
+        .btn-back-to-login {
             height: 44px;
             border-radius: 12px;
             font-size: 13.5px;
@@ -376,14 +351,14 @@
             text-decoration: none;
         }
 
-        .btn-register:hover {
+        .btn-back-to-login:hover {
             background: rgba(99, 102, 241, 0.05) !important;
             border-color: #4f46e5 !important;
             color: #4f46e5 !important;
             transform: translateY(-1px);
         }
 
-        .btn-register:active {
+        .btn-back-to-login:active {
             transform: translateY(1px);
         }
 
@@ -416,7 +391,7 @@
                 background-color: #f1f5f9;
             }
 
-            .login-wrapper {
+            .register-wrapper {
                 width: 100%;
                 max-width: 440px;
                 height: auto;
@@ -439,14 +414,13 @@
             }
         }
 
-        /* Dynamic viewport check: Allow scrolling only on very small heights (e.g. keyboard active) */
         @media(max-height: 580px) {
             body {
                 overflow-y: auto;
                 align-items: flex-start;
                 padding: 20px 16px;
             }
-            .login-wrapper {
+            .register-wrapper {
                 height: auto !important;
                 max-height: none !important;
             }
@@ -466,14 +440,13 @@
 
     <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
 
-        <div class="login-wrapper">
+        <div class="register-wrapper">
 
             <div class="row g-0 h-100">
 
-                <!-- LEFT -->
+                <!-- LEFT PANEL -->
                 <div class="col-lg-6 left-side d-none d-lg-flex flex-column justify-content-center">
 
-                    <!-- DOT -->
                     <div class="dot-pattern d-grid gap-2"
                         style="grid-template-columns: repeat(5,1fr); width: max-content;">
                         <span></span><span></span><span></span><span></span><span></span>
@@ -516,117 +489,88 @@
 
                 </div>
 
-                <!-- RIGHT -->
+                <!-- RIGHT PANEL -->
                 <div class="col-lg-6 right-side">
 
                     <div class="form-area">
 
-                        <div class="text-center text-lg-start mb-3">
-                            <div class="d-flex justify-content-center justify-content-lg-start mb-1">
-                                <span class="period-badge">
-                                    <i class="bi bi-calendar3 me-2"></i>
-                                    @if ($tahunAjaran)
-                                        {{ $tahunAjaran->tahun }} • Sem. {{ $tahunAjaran->semester }}
-                                    @else
-                                        Tahun Ajaran
-                                    @endif
-                                </span>
+                        <div class="text-center text-lg-start mb-1">
+                            <div class="register-title">
+                                Daftar Akun Guru
                             </div>
 
-                            <div class="welcome">
-                                Selamat Datang Kembali!
-                            </div>
-
-                            <div class="welcome-sub">
-                                Silakan masuk untuk melanjutkan ke aplikasi SIANTA
+                            <div class="register-sub">
+                                Silakan isi data di bawah untuk membuat akun Guru Anda
                             </div>
                         </div>
 
                         <!-- FORM -->
-                        <form id="formLogin" data-parsley-validate>
+                        <form id="formRegister" data-parsley-validate>
 
                             @csrf
 
-                            <!-- EMAIL -->
+                            <!-- NAMA LENGKAP -->
                             <div class="mb-3">
-
-                                <label class="form-label">
-                                    Email
-                                </label>
-
+                                <label class="form-label">Nama Lengkap</label>
                                 <div class="input-group">
-
                                     <span class="input-group-text">
-                                        <i class="bi bi-envelope"></i>
+                                        <i class="bi bi-person"></i>
                                     </span>
-
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Masukkan email" data-parsley-required="true"
-                                        data-parsley-type="email" data-parsley-errors-container="#email-errors">
-
+                                    <input type="text" class="form-control" name="name" id="name"
+                                        placeholder="Masukkan nama lengkap beserta gelar" data-parsley-required="true"
+                                        data-parsley-errors-container="#name-errors">
                                 </div>
-                                <div id="email-errors"></div>
+                                <div id="name-errors"></div>
+                            </div>
 
+                            <!-- USERNAME -->
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person-badge"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="username" id="username"
+                                        placeholder="Masukkan username" data-parsley-required="true"
+                                        data-parsley-pattern="^[a-zA-Z0-9_.]+$" data-parsley-pattern-message="Username hanya boleh berisi huruf, angka, underscore, atau titik"
+                                        data-parsley-errors-container="#username-errors">
+                                </div>
+                                <div id="username-errors"></div>
                             </div>
 
                             <!-- PASSWORD -->
-                            <div class="mb-2">
-
-                                <label class="form-label">
-                                    Password
-                                </label>
-
+                            <div class="mb-4">
+                                <label class="form-label">Password</label>
                                 <div class="input-group">
-
                                     <span class="input-group-text">
                                         <i class="bi bi-lock"></i>
                                     </span>
-
                                     <input type="password" class="form-control" name="password" id="password"
                                         placeholder="Masukkan password" data-parsley-required="true"
-                                        data-parsley-errors-container="#password-errors">
-
+                                        data-parsley-minlength="6" data-parsley-errors-container="#password-errors">
                                     <span class="input-group-text" id="togglePassword" style="cursor:pointer">
                                         <i class="bi bi-eye-slash"></i>
                                     </span>
-
                                 </div>
                                 <div id="password-errors"></div>
-
                             </div>
 
-                            <div class="text-end mb-3">
-
-                                <a href="#" class="forgot">
-                                    Lupa password?
-                                </a>
-
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-login w-100">
-
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
-
-                                Masuk ke Sistem
-
+                            <!-- BUTTONS -->
+                            <button type="submit" class="btn btn-primary btn-register-submit w-100">
+                                <i class="bi bi-person-plus-fill me-2"></i>
+                                Daftar Sekarang
                             </button>
 
-                            <a href="{{ route('register') }}" class="btn btn-register w-100 mt-2">
-
-                                <i class="bi bi-person-plus me-2"></i>
-
-                                Daftar Akun Guru
-
+                            <a href="{{ route('login') }}" class="btn btn-back-to-login w-100 mt-2">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Sudah Punya Akun? Masuk
                             </a>
 
                         </form>
 
                         <div class="copyright">
-
                             <i class="bi bi-shield-check me-1"></i>
-
                             SIANTA © 2026 • All rights reserved
-
                         </div>
 
                     </div>
@@ -646,86 +590,54 @@
     <script src="{{ asset('asset_admin') }}/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
+        // Disable right-click & key shortcuts (consistent with login page security)
         document.addEventListener('contextmenu', e => e.preventDefault());
-
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F12') {
                 e.preventDefault();
             }
-
             if (e.ctrlKey && e.key.toLowerCase() === 'u') {
                 e.preventDefault();
             }
         });
-        // SHOW PASSWORD
+
+        // SHOW PASSWORD TOGGLE
         $('#togglePassword').click(function() {
-
             let password = $('#password');
-
             if (password.attr('type') == 'password') {
-
                 password.attr('type', 'text');
-
                 $(this).html('<i class="bi bi-eye"></i>');
-
             } else {
-
                 password.attr('type', 'password');
-
                 $(this).html('<i class="bi bi-eye-slash"></i>');
             }
-
         });
 
+        // MOCKUP FORM SUBMISSION HANDLER (UI Only, No Backend Logic)
         $(document).ready(function() {
-            $('#formLogin').on('submit', function(e) {
+            $('#formRegister').on('submit', function(e) {
                 e.preventDefault();
                 $(this).parsley().validate();
-                let url = "{{ route('loginUser') }}";
+                
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            if (response.status == 'success') {
-                                $('#loader').css('display', 'none');
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message,
-                                }).then(() => {
-                                    window.location.href = response.url;
-                                });
-                            } else {
-                                $('#loader').css('display', 'none');
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal',
-                                    text: response.message,
-                                });
-                            }
-                        },
-                        error: function(xhr) {
-                            $('#loader').css('display', 'none');
-                            let message = 'Terjadi kesalahan pada server.';
-                            if (xhr.status === 429) {
-                                message =
-                                    'Terlalu banyak percobaan login. Silakan coba lagi dalam beberapa saat.';
-                            } else if (xhr.responseJSON && xhr.responseJSON.message) {
-                                message = xhr.responseJSON.message;
-                            }
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal',
-                                text: message,
-                            });
-                        }
-                    });
+                    
+                    // Simulate API network request latency
+                    setTimeout(function() {
+                        $('#loader').css('display', 'none');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Pendaftaran Berhasil!',
+                            text: 'Akun guru Anda berhasil dibuat secara lokal (Mockup).',
+                            confirmButtonText: 'Kembali Ke Login',
+                            confirmButtonColor: '#4f46e5'
+                        }).then(() => {
+                            window.location.href = "{{ route('login') }}";
+                        });
+                    }, 1200);
                 }
             });
-        })
+        });
     </script>
 </body>
 

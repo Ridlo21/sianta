@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [Logincontroller::class, 'index'])->name('login');
 Route::post('/loginUser', [Logincontroller::class, 'loginuser'])->middleware('throttle:5,1')->name('loginUser');
 Route::get('/logout', [Logincontroller::class, 'logout'])->name('logout');
+Route::view('/register', 'auth.register')->name('register');
 
 Route::get('/', function () {
     $siswaAktifCount = \App\Models\Siswa::where('status', 'Aktif')->count();
