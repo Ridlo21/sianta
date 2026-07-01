@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/siswa_show/{siswa}', [Siswacontroller::class, 'show'])->name('siswa.show');
     Route::get('admin/siswa_print/{siswa}', [Siswacontroller::class, 'print'])->name('siswa.print');
     Route::get('admin/siswa_download/{siswa}/{field}', [Siswacontroller::class, 'downloadBerkas'])->name('siswa.download.berkas');
+    Route::get('admin/siswa_download_zip/{siswa}', [Siswacontroller::class, 'downloadZip'])->name('siswa.download.zip');
     Route::get('admin/siswa_upload/{siswa}', [Siswacontroller::class, 'upload'])->name('siswa.upload');
     Route::put('admin/siswa/update/upload/{siswa}', [Siswacontroller::class, 'updateUpload'])->name('siswa.update.upload');
     Route::post('/admin/siswa/hapus', [Siswacontroller::class, 'hapus'])->name('siswa.hapus');
@@ -74,7 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/guru/batal', [Gurucontroller::class, 'batal'])->name('guru.batal');
     Route::get('admin/guru_show/{guru}', [Gurucontroller::class, 'show'])->name('guru.show');
     Route::get('admin/guru_print/{guru}', [Gurucontroller::class, 'print'])->name('guru.print');
+    Route::get('admin/guru_export/{gender}', [Gurucontroller::class, 'exportExcel'])->name('guru.export');
     Route::get('admin/guru_download/{guru}/{field}', [Gurucontroller::class, 'downloadBerkas'])->name('guru.download.berkas');
+    Route::get('admin/guru_download_zip/{guru}', [Gurucontroller::class, 'downloadZip'])->name('guru.download.zip');
     Route::post('admin/guru/pendidikan', [Gurucontroller::class, 'storePendidikan'])->name('guru.pendidikan.store');
     Route::get('admin/guru_pendidikan_download/{id}', [Gurucontroller::class, 'downloadPendidikanBerkas'])->name('guru.pendidikan.download');
     Route::get('admin/guru_upload/{guru}', [Gurucontroller::class, 'upload'])->name('guru.upload');
@@ -89,6 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/rombel/update', [Rombelcontroller::class, 'update'])->name('rombel.update');
     Route::post('/admin/rombel/hapus', [Rombelcontroller::class, 'hapus'])->name('rombel.hapus');
     Route::get('/admin/rombel/detail/{id}', [Rombelcontroller::class, 'show'])->name('rombel.show-detail');
+    Route::get('/admin/rombel/detail-json/{id}', [Rombelcontroller::class, 'detailJson'])->name('rombel.detail.json');
     Route::get('/admin/rombel/print/{id}', [Rombelcontroller::class, 'print'])->name('rombel.print');
     Route::post('/admin/rombel/set-wali', [Rombelcontroller::class, 'setWali'])->name('rombel.set-wali');
     Route::post('/admin/rombel/pindah-siswa', [Rombelcontroller::class, 'pindahSiswa'])->name('rombel.pindah-siswa');

@@ -16,6 +16,24 @@
                             <h5 class="card-title">Upload Berkas <span class="text-danger">{{ $guru->nama }}</span></h5>
                         </div>
                         <div class="card-body">
+                            @php
+                                $pdfSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="100" height="120"><path fill="%23dc3545" d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5-.1 0 21.4 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM256 48l80 80h-80V48zM56 464c-4.4 0-8-3.6-8-8V56c0-4.4 3.6-8 8-8h152v96c0 13.3 10.7 24 24 24h96v288c0 4.4-3.6 8-8 8H56z"/></svg>';
+
+                                $isKkPdf = $guru->scan_kk && strtolower(pathinfo($guru->scan_kk, PATHINFO_EXTENSION)) === 'pdf';
+                                $kkSrc = $isKkPdf ? $pdfSvg : ($guru->scan_kk ? asset('gambar_berkas/berkas_guru/' . $guru->scan_kk) : '');
+
+                                $isAktaPdf = $guru->scan_akta && strtolower(pathinfo($guru->scan_akta, PATHINFO_EXTENSION)) === 'pdf';
+                                $aktaSrc = $isAktaPdf ? $pdfSvg : ($guru->scan_akta ? asset('gambar_berkas/berkas_guru/' . $guru->scan_akta) : '');
+
+                                $isKtpPdf = $guru->scan_ktp && strtolower(pathinfo($guru->scan_ktp, PATHINFO_EXTENSION)) === 'pdf';
+                                $ktpSrc = $isKtpPdf ? $pdfSvg : ($guru->scan_ktp ? asset('gambar_berkas/berkas_guru/' . $guru->scan_ktp) : '');
+
+                                $isSkPdf = $guru->scan_sk && strtolower(pathinfo($guru->scan_sk, PATHINFO_EXTENSION)) === 'pdf';
+                                $skSrc = $isSkPdf ? $pdfSvg : ($guru->scan_sk ? asset('gambar_berkas/berkas_guru/' . $guru->scan_sk) : '');
+
+                                $isTranskripPdf = $guru->scan_transkrip_nilai && strtolower(pathinfo($guru->scan_transkrip_nilai, PATHINFO_EXTENSION)) === 'pdf';
+                                $transkripSrc = $isTranskripPdf ? $pdfSvg : ($guru->scan_transkrip_nilai ? asset('gambar_berkas/berkas_guru/' . $guru->scan_transkrip_nilai) : '');
+                            @endphp
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Foto Guru</label>
@@ -29,51 +47,51 @@
                                 <div class="col-md-4">
                                     <label class="form-label">Scan Kartu Keluarga (KK)</label>
                                     <img id="preview_scan_kk" class="img-thumbnail mt-2 mb-3"
-                                        src="{{ $guru->scan_kk ? asset('gambar_berkas/berkas_guru/' . $guru->scan_kk) : '' }}"
+                                        src="{{ $kkSrc }}"
                                         style="max-width: 300px; {{ $guru->scan_kk ? '' : 'display:none;' }}">
                                     <input type="file" name="scan_kk" id="scan_kk" class="form-control text-uppercase"
-                                        accept="image/png, image/jpeg, image/jpg" data-parsley-filemaxsize="2"
-                                        data-parsley-fileextension="jpg,jpeg,png"
+                                        accept="image/png, image/jpeg, image/jpg, application/pdf" data-parsley-filemaxsize="2"
+                                        data-parsley-fileextension="jpg,jpeg,png,pdf"
                                         {{ $guru->scan_kk == '' ? 'required' : '' }}>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Scan Akta Lahir</label>
                                     <img id="preview_scan_akta" class="img-thumbnail mt-2 mb-3"
-                                        src="{{ $guru->scan_akta ? asset('gambar_berkas/berkas_guru/' . $guru->scan_akta) : '' }}"
+                                        src="{{ $aktaSrc }}"
                                         style="max-width: 300px; {{ $guru->scan_akta ? '' : 'display:none;' }}">
                                     <input type="file" name="scan_akta" id="scan_akta"
-                                        class="form-control text-uppercase" accept="image/png, image/jpeg, image/jpg"
-                                        data-parsley-filemaxsize="2" data-parsley-fileextension="jpg,jpeg,png"
+                                        class="form-control text-uppercase" accept="image/png, image/jpeg, image/jpg, application/pdf"
+                                        data-parsley-filemaxsize="2" data-parsley-fileextension="jpg,jpeg,png,pdf"
                                         {{ $guru->scan_akta == '' ? 'required' : '' }}>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Scan KTP</label>
                                     <img id="preview_scan_ktp" class="img-thumbnail mt-2 mb-3"
-                                        src="{{ $guru->scan_ktp ? asset('gambar_berkas/berkas_guru/' . $guru->scan_ktp) : '' }}"
+                                        src="{{ $ktpSrc }}"
                                         style="max-width: 300px; {{ $guru->scan_ktp ? '' : 'display:none;' }}">
                                     <input type="file" name="scan_ktp" id="scan_ktp" class="form-control text-uppercase"
-                                        accept="image/png, image/jpeg, image/jpg" data-parsley-filemaxsize="2"
-                                        data-parsley-fileextension="jpg,jpeg,png"
+                                        accept="image/png, image/jpeg, image/jpg, application/pdf" data-parsley-filemaxsize="2"
+                                        data-parsley-fileextension="jpg,jpeg,png,pdf"
                                         {{ $guru->scan_ktp == '' ? 'required' : '' }}>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Scan SK</label>
                                     <img id="preview_scan_sk" class="img-thumbnail mt-2 mb-3"
-                                        src="{{ $guru->scan_sk ? asset('gambar_berkas/berkas_guru/' . $guru->scan_sk) : '' }}"
+                                        src="{{ $skSrc }}"
                                         style="max-width: 300px; {{ $guru->scan_sk ? '' : 'display:none;' }}">
                                     <input type="file" name="scan_sk" id="scan_sk" class="form-control text-uppercase"
-                                        accept="image/png, image/jpeg, image/jpg" data-parsley-filemaxsize="2"
-                                        data-parsley-fileextension="jpg,jpeg,png"
+                                        accept="image/png, image/jpeg, image/jpg, application/pdf" data-parsley-filemaxsize="2"
+                                        data-parsley-fileextension="jpg,jpeg,png,pdf"
                                         {{ $guru->scan_sk == '' ? 'required' : '' }}>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Scan Transkrip Nilai</label>
                                     <img id="preview_scan_transkrip_nilai" class="img-thumbnail mt-2 mb-3"
-                                        src="{{ $guru->scan_transkrip_nilai ? asset('gambar_berkas/berkas_guru/' . $guru->scan_transkrip_nilai) : '' }}"
+                                        src="{{ $transkripSrc }}"
                                         style="max-width: 300px; {{ $guru->scan_transkrip_nilai ? '' : 'display:none;' }}">
                                     <input type="file" name="scan_transkrip_nilai" id="scan_transkrip_nilai"
-                                        class="form-control text-uppercase" accept="image/png, image/jpeg, image/jpg"
-                                        data-parsley-filemaxsize="2" data-parsley-fileextension="jpg,jpeg,png"
+                                        class="form-control text-uppercase" accept="image/png, image/jpeg, image/jpg, application/pdf"
+                                        data-parsley-filemaxsize="2" data-parsley-fileextension="jpg,jpeg,png,pdf"
                                         {{ $guru->scan_transkrip_nilai == '' ? 'required' : '' }}>
                                 </div>
                             </div>
@@ -91,7 +109,7 @@
                                                         seluruh informasi dapat dibaca.</li>
                                                     <li>Scan KTP, Scan SK, dan Scan Transkrip Nilai harus dalam kondisi
                                                         jelas dan mudah dibaca.</li>
-                                                    <li>Format file yang diperbolehkan: JPG, JPEG, atau PNG.</li>
+                                                    <li>Format file yang diperbolehkan: JPG, JPEG, PNG, atau PDF.</li>
                                                     <li>Ukuran setiap file yang diunggah maksimal <strong>2 MB</strong>.
                                                     </li>
                                                 </ul>
@@ -116,15 +134,20 @@
     <script>
         function readURL(input, previewId) {
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $(previewId)
-                        .attr('src', e.target.result)
-                        .show();
+                var file = input.files[0];
+                var ext = file.name.split('.').pop().toLowerCase();
+                if (ext === 'pdf') {
+                    var pdfSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="100" height="120"><path fill="%23dc3545" d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5-.1 0 21.4 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM256 48l80 80h-80V48zM56 464c-4.4 0-8-3.6-8-8V56c0-4.4 3.6-8 8-8h152v96c0 13.3 10.7 24 24 24h96v288c0 4.4-3.6 8-8 8H56z"/></svg>';
+                    $(previewId).attr('src', pdfSvg).show();
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $(previewId)
+                            .attr('src', e.target.result)
+                            .show();
+                    }
+                    reader.readAsDataURL(file);
                 }
-
-                reader.readAsDataURL(input.files[0]);
             }
         }
 

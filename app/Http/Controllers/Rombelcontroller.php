@@ -199,6 +199,31 @@ class Rombelcontroller extends Controller
         return view('admin.rombel.show', compact('title', 'user', 'tahun', 'rombel', 'students', 'activeWali', 'gurus', 'otherRombels', 'unassignedStudents'));
     }
 
+    public function detailJson($id)
+    {
+        $rombel = Rombel::with(['kelas', 'jurusan'])->findOrFail($id);
+        
+        $tahun = TahunAjaran::find($rombel->tahun_ajaran_id);
+        $tahun_ajaran = $tahun ? $tahun->tahun_ajaran . ' (' . ($tahun->semester == 1 ? 'Ganjil' : 'Genap') . ')' : '-';
+
+        $activeWali = WaliRombel::where('rombel_id', $id)
+            ->where('status', 1)
+            ->with('guru')
+            ->first();
+        $wali_name = $activeWali && $activeWali->guru ? $activeWali->guru->nama_lengkap : '-';
+
+        $studentCount = PenempatanRombel::where('rombel_id', $id)
+            ->where('status_aktif', 1)
+            ->count();
+
+        return response()->json([
+            'rombel' => $rombel,
+            'tahun_ajaran' => $tahun_ajaran,
+            'wali_kelas' => $wali_name,
+            'student_count' => $studentCount
+        ]);
+    }
+
     public function setWali(Request $request)
     {
         $request->validate([
