@@ -22,9 +22,9 @@
     
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-light: #e0e7ff;
-            --primary-dark: #3730a3;
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --primary-dark: #1d4ed8;
             --success: #10b981;
             --success-light: #d1fae5;
             --success-dark: #065f46;
@@ -68,7 +68,7 @@
         }
 
         .bg-blob-1 {
-            background-color: #4f46e5;
+            background-color: #2563eb;
             top: -10%;
             left: -10%;
         }
@@ -89,13 +89,13 @@
 
         /* Header Card */
         .profile-header-card {
-            background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
             border-radius: 24px;
             padding: 40px 32px;
             color: #ffffff;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.3);
             margin-bottom: 24px;
             display: flex;
             flex-direction: column;
@@ -408,7 +408,7 @@
             border-radius: 50%;
             background-color: var(--card-bg);
             border: 4px solid var(--primary);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
             transition: all 0.3s ease;
         }
 
@@ -427,8 +427,8 @@
 
         .timeline-content:hover {
             transform: translateX(4px);
-            border-color: rgba(79, 70, 229, 0.2);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.03);
+            border-color: rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.03);
         }
 
         .timeline-year {
@@ -491,7 +491,7 @@
         }
 
         .class-card:hover {
-            border-color: rgba(79, 70, 229, 0.2);
+            border-color: rgba(37, 99, 235, 0.2);
             background-color: #f1f5f9;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
