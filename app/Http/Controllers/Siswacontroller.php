@@ -128,6 +128,9 @@ class Siswacontroller extends Controller
     public function updateStep1(Request $request, Siswa $siswa)
     {
         try {
+            $oldJurusanId = $siswa->jurusan_id;
+            $newJurusanId = $request->jurusan;
+
             $siswa->update([
                 'nama' => strtoupper($request->nama),
                 'nik' => $request->nik,
@@ -154,6 +157,11 @@ class Siswacontroller extends Controller
                 'niup' => $request->niup,
                 'status_step' => 1,
             ]);
+
+            if ($siswa->nis && $oldJurusanId != $newJurusanId) {
+                self::reorderNisForJurusan($oldJurusanId);
+                self::reorderNisForJurusan($newJurusanId);
+            }
 
             return response()->json([
                 'status' => 'success',
@@ -372,6 +380,7 @@ class Siswacontroller extends Controller
                     'status' => "Aktif",
                     'status_step' => 4,
                 ]);
+                self::reorderNisForJurusan($siswa->jurusan_id);
             } else {
                 $siswa->update([
                     'nm_w' => strtoupper($request->nm_w),
@@ -404,6 +413,39 @@ class Siswacontroller extends Controller
             return back()
                 ->with('error', 'Gagal menyimpan data wali')
                 ->withInput();
+        }
+    }
+
+    public static function reorderNisForJurusan($jurusanId)
+    {
+        $jurusan = Jurusan::find($jurusanId);
+        if (!$jurusan) {
+            return;
+        }
+
+        $students = Siswa::where('jurusan_id', $jurusanId)
+            ->where('status', 'Aktif')
+            ->whereNotNull('nis')
+            ->where('nis', '!=', '')
+            ->orderBy('id_person', 'asc')
+            ->get();
+
+        foreach ($students as $index => $s) {
+            $parts = explode('/', $s->nis);
+            if (count($parts) < 2) {
+                continue;
+            }
+            $A = $parts[0];
+
+            $newNomorJurusan = $index + 1;
+            $B = str_pad($newNomorJurusan, 3, '0', STR_PAD_LEFT);
+            $C = $jurusan->kode_nomenklatur;
+
+            $newNis = "{$A}/{$B}.{$C}";
+
+            if ($s->nis !== $newNis) {
+                $s->update(['nis' => $newNis]);
+            }
         }
     }
 
@@ -671,9 +713,18 @@ class Siswacontroller extends Controller
         if (empty($decoded)) {
             return response()->json(['status' => 'error', 'message' => 'ID tidak valid.']);
         }
-        Siswa::where('id_person', $decoded[0])->update([
-            'status' => 'Keluar'
-        ]);
+        
+        $siswa = Siswa::find($decoded[0]);
+        if ($siswa) {
+            $oldJurusanId = $siswa->jurusan_id;
+            $siswa->update([
+                'status' => 'Keluar',
+                'nis' => null
+            ]);
+            if ($oldJurusanId) {
+                self::reorderNisForJurusan($oldJurusanId);
+            }
+        }
 
         return response()->json(['status' => 'success', 'message' => 'Data siswa berhasil dihapus.']);
     }

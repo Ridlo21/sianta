@@ -5,8 +5,25 @@
             <div class="col-auto d-none d-sm-block">
                 <h3><strong>{{ $title }}</strong></h3>
             </div>
-            <div class="col-auto ms-auto text-end mt-n1">
-                <button class="btn btn-primary" id="bt_tambah"><i class="fas fa-plus"></i> Tambah Guru</button>
+            <div class="col-auto ms-auto text-end mt-n1 d-flex justify-content-end align-items-center gap-2">
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-success dropdown-toggle fw-bold shadow-xs" type="button" id="dropdownExportExcel" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-file-excel me-1"></i> Export Excel
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="dropdownExportExcel">
+                        <li>
+                            <a class="dropdown-item fw-bold text-primary" href="{{ route('guru.export', 'Laki-laki') }}">
+                                <i class="fas fa-mars me-1"></i> Laki-Laki
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item fw-bold text-danger" href="{{ route('guru.export', 'Perempuan') }}">
+                                <i class="fas fa-venus me-1"></i> Perempuan
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="btn btn-primary" id="bt_tambah"><i class="fas fa-plus"></i> Tambah Guru & Tendik</button>
             </div>
         </div>
 
