@@ -214,7 +214,7 @@
                     text: "Sistem akan menduplikasi seluruh data jadwal aktif sebagai cadangan arsip.",
                     icon: 'info',
                     showCancelButton: true,
-                    confirmButtonColor: '#3b7ddd',
+                    confirmButtonColor: '#4f46e5',
                     cancelButtonColor: '#6c757d',
                     confirmButtonText: 'Ya, Backup!',
                     cancelButtonText: 'Batal'

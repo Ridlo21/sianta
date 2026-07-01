@@ -86,8 +86,8 @@
 
     <style>
         .bg-primary-soft {
-            background-color: rgba(59, 125, 221, 0.1) !important;
-            color: #3b7ddd !important;
+            background-color: rgba(99, 102, 241, 0.1) !important;
+            color: #4f46e5 !important;
         }
         .bg-success-soft {
             background-color: rgba(28, 187, 140, 0.1) !important;

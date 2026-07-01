@@ -17,15 +17,15 @@
         // Render-blocking script to apply theme matching system preferences
         (function() {
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
-            } else if (savedTheme === 'dark') {
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else if (savedTheme === 'light') {
                 document.documentElement.removeAttribute('data-theme');
             } else {
                 // First-time visit: default to computer/OS color scheme
-                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-                if (prefersLight) {
-                    document.documentElement.setAttribute('data-theme', 'light');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
                 }
             }
         })();
@@ -360,6 +360,71 @@
                     </div>
                 </div>
 
+                <!-- Guide Section (Panduan) -->
+                <div class="guide-container" id="panduan">
+                    <div class="guide-header">
+                        <span class="guide-tagline">Panduan Sistem</span>
+                        <h2 class="guide-title">Panduan Penggunaan Aplikasi SIANTA</h2>
+                    </div>
+
+                    <div class="guide-grid">
+
+                        <!-- Card 1: Admin -->
+                        <article class="guide-card">
+                            <div class="guide-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                            </div>
+                            <h3 class="guide-card-title">Peran Administrator (Admin)</h3>
+                            <ul class="guide-steps">
+                                <li data-step="1">Masuk dengan akun Admin yang terdaftar di database.</li>
+                                <li data-step="2">Atur <strong>Periode Akademik</strong> &amp; <strong>Jurusan</strong> pada Menu Data Master.</li>
+                                <li data-step="3">Buat <strong>Rombel</strong> (Kelas) dan lengkapi data <strong>Guru</strong> &amp; <strong>Siswa</strong>.</li>
+                                <li data-step="4">Susun dan aktifkan <strong>Jadwal Pelajaran</strong> untuk memulai periode baru.</li>
+                            </ul>
+                        </article>
+
+                        <!-- Card 2: Guru -->
+                        <article class="guide-card">
+                            <div class="guide-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+                                </svg>
+                            </div>
+                            <h3 class="guide-card-title">Peran Guru &amp; Pendidik</h3>
+                            <ul class="guide-steps">
+                                <li data-step="1">Dapatkan kredensial email &amp; password resmi dari Admin.</li>
+                                <li data-step="2">Masuk ke sistem dan lengkapi data profil serta riwayat pendidikan.</li>
+                                <li data-step="3">Unggah berkas kelengkapan administrasi pada kolom berkas.</li>
+                                <li data-step="4">Pantau jadwal mengajar &amp; sebaran mata pelajaran yang aktif.</li>
+                            </ul>
+                        </article>
+
+                        <!-- Card 3: Siswa -->
+                        <article class="guide-card">
+                            <div class="guide-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <h3 class="guide-card-title">Peran Siswa &amp; Alumni</h3>
+                            <ul class="guide-steps">
+                                <li data-step="1">Pastikan data NISN &amp; nama lengkap terdaftar oleh Admin.</li>
+                                <li data-step="2">Gunakan kredensial terdaftar untuk masuk ke portal akademis.</li>
+                                <li data-step="3">Cek pembagian kelas (Rombel) yang sedang diikuti.</li>
+                                <li data-step="4">Unduh lembar biodata pribadi digital resmi dari sekolah.</li>
+                            </ul>
+                        </article>
+
+                    </div>
+                </div>
+
             </div>
         </main>
 
@@ -393,12 +458,12 @@
             // Updates button icon based on loaded theme class
             function updateToggleIcon() {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
-                if (currentTheme === 'light') {
-                    themeToggleBtn.innerHTML = moonIcon;
-                    themeToggleBtn.setAttribute('title', 'Ubah ke Mode Gelap');
-                } else {
+                if (currentTheme === 'dark') {
                     themeToggleBtn.innerHTML = sunIcon;
                     themeToggleBtn.setAttribute('title', 'Ubah ke Mode Terang');
+                } else {
+                    themeToggleBtn.innerHTML = moonIcon;
+                    themeToggleBtn.setAttribute('title', 'Ubah ke Mode Gelap');
                 }
             }
 
@@ -408,15 +473,32 @@
             // Click event to swap theme attribute and update store
             themeToggleBtn.addEventListener('click', function() {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
-                if (currentTheme === 'light') {
+                if (currentTheme === 'dark') {
                     document.documentElement.removeAttribute('data-theme');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'light');
                     localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
                 }
                 updateToggleIcon();
             });
+
+            // Smooth scroll for internal container link
+            const guideBtn = document.getElementById('btnSidebarGuide');
+            const dashboardBlock = document.querySelector('.dashboard-block');
+            const targetSection = document.getElementById('panduan');
+
+            if (guideBtn && dashboardBlock && targetSection) {
+                guideBtn.addEventListener('click', function(e) {
+                    if (window.innerWidth > 1024) {
+                        e.preventDefault();
+                        dashboardBlock.scrollTo({
+                            top: targetSection.offsetTop - dashboardBlock.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
         });
     </script>
 

@@ -16,7 +16,7 @@
         }
 
         .bg-primary-subtle {
-            background-color: rgba(37, 99, 235, 0.08) !important;
+            background-color: rgba(99, 102, 241, 0.08) !important;
         }
 
         .bg-success-subtle {
@@ -33,14 +33,14 @@
 
         /* Welcome Banner */
         .welcome-banner {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
             border-radius: 16px;
             padding: 2.25rem;
             color: #ffffff;
             position: relative;
             overflow: hidden;
             border: none;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15);
             margin-bottom: 2rem;
         }
 
@@ -155,14 +155,14 @@
 
         /* Stat Soft & Hover Colors */
         .stat-blue {
-            background: rgba(37, 99, 235, 0.07) !important;
-            color: #2563eb !important;
+            background: rgba(99, 102, 241, 0.07) !important;
+            color: #4f46e5 !important;
         }
 
         .metric-card:hover .stat-blue {
-            background: #2563eb !important;
+            background: #4f46e5 !important;
             color: #ffffff !important;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
             transform: scale(1.08) rotate(5deg);
         }
 
@@ -204,8 +204,8 @@
 
         /* Badge Soft Styles */
         .badge-soft-blue {
-            background-color: rgba(37, 99, 235, 0.08);
-            color: #2563eb;
+            background-color: rgba(99, 102, 241, 0.08);
+            color: #4f46e5;
             font-size: 0.75rem;
             font-weight: 600;
             padding: 0.25rem 0.5rem;
@@ -267,8 +267,8 @@
         }
 
         .quick-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 10px 20px -3px rgba(37, 99, 235, 0.08);
+            border-color: #4f46e5;
+            box-shadow: 0 10px 20px -3px rgba(99, 102, 241, 0.08);
             transform: translateX(5px);
         }
 
@@ -295,7 +295,7 @@
         }
 
         .quick-card:hover .quick-card-name {
-            color: #2563eb;
+            color: #4f46e5;
         }
 
         .quick-card-arrow {
@@ -305,7 +305,7 @@
 
         .quick-card:hover .quick-card-arrow {
             transform: translateX(3px);
-            color: #2563eb;
+            color: #4f46e5;
         }
 
         /* Charts */
@@ -390,9 +390,9 @@
 
         #recent-tab .nav-link.active {
             color: #ffffff !important;
-            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%) !important;
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
             border-color: transparent !important;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15) !important;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15) !important;
         }
     </style>
 
@@ -533,7 +533,7 @@
                 <div class="col-6 col-md-3">
                     <a href="{{ route('siswa') }}" class="quick-card">
                         <div class="quick-card-info">
-                            <div class="quick-card-icon" style="background: rgba(37, 99, 235, 0.08); color: #2563eb;">
+                            <div class="quick-card-icon" style="background: rgba(99, 102, 241, 0.08); color: #4f46e5;">
                                 <i data-feather="users" style="width: 18px; height: 18px;"></i>
                             </div>
                             <span class="quick-card-name">Data Siswa</span>
@@ -609,7 +609,7 @@
                                     <tr>
                                         <td>
                                             <span class="d-inline-block rounded-circle me-2"
-                                                style="width: 10px; height: 10px; background: linear-gradient(135deg, #1d4ed8, #60a5fa); vertical-align: middle;"></span>
+                                                style="width: 10px; height: 10px; background: linear-gradient(135deg, #4f46e5, #818cf8); vertical-align: middle;"></span>
                                             Laki-laki (L)
                                         </td>
                                         <td>{{ $siswaLaki }}</td>
@@ -703,7 +703,7 @@
                         <div class="pt-3 border-top">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="text-muted small">Versi Aplikasi</span>
-                                <span class="badge bg-secondary">v1.2.0</span>
+                                <span class="badge bg-secondary">v1.1</span>
                             </div>
                         </div>
                     </div>
@@ -832,8 +832,8 @@
             const ctxGender = document.getElementById("chart-gender").getContext("2d");
 
             const gradientMale = ctxGender.createLinearGradient(0, 0, 0, 180);
-            gradientMale.addColorStop(0, "#1d4ed8"); // Blue-700
-            gradientMale.addColorStop(1, "#60a5fa"); // Sky-400
+            gradientMale.addColorStop(0, "#4f46e5"); // Indigo-600
+            gradientMale.addColorStop(1, "#818cf8"); // Indigo-400
 
             const gradientFemale = ctxGender.createLinearGradient(0, 0, 0, 180);
             gradientFemale.addColorStop(0, "#ec4899"); // Pink-500
@@ -950,12 +950,12 @@
             const ctxAngkatan = document.getElementById("chart-angkatan").getContext("2d");
 
             const gradientAngkatan = ctxAngkatan.createLinearGradient(0, 0, 0, 200);
-            gradientAngkatan.addColorStop(0, "rgba(59, 130, 246, 0.85)"); // blue-500
-            gradientAngkatan.addColorStop(1, "rgba(59, 130, 246, 0.05)"); // blue-500 faded
+            gradientAngkatan.addColorStop(0, "rgba(99, 102, 241, 0.85)"); // indigo-500
+            gradientAngkatan.addColorStop(1, "rgba(99, 102, 241, 0.05)"); // indigo-500 faded
 
             const gradientAngkatanHover = ctxAngkatan.createLinearGradient(0, 0, 0, 200);
-            gradientAngkatanHover.addColorStop(0, "rgba(59, 130, 246, 1)");
-            gradientAngkatanHover.addColorStop(1, "rgba(59, 130, 246, 0.2)");
+            gradientAngkatanHover.addColorStop(0, "rgba(99, 102, 241, 1)");
+            gradientAngkatanHover.addColorStop(1, "rgba(99, 102, 241, 0.2)");
 
             chartAngkatan = new Chart(ctxAngkatan, {
                 type: "bar",
@@ -964,10 +964,10 @@
                     datasets: [{
                         label: "Siswa Aktif",
                         backgroundColor: gradientAngkatan,
-                        borderColor: "rgba(59, 130, 246, 1)",
+                        borderColor: "rgba(99, 102, 241, 1)",
                         borderWidth: 1.5,
                         hoverBackgroundColor: gradientAngkatanHover,
-                        hoverBorderColor: "rgba(59, 130, 246, 1)",
+                        hoverBorderColor: "rgba(99, 102, 241, 1)",
                         data: {!! json_encode($angkatanCounts) !!},
                         barPercentage: .4,
                         categoryPercentage: .3

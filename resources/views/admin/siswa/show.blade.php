@@ -21,15 +21,15 @@
             border: 1px solid #e9ecef;
         }
         .nav-pills-custom .nav-link:hover {
-            background-color: rgba(59, 125, 221, 0.05);
-            color: #3b7ddd;
-            border-color: rgba(59, 125, 221, 0.2);
+            background-color: rgba(99, 102, 241, 0.05);
+            color: #4f46e5;
+            border-color: rgba(99, 102, 241, 0.2);
         }
         .nav-pills-custom .nav-link.active {
-            background-color: #3b7ddd !important;
+            background-color: #4f46e5 !important;
             color: #ffffff !important;
-            border-color: #3b7ddd;
-            box-shadow: 0 4px 15px rgba(59, 125, 221, 0.25);
+            border-color: #4f46e5;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
         }
         .hover-scale {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -47,7 +47,7 @@
         .doc-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06) !important;
-            border-color: #3b7ddd;
+            border-color: #4f46e5;
         }
         .doc-img-container {
             position: relative;

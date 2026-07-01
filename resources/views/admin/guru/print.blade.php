@@ -62,13 +62,13 @@
         }
 
         .btn-print {
-            background-color: #3b7ddd;
+            background-color: #4f46e5;
             color: #ffffff;
         }
 
         .btn-print:hover {
-            background-color: #2b6cb0;
-            box-shadow: 0 4px 12px rgba(59, 125, 221, 0.3);
+            background-color: #4338ca;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .control-title {

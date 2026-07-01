@@ -291,7 +291,7 @@
         .rombel-icon-box {
             width: 44px;
             height: 44px;
-            background-color: rgba(59, 125, 221, 0.08);
+            background-color: rgba(99, 102, 241, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -301,17 +301,17 @@
             background-color: #f7f9fa;
         }
         .bg-primary-soft {
-            background-color: rgba(59, 125, 221, 0.1) !important;
-            color: #3b7ddd !important;
+            background-color: rgba(99, 102, 241, 0.1) !important;
+            color: #4f46e5 !important;
         }
         .btn-primary-soft {
-            background-color: rgba(59, 125, 221, 0.08);
-            color: #3b7ddd;
+            background-color: rgba(99, 102, 241, 0.08);
+            color: #4f46e5;
             border: none;
             transition: all 0.2s ease;
         }
         .btn-primary-soft:hover {
-            background-color: #3b7ddd;
+            background-color: #4f46e5;
             color: #fff;
         }
         .table-responsive {

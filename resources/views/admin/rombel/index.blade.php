@@ -294,8 +294,8 @@
         }
 
         .bg-primary-soft {
-            background-color: rgba(59, 125, 221, 0.1) !important;
-            color: #3b7ddd !important;
+            background-color: rgba(99, 102, 241, 0.1) !important;
+            color: #4f46e5 !important;
         }
 
         .bg-info-soft {
@@ -324,7 +324,7 @@
         }
 
         .btn-selengkapnya:hover {
-            background-color: #3b7ddd !important;
+            background-color: #4f46e5 !important;
             color: #fff !important;
         }
     </style>

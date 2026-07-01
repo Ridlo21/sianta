@@ -46,7 +46,7 @@
             color: #fff;
         }
         .btn-primary {
-            background-color: #0d6efd;
+            background-color: #4f46e5;
             color: #fff;
         }
 

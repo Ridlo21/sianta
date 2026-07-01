@@ -22,9 +22,9 @@
     
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-light: #dbeafe;
-            --primary-dark: #1d4ed8;
+            --primary: #4f46e5;
+            --primary-light: rgba(99, 102, 241, 0.08);
+            --primary-dark: #4338ca;
             --success: #10b981;
             --success-light: #d1fae5;
             --success-dark: #065f46;
@@ -68,7 +68,7 @@
         }
 
         .bg-blob-1 {
-            background-color: #2563eb;
+            background-color: #4f46e5;
             top: -10%;
             left: -10%;
         }
@@ -89,13 +89,13 @@
 
         /* Header Card */
         .profile-header-card {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
             border-radius: 24px;
             padding: 40px 32px;
             color: #ffffff;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.3);
             margin-bottom: 24px;
             display: flex;
             flex-direction: column;
@@ -554,8 +554,8 @@
 
         /* Verification Note footer card */
         .verification-footer-card {
-            background-color: #eff6ff;
-            border: 1px dashed #bfdbfe;
+            background-color: rgba(99, 102, 241, 0.05);
+            border: 1px dashed rgba(99, 102, 241, 0.2);
             border-radius: 20px;
             padding: 20px;
             display: flex;
@@ -565,7 +565,7 @@
         }
 
         .verification-footer-card i {
-            color: #3b82f6;
+            color: #4f46e5;
             font-size: 20px;
             margin-top: 2px;
         }
@@ -573,7 +573,7 @@
         .verification-footer-card div h5 {
             font-size: 14px;
             font-weight: 700;
-            color: #1e3a8a;
+            color: #312e81;
             margin-bottom: 4px;
         }
 

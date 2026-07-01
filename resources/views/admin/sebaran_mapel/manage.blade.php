@@ -277,7 +277,7 @@
         .rombel-icon-box {
             width: 44px;
             height: 44px;
-            background-color: rgba(59, 125, 221, 0.08);
+            background-color: rgba(99, 102, 241, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -287,8 +287,8 @@
             background-color: #f7f9fa;
         }
         .bg-primary-soft {
-            background-color: rgba(59, 125, 221, 0.1) !important;
-            color: #3b7ddd !important;
+            background-color: rgba(99, 102, 241, 0.1) !important;
+            color: #4f46e5 !important;
         }
         .bg-success-soft {
             background-color: rgba(28, 187, 140, 0.1) !important;

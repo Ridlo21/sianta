@@ -213,7 +213,7 @@
                         icon: 'success',
                         title: 'Berhasil',
                         text: body.message,
-                        confirmButtonColor: '#3b7ddd'
+                        confirmButtonColor: '#4f46e5'
                     }).then(() => {
                         window.location.reload();
                     });
