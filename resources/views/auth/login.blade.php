@@ -23,7 +23,6 @@
             align-items: center;
             justify-content: center;
             padding: 18px;
-            overflow: hidden;
         }
 
         /* OVERLAY LOADER */
@@ -65,6 +64,7 @@
             width: 100%;
             max-width: 1050px;
             height: 88vh;
+            min-height: 600px;
             background: #fff;
             border-radius: 24px;
             overflow: hidden;
@@ -336,12 +336,13 @@
 
             .login-wrapper {
                 width: 100%;
-                max-width: 1020px;
-                height: 90vh;
+                max-width: 480px;
+                height: auto;
                 background: #fff;
                 border-radius: 22px;
                 overflow: hidden;
                 box-shadow: 0 8px 28px rgba(0, 0, 0, .07);
+                margin: 20px auto;
             }
 
             .left-side {
@@ -362,7 +363,7 @@
         <div class="spinner"></div>
     </div>
 
-    <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
 
         <div class="login-wrapper">
 
@@ -544,64 +545,7 @@
 
                         </div>
 
-                        <!-- STATS -->
-                        <div class="row g-3">
 
-                            <div class="col-4">
-
-                                <div class="stats-box">
-
-                                    <i class="bi bi-people text-primary"></i>
-
-                                    <h5 class="fw-bold">
-                                        1.200+
-                                    </h5>
-
-                                    <small class="text-muted">
-                                        Siswa
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-4">
-
-                                <div class="stats-box">
-
-                                    <i class="bi bi-mortarboard text-success"></i>
-
-                                    <h5 class="fw-bold">
-                                        80+
-                                    </h5>
-
-                                    <small class="text-muted">
-                                        Guru
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-4">
-
-                                <div class="stats-box">
-
-                                    <i class="bi bi-pc-display text-primary"></i>
-
-                                    <h5 class="fw-bold">
-                                        24/7
-                                    </h5>
-
-                                    <small class="text-muted">
-                                        Monitoring
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-                        </div>
 
                         <div class="copyright">
 
