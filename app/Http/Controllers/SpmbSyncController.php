@@ -127,8 +127,8 @@ class SpmbSyncController extends Controller
         $syncedNames = [];
         $errors = [];
 
-        $spmbPublicPath = 'c:/xampp/htdocs/spmb/public/';
-        $spmbStoragePath = 'c:/xampp/htdocs/spmb/storage/app/public/';
+        $spmbPublicPath = env('SPMB_PUBLIC_PATH', 'c:/xampp/htdocs/spmb/public/');
+        $spmbStoragePath = env('SPMB_STORAGE_PATH', 'c:/xampp/htdocs/spmb/storage/app/public/');
         $siantaPublicPath = public_path('gambar_berkas/berkas_siswa/');
 
         if (!file_exists($siantaPublicPath)) {
