@@ -1,4 +1,4 @@
-@extends('template')
+@extends('template_guru')
 @section('content')
     <div class="container-fluid p-0">
         <div class="row mb-2 mb-xl-3">
@@ -262,14 +262,13 @@
                                         <i class="fas fa-times"></i> Batal
                                     </a>
                                 @else
-                                    <a href="{{ route('guru') }}" class="btn btn-danger">
+                                    <a href="{{ route('guru.dashboard') }}" class="btn btn-danger">
                                         <i class="fas fa-reply"></i> Kembali
                                     </a>
                                 @endif
 
                                 <div>
-                                    <a href="{{ route('guru.edit.step1', [$guru, $st]) }}"
-                                        class="btn btn-secondary me-2">
+                                    <a href="{{ route('guru.lengkapi_data.step1') }}" class="btn btn-secondary me-2">
                                         <i class="fas fa-arrow-left"></i> Sebelumnya
                                     </a>
                                     <button type="submit" class="btn btn-primary">
@@ -296,7 +295,7 @@
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
                     $.ajax({
-                        url: "{{ route('guru.update.step2', $guru) }}",
+                        url: "{{ route('guru.lengkapi_data.update.step2') }}",
                         type: "PUT",
                         data: $(this).serialize(),
                         success: function(response) {
@@ -307,7 +306,7 @@
                                     title: 'Berhasil',
                                     text: response.message,
                                 }).then(() => {
-                                    let url = "{{ route('guru') }}";
+                                    let url = "{{ route('guru.lengkapi_data.show') }}";
                                     window.location.href = url;
                                 });
                             } else {

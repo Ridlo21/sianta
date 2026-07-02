@@ -34,7 +34,10 @@ class Gurucontroller extends Controller
 
     public function guru_data()
     {
-        $guru = Guru::where('status_aktif', '1')->orderBy('id', 'desc')->get();
+        $guru = Guru::where('status_aktif', '1')
+        ->whereNotNull('jenis_gtk')
+        ->orderBy('id', 'desc')
+        ->get();
 
         return DataTables::of($guru)
             ->addIndexColumn()

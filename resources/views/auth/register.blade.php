@@ -13,7 +13,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
         * {
@@ -28,7 +30,8 @@
             justify-content: center;
             padding: 16px;
             position: relative;
-            overflow: hidden; /* Prevents scroll globally */
+            overflow: hidden;
+            /* Prevents scroll globally */
         }
 
         /* Ambient Glow Blobs */
@@ -420,6 +423,7 @@
                 align-items: flex-start;
                 padding: 20px 16px;
             }
+
             .register-wrapper {
                 height: auto !important;
                 max-height: none !important;
@@ -506,10 +510,7 @@
 
                         <!-- FORM -->
                         <form id="formRegister" data-parsley-validate>
-
                             @csrf
-
-                            <!-- NAMA LENGKAP -->
                             <div class="mb-3">
                                 <label class="form-label">Nama Lengkap</label>
                                 <div class="input-group">
@@ -517,28 +518,23 @@
                                         <i class="bi bi-person"></i>
                                     </span>
                                     <input type="text" class="form-control" name="name" id="name"
-                                        placeholder="Masukkan nama lengkap beserta gelar" data-parsley-required="true"
-                                        data-parsley-errors-container="#name-errors">
+                                        placeholder="Masukkan nama lengkap saja tanpa gelar"
+                                        data-parsley-required="true" data-parsley-errors-container="#name-errors">
                                 </div>
                                 <div id="name-errors"></div>
                             </div>
-
-                            <!-- USERNAME -->
                             <div class="mb-3">
-                                <label class="form-label">Username</label>
+                                <label class="form-label">Email</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-person-badge"></i>
                                     </span>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                        placeholder="Masukkan username" data-parsley-required="true"
-                                        data-parsley-pattern="^[a-zA-Z0-9_.]+$" data-parsley-pattern-message="Username hanya boleh berisi huruf, angka, underscore, atau titik"
-                                        data-parsley-errors-container="#username-errors">
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Masukkan email" data-parsley-required="true"
+                                        data-parsley-type="email" data-parsley-errors-container="#email-errors">
                                 </div>
-                                <div id="username-errors"></div>
+                                <div id="email-errors"></div>
                             </div>
-
-                            <!-- PASSWORD -->
                             <div class="mb-4">
                                 <label class="form-label">Password</label>
                                 <div class="input-group">
@@ -554,33 +550,23 @@
                                 </div>
                                 <div id="password-errors"></div>
                             </div>
-
-                            <!-- BUTTONS -->
                             <button type="submit" class="btn btn-primary btn-register-submit w-100">
                                 <i class="bi bi-person-plus-fill me-2"></i>
                                 Daftar Sekarang
                             </button>
-
                             <a href="{{ route('login') }}" class="btn btn-back-to-login w-100 mt-2">
                                 <i class="bi bi-arrow-left me-2"></i>
                                 Sudah Punya Akun? Masuk
                             </a>
-
                         </form>
-
                         <div class="copyright">
                             <i class="bi bi-shield-check me-1"></i>
-                            SIANTA © 2026 • All rights reserved
+                            SIANTA © {{ date('Y') }} • All rights reserved
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <script src="{{ asset('asset_login') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -613,28 +599,70 @@
             }
         });
 
-        // MOCKUP FORM SUBMISSION HANDLER (UI Only, No Backend Logic)
+        // FORM SUBMISSION HANDLER
         $(document).ready(function() {
             $('#formRegister').on('submit', function(e) {
                 e.preventDefault();
                 $(this).parsley().validate();
-                
+
                 if ($(this).parsley().isValid()) {
                     $('#loader').css('display', 'flex');
-                    
-                    // Simulate API network request latency
-                    setTimeout(function() {
-                        $('#loader').css('display', 'none');
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Pendaftaran Berhasil!',
-                            text: 'Akun guru Anda berhasil dibuat secara lokal (Mockup).',
-                            confirmButtonText: 'Kembali Ke Login',
-                            confirmButtonColor: '#4f46e5'
-                        }).then(() => {
-                            window.location.href = "{{ route('login') }}";
-                        });
-                    }, 1200);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('registerUser') }}",
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            $('#loader').css('display', 'none');
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Pendaftaran Berhasil!',
+                                    text: response.message,
+                                    confirmButtonText: 'Ke Halaman Login',
+                                    confirmButtonColor: '#4f46e5'
+                                }).then(() => {
+                                    window.location.href = "{{ route('login') }}";
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: response.message,
+                                    confirmButtonColor: '#4f46e5'
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            $('#loader').css('display', 'none');
+                            let message = 'Terjadi kesalahan saat mendaftar.';
+                            if (xhr.status === 422) {
+                                let errors = xhr.responseJSON.errors;
+                                if (errors) {
+                                    let firstKey = Object.keys(errors)[0];
+                                    message = errors[firstKey][0];
+                                } else {
+                                    message = xhr.responseJSON.message || message;
+                                }
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Validasi Gagal',
+                                    text: message,
+                                    confirmButtonColor: '#4f46e5'
+                                });
+                            } else {
+                                if (xhr.responseJSON && xhr.responseJSON.message) {
+                                    message = xhr.responseJSON.message;
+                                }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: message,
+                                    confirmButtonColor: '#4f46e5'
+                                });
+                            }
+                        }
+                    });
                 }
             });
         });

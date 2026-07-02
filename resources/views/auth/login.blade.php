@@ -13,7 +13,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
         * {
@@ -28,7 +30,8 @@
             justify-content: center;
             padding: 16px;
             position: relative;
-            overflow: hidden; /* Prevents scroll globally */
+            overflow: hidden;
+            /* Prevents scroll globally */
         }
 
         /* Ambient Glow Blobs */
@@ -446,6 +449,7 @@
                 align-items: flex-start;
                 padding: 20px 16px;
             }
+
             .login-wrapper {
                 height: auto !important;
                 max-height: none !important;
@@ -625,7 +629,7 @@
 
                             <i class="bi bi-shield-check me-1"></i>
 
-                            SIANTA © 2026 • All rights reserved
+                            SIANTA © {{ date('Y') }} • All rights reserved
 
                         </div>
 
